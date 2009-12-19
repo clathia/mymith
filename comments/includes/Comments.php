@@ -1,7 +1,9 @@
 <?php require("commentsconfig.php");
 
 ?>
+
 <script>
+var idnum = 0;
 var xmlHttp;
 function CreateXMLHttpRequest()
 {
@@ -18,7 +20,7 @@ function CreateXMLHttpRequest()
 function saveComment()
 {
    xmlHttp =CreateXMLHttpRequest(); 
-   var url = 'saveComment.php?FullName='+document.getElementById('FullName').value+'&CommentText='+document.getElementById('CommentText').value+'&Website='+document.getElementById('Website').value+'&Email='+document.getElementById('Email').value+"&BgColor="+ document.getElementById('Bgcolor').value+"&BorderColor="+document.getElementById('BorderColor').value+'&ForeignID=<?$ForeignID ?>';
+   var url = 'saveComment.php?CommentText='+document.getElementById('CommentText').value+"&BgColor="+ document.getElementById('Bgcolor').value+"&BorderColor="+document.getElementById('BorderColor').value+'&ForeignID=<?$ForeignID ?>';
 
    document.getElementById('indicator').style.visibility = 'visible';
     
@@ -34,23 +36,58 @@ function callback()
     if (xmlHttp.status == 200)
     {
         var response = xmlHttp.responseText;
-        document.getElementById('PostCommentdiv').innerHTML = response;
-        document.getElementById('indicator').style.display = 'none';
+        document.getElementById(idnum).innerHTML = response;
+        document.getElementById('indicator').style.visibility = 'hidden';
+        document.getElementById('CommentText').value = "";
         opacity("PostCommentdiv", 0, 100, 1500);
+        idnum++;
     }
   }
 }
 </script>
+
+<style>
+#postButton{
+  float: left;
+  width: 100px;
+  height: 50px;
+}
+</style>
+
+<span id="indicator" style= 'visibility:hidden'>
+<br>
+<center>
+<img src ='images/indicator.gif'/>
+<br>
+<b>Saving Your Comment</b>
+</center>
+</span>
+<center>
+Who is mafia ?
+<div id='PostCommentdiv' style='width:100%;height:150px;align:center' >
+<form method ="get" action ="" onsubmit = "return false;">
+<table style='text-align:left' >
+<tr>
+<td><textarea type="text" id="CommentText" style='width:400px;height:100px;' ></textarea></td>
+<td align = "left" ><input type ='submit' id="postButton" value = 'Accuse' OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';> </td>
+</table>
+</form></div>
+</center>
+
 <?php
+
+for($i = 10; $i>=0; $i--) { 
+echo "<span id = \"$i\"> </span>";
+}
 
 mysql_connect($host,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
 $query 	="select * from comments  where ForeignID = '$ForeignID' ";
 $result=mysql_query($query);
 $num=mysql_numrows($result);
-$i =0 ;
+$i = $num - 1;
 
-while($num > $i )
+while($i > 0)
 {   
     $CommentSubject = mysql_result($result,$i,"CommentSubject");
     $PublishDate = mysql_result($result,$i,"PublishDate");
@@ -75,7 +112,7 @@ while($num > $i )
 
 <Table width = '90%'  cellspacing='0' bgcolor = '<?=$bgcolor?>' align = 'center'  style='border-top:<?=$borderColor?> 1px solid ;border-bottom:<?=$borderColor?> 1px solid ;'>
     <tr>
-        <td style='text-align:left;font-weight:bold'><a target = '_blank' href = '<?=$Website?>'><?=$FullName?></a> Says:</td>
+        <td style='text-align:left;font-weight:bold'><a target = '_blank' href = '<?=$Website?>'><?=$FullName?></a></td>
     </tr>
     <tr>
         <td style='text-align:left;'><?=$PublishDate?></td>
@@ -86,7 +123,7 @@ while($num > $i )
        
 </Table>
 <?
-$i++;
+$i--;
 }
 if ($i % 2 == 1)
 {
@@ -121,38 +158,4 @@ function create_date($format, $gmepoch, $tz)
 }
 
 ?>
-<span id="indicator" style= 'visibility:hidden'>
-<br>
-<center>
-<img src ='images/indicator.gif'/>
-<br>
-<b>Saving Your Comment</b>
-</center>
-</span>
-<center>
-<div id='PostCommentdiv' style='width:100%;height:350px;align:center' >
-<h2 >Leave Your Comment <img src="images/ajax2.gif"/></h2>
-<form method ="get" action ="" onsubmit = "return false;">
-<table width = "70%" style='text-align:left' >
-<tr>
-<td><input type="text" id="FullName"/></td>
-<td>Name (Required)</td>
-</tr>
- <tr>
-<td><input type="text" id="Email"/></td>
-<td>Mail (will not be published) (required)</td>
 
-</tr>
-<tr>
-<td><input type="text" id="Website"/></td>
-<td>Website</td>
-</tr>
-<tr>
-
-<td colspan = '2'><textarea type="text" id="CommentText" style='width:100%; height: 200px;' ></textarea></td>
-</tr>
-<td colspan = '2' align = "right" ><input type ='submit' value = 'Post' OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';> </td>
-</tr>
-</table>
-</form></div>
-</center>

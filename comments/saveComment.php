@@ -6,9 +6,9 @@ if($_GET )
 
 $PublishDate = time();$bgcolor = $_GET["BgColor"];
 $borderColor= $_GET["BorderColor"];
-$Website = $_GET["Website"];
-$FullName = $_GET["FullName"];
-$Email = $_GET["Email"];
+$Website = "sajain.com";//$_GET["Website"];
+$FullName = "shailesh";//$_GET["FullName"];
+$Email = "shailesh@sajain.com";//$_GET["Email"];
 $CommentText = rteSafe($_GET["CommentText"]);
 $ForeignID = 1;//$_GET["ForeignID"] ;
 $query = "Insert Into comments(FullName,Email,Website, CommentText, ForeignID, PublishDate)
@@ -41,7 +41,7 @@ function create_date($format, $gmepoch, $tz)
 
 <Table width = '90%'  cellspacing='0' bgcolor = '#<?=$bgcolor?>' align = 'center' style='border-top:#<?=$borderColor?> 1px solid ;border-bottom:#<?=$borderColor?> 1px solid ;'>
     <tr>
-        <td style='text-align:left;font-weight:bold'><a target = '_blank' href = '<?=$Website?>'><?=$FullName?></a> Says:</td>
+        <td style='text-align:left;font-weight:bold'><a target = '_blank' href = '<?=$Website?>'><?=$FullName?></a></td>
     </tr>
     <tr>
         <td style='text-align:left;'><?=$PublishDate?></td>
@@ -50,7 +50,6 @@ function create_date($format, $gmepoch, $tz)
         <td style='text-align:left;'><?=$CommentText?></td>
     </tr>
 
-</Table>
 <?php
 function rteSafe($strText) {
 	//returns safe code for preloading in the RTE
