@@ -1,0 +1,10 @@
+html,body{margin:0;padding:0}
+body{font: 11px "lucida grande",tahoma,verdana,arial,sans-serif;text-align:center;}
+p{margin:0 10px 10px}
+a{padding:5px;font: 11px "lucida grande",tahoma,verdana,arial,sans-serif; text-decoration:none;color:#3b5998}
+div#container{text-align:left}
+div#content p{line-height:1.4}
+div#container{width:95%;margin:0 auto}
+div#content{width:95%}
+
+
