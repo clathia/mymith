@@ -1,0 +1,13 @@
+<?php
+/*
+ * Copyright 2009 MiTH.  All Rights Reserved. 
+ *
+ * Application: MiTH (Mafia in The House)
+ * File: 'mithkeys.php' 
+ */
+require_once 'mithkeys.php';
+
+?>
+
+
+

@@ -19,7 +19,7 @@ require("/var/www/mithgit/comments/includes/head.php");
   
    <div id="wrapper">
     <div id="content">
-      <?php $ForeignID = '1'; include("comments/includes/Comments.php");?>
+      <?php echo "least comments by: " ?>
     </div>
    </div>
   
@@ -27,3 +27,6 @@ require("/var/www/mithgit/comments/includes/head.php");
   
 </div>
 </body>
+
+
+
