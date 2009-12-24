@@ -1,5 +1,10 @@
 <?php
 
+/* The return types are mentioned over the function names. These are the return
+ * types for success cases. For failures, FALSE is returned. If not specified,
+ * the function returns TRUE for success, and FALSE for failure.
+ */
+
 include_once("constants.php");
 
 class db_manager
@@ -163,6 +168,7 @@ class db_manager
         return TRUE;
     }
 
+    //Number of Comments
     function get_total_comments($game_id, $round, $type)
     {
         if (!$this->id_valid($game_id)) {
@@ -179,6 +185,7 @@ class db_manager
         return $num;
     }
 
+    //Array of (comment_id, uid, text, timestamp)
     function get_comments($game_id, $round, $type, $num_comments)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
@@ -199,6 +206,7 @@ class db_manager
         return $arr;
     }
 
+    //Array of (comment_id, uid, text, timestamp)
     function get_prev_comments($game_id, $round, $type, $num_comments, $last_comment)
     {
         if (!$this->id_valid($game_id)) {
@@ -220,6 +228,7 @@ class db_manager
         return $arr;
     }
 
+    //Array of (comment_id, text, timestamp)
     function get_comments_by($game_id, $round, $type, $uid)
     {
         if (!$this->id_valid($game_id) || !$this->id_valid($uid)) {
@@ -258,6 +267,7 @@ class db_manager
         return TRUE;
     }
 
+    //Player State
     function get_player_state($game_id, $uid)
     {
         if (!$this->id_valid($game_id) || !$this->id_valid($uid)) {
@@ -273,6 +283,7 @@ class db_manager
         return $num;
     }
 
+    //Array of (uid, state)
     function get_players_by_state($game_id, $state)
     {
         if (!($this->id_valid($game_id))) {
@@ -308,6 +319,7 @@ class db_manager
         return TRUE;
     }
 
+    //Player Role
     function get_player_role($game_id, $uid)
     {
         if (!$this->id_valid($game_id) || !$this->id_valid($uid)) {
@@ -323,6 +335,7 @@ class db_manager
         return $num;
     }
 
+    //Array of (uid, role)
     function get_players_by_role($game_id, $role)
     {
         if (!($this->id_valid($game_id))) {
@@ -353,6 +366,7 @@ class db_manager
         }
     }
 
+    //uid
     function get_max_votes($game_id, $round)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
@@ -362,6 +376,7 @@ class db_manager
         return $num;
     }
 
+    //Array of (uid, vote)
     function get_all_votes($game_id, $round)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
@@ -374,6 +389,7 @@ class db_manager
         return $arr;
     }
 
+    //Array of uid
     function get_votes_against($game_id, $round, $uid)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round) || !$this->id_valid($uid)) {
@@ -386,6 +402,7 @@ class db_manager
         return $arr;
     }
 
+    //uid
     function get_votes_by($game_id, $round, $uid)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round) || !$this->id_valid($uid)) {
