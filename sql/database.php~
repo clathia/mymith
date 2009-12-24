@@ -58,6 +58,13 @@ class db_manager
             return FALSE;
         return TRUE;
     }
+    
+    function player_state_valid($state)
+    {
+        if (($role < PLAYER_STATE_MIN) || ($role > PLAYER_STATE_MAX))
+            return FALSE;
+        return TRUE;
+    }
 
     function comment_type_valid($type)
     {
@@ -137,6 +144,7 @@ class db_manager
     function add_comment($game_id, $uid, $text, $type)
     {
         if (!($this->id_valid($game_id)) || !($this->id_valid($uid)) || !($this->comment_type_valid($type))) {
+            echo "Validation failed";
             return FALSE;
         }
 
@@ -147,6 +155,7 @@ class db_manager
         $q = "SELECT curr_round, $comment_type FROM ".TBL_GAMES." WHERE game_id = '$game_id'";
         $result = $this->run_query($q);
         if (($result == FALSE) || (mysql_num_rows($result) == 0)) {
+            echo "No comment of this type";
             return FALSE;
         }
         $arr = mysql_fetch_row($result);
@@ -218,7 +227,7 @@ class db_manager
         $q = "SELECT comment_id, uid, text, timestamp FROM ".TBL_COMMENTS."
              WHERE game_id = '$game_id' AND round = '$round'
              AND type = '$type' AND comment_id <= '$last_comment'
-             ORDER BY comment_id DESC LIMIT $num_comments";
+             ORDER BY comment_id ASC LIMIT $num_comments";
         $result = $this->run_query($q);
         if ($result == FALSE) {
             return FALSE;
@@ -285,7 +294,7 @@ class db_manager
         return $num;
     }
 
-    //Array of (uid, state)
+    //Array of (uid, {state})
     function get_players_by_state($game_id, $state)
     {
         if (!($this->id_valid($game_id))) {
@@ -294,7 +303,7 @@ class db_manager
         if(!($this->player_state_valid($state))) {
             $q = "SELECT uid, state FROM ".TBL_PLAYERS." WHERE game_id = '$game_id'";
         } else {
-            $q = "SELECT uid, state FROM ".TBL_PLAYERS." WHERE game_id = '$game_id' AND state = '$state'";
+            $q = "SELECT uid FROM ".TBL_PLAYERS." WHERE game_id = '$game_id' AND state = '$state'";
         }
         $result = $this->run_query($q, $this->connection);
         if ($result == FALSE) {

@@ -9,9 +9,9 @@ require_once("/var/www/mithgit/mithkeys.php");
 require("/var/www/mithgit/comments/includes/head.php");
 
 ?>
-<iframe scrolling="no"></iframe>
+
 <head>
-<link rel="stylesheet" type="text/css" href="styles.css?2" />
+<link rel="stylesheet" type="text/css" href="/mithgit/styles.css?2" />
 </head>
 
 <body>
@@ -19,7 +19,7 @@ require("/var/www/mithgit/comments/includes/head.php");
   
    <div id="wrapper">
     <div id="content">
-      <?php $ForeignID = '1'; include("comments/includes/Comments.php");?>
+      <?php include("godCore.php");?>
     </div>
    </div>
   

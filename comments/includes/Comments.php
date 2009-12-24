@@ -56,15 +56,25 @@ function callback()
     if (xmlHttp.status == 200)
     {
         var response = xmlHttp.responseText;
-        alert(response);
         document.getElementById(idnum).innerHTML = response;
         document.getElementById('indicator').style.visibility = 'hidden';
         document.getElementById('CommentText').value = "";
         opacity("PostCommentdiv", 0, 100, 1500);
+        document.getElementById('postButton').disabled = true;
         idnum++;
     }
   }
 }
+
+function verifyText()
+{
+   if (document.getElementById('CommentText').value == '') {
+      document.getElementById('postButton').disabled = true;
+   } else {
+      document.getElementById('postButton').disabled = false;
+   }
+}
+
 </script>
 
 
@@ -87,9 +97,24 @@ div#textForTextArea{
   font-size:20px;
 }
 
+div#GodMessage{
+  background:#f5f5f5;
+  text-align:left;
+  width:95%;
+  font-size:20px;
+  color:black;
+}
 </style>
-
-
+<br /> <br />
+<center>
+<div id="GodMessage">
+<?php
+$comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
+if (count($comment))
+echo "God says:"." ". $comment[0]['text'];
+?>
+</div>
+</center>
 
 <span id="indicator" style= 'visibility:hidden'>
 <br>
@@ -107,8 +132,8 @@ div#textForTextArea{
 <table style='text-align:left' >
 <tr>
 <div id="textForTextArea">Who is mafia ?</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' ></textarea></td>
-<td align = "left" ><input type ='submit' id="postButton" value = 'Accuse' OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
+<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp='verifyText()'></textarea></td>
+<td align = "left" ><input type ='submit' id="postButton" value = 'Accuse' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
 </table>
 </form></div>
 </center>
@@ -119,16 +144,17 @@ for($i = 50; $i>=0; $i--) {
 echo "<span id = \"$i\"> </span>";
 }
 
-$comment = $database->get_comments(5, 1, COMMENT_TYPE_CITY, 10);
-$i = count($comment) - 1;
+$comment = $database->get_comments(5, 1, COMMENT_TYPE_CITY, 20);
+$tmp = count($comment) - 1;
 ?>
 
 <script>
-numComments=<?=$i?>;
+numComments=<?=$tmp?>;
 </script>
 
 <?
-while($i >= 0)
+$i = 0;
+while($i <= $tmp)
 {   
     
     if ($i % 2 == 1)
@@ -155,5 +181,5 @@ while($i >= 0)
 
     echo display_comment($bgcolor, $borderColor, $profile_url, $pic_square, $full_name, $comment[$i]['timestamp'], $comment[$i]['text']);
     }
-    $i--;
+    $i++;
 }?>

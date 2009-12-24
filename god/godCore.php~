@@ -1,6 +1,6 @@
 <?php 
-require("sql/database.php");
-require("core/helper.php");
+require_once("/var/www/mithgit/sql/database.php");
+require("/var/www/mithgit/core/helper.php");
 ?>
 
 <script>
@@ -37,10 +37,10 @@ function saveComment()
         bgColor =  "f5f5f5";
         borderColor = "c4c4c4";
     }
-
+   
    var text= document.getElementById('CommentText').value;
-   var url = "comments/saveComment.php";
-   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=1';
+   var url = "/mithgit/comments/saveComment.php";
+   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=2';
    xmlHttp.open("POST", url, true);
    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xmlHttp.setRequestHeader("Content-length", params.length);
@@ -81,8 +81,8 @@ function verifyText()
 <style>
 #postButton{
   float: left;
-  width: 100px;
-  height: 50px;
+  width: 50px;
+  height: 30px;
 }
 
 div#PostCommentdiv{
@@ -93,10 +93,9 @@ div#PostCommentdiv{
 
 div#textForTextArea{
   text-align:left;
-  width:200px;
-  font-size:20px;
+  width:50px;
+  font-size:15px;
 }
-
 </style>
 
 
@@ -104,7 +103,7 @@ div#textForTextArea{
 <span id="indicator" style= 'visibility:hidden'>
 <br>
 <center>
-<img src ='comments/images/indicator.gif'/>
+<img src ='/mithgit/comments/images/indicator.gif'/>
 <br>
 <b>Saving Your Comment</b>
 </center>
@@ -116,9 +115,9 @@ div#textForTextArea{
 <form method ="get" action ="" onsubmit = "return false;">
 <table style='text-align:left' >
 <tr>
-<div id="textForTextArea">Muhahaha! Time to kill someone..</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp='verifyText()'></textarea></td>
-<td align = "left" ><input type ='submit' id="postButton" value = 'Kill' OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';></td>
+<div id="textForTextArea">Enter Message</label>
+<td><textarea type="text" id="CommentText" style='width:400px;height:30px;' OnKeyUp='verifyText()'></textarea></td>
+<td align = "left" ><input type ='submit' id="postButton" value = 'Post' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
 </table>
 </form></div>
 </center>
@@ -129,7 +128,7 @@ for($i = 50; $i>=0; $i--) {
 echo "<span id = \"$i\"> </span>";
 }
 
-$comment = $database->get_comments(5, 1, COMMENT_TYPE_MAFIA, 5);
+$comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 20);
 $tmp = count($comment) - 1;
 ?>
 

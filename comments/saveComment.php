@@ -29,8 +29,13 @@ $game_id = 5;
       if ($ret == FALSE) {
          echo "Error inserting into database";
       }
-   } else {
+   } else if ($type == 1){
       $database->add_comment($game_id, $uid, $text, COMMENT_TYPE_MAFIA);
+   } else if ($type == 2) {
+      $ret = $database->add_comment($game_id, $uid, $text, COMMENT_TYPE_GOD);
+      if ($ret == FALSE) {
+         echo "Error inserting into database";
+      }
    }
 }
 
