@@ -1,6 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
-
 <?php
 /*
  * Copyright 2009 MiTH.  All Rights Reserved. 
@@ -8,29 +5,25 @@
  * Application: MiTH (Mafia in The House)
  * File: 'mithkeys.php' 
  */
-require_once 'mithkeys.php';
+require_once("/var/www/mithgit/mithkeys.php");
+require("/var/www/mithgit/comments/includes/head.php");
 
 ?>
 
-<script src=
-"http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" 
-type="text/javascript"></script>
+<head>
+<link rel="stylesheet" type="text/css" href="styles.css?2" />
+</head>
 
-<link rel="stylesheet" type="text/css" href="global.css" />
-
-<div>
-<fb:comments xid="tp" numposts="8" title="My comment box" simple="1" css="http://apps.facebook.com/mafiainthehouse/global.css?2">
-<fb:title>Who is accusing ?</fb:title>
-</fb:comments>
+<body>
+<div id="container">   <?php include("/var/www/mithgit/core/top.layout.php"); ?>
+  
+   <div id="wrapper">
+    <div id="content">
+      <?php $ForeignID = '1'; include("comments/includes/Comments.php");?>
+    </div>
+   </div>
+  
+   <?php include("/var/www/mithgit/core/bottom.layout.php");?>
+  
 </div>
-
-<script type="text/javascript">
-FB.init("10d020f9dcb70b3d5aeebc0124ddd387", "xd_receiver.htm");
-</script>
-
-<form action="invite.php" method="post">
-<center>
-<input type="submit" value="Start New MiTh">
-</center>
-</form>
-
+</body>
