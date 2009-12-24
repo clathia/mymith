@@ -196,7 +196,7 @@ class db_manager
 
         $q = "SELECT comment_id, uid, text, timestamp FROM ".TBL_COMMENTS."
              WHERE game_id = '$game_id' AND round = '$round' AND type = '$type'
-             ORDER BY comment_id DESC LIMIT $num_comments";
+             ORDER BY comment_id ASC LIMIT $num_comments";
         $result = $this->run_query($q);
         if ($result == FALSE) {
             return FALSE;

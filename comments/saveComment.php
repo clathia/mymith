@@ -1,72 +1,38 @@
 
-<?php require("includes/commentsconfig.php");
+<?php require_once '../mithkeys.php';
+require("../core/helper.php");
+require_once("/var/www/mithgit/sql/database.php");
 
-if($_GET )
+if($_POST )
 {
 
-$PublishDate = time();$bgcolor = $_GET["BgColor"];
-$borderColor= $_GET["BorderColor"];
-$Website = "sajain.com";//$_GET["Website"];
-$FullName = "shailesh";//$_GET["FullName"];
-$Email = "shailesh@sajain.com";//$_GET["Email"];
-$CommentText = rteSafe($_GET["CommentText"]);
-$ForeignID = 1;//$_GET["ForeignID"] ;
-$query = "Insert Into comments(FullName,Email,Website, CommentText, ForeignID, PublishDate)
-			 values('$FullName', '$Email', '$Website', '$CommentText','$ForeignID','$PublishDate')";
-
-mysql_connect($host,$username,$password);
-@mysql_select_db($database) or die( "Unable to select database");
-mysql_query($query);
-mysql_close();
-$PublishDate= create_date('D M d, Y g:i a', $PublishDate, 0);
-}
-function create_date($format, $gmepoch, $tz)
-{
-	global $board_config, $lang;
-	static $translate;
-
-	if ( empty($translate) && $board_config['default_lang'] != 'english' )
-	{
-		@reset($lang['datetime']);
-		while ( list($match, $replace) = @each($lang['datetime']) )
-		{
-			$translate[$match] = $replace;
-		}
-	}
-
-	return ( !empty($translate) ) ? strtr(@gmdate($format, $gmepoch + (3600 * $tz)), $translate) : @gmdate($format, $gmepoch + (3600 * $tz));
+$uid = $facebook->api_client->users_GetLoggedInUser();
+$user_details = $facebook->api_client->users_GetInfo($user_id, 'last_name, first_name, profile_url, pic_square'); 
+$first_name = $user_details[0]['first_name']; 
+$last_name = $user_details[0]['last_name']; 
+$profile_url = $user_details[0]['profile_url'];
+$pic_square = $user_details[0]['pic_square'];
+if (! $pic_square) {
+   $pic_square = "/mithgit/images/nullImage.gif";
 }
 
-?>
+$publish_date = $mysqldate = date( 'Y-m-d H:i:s', time());
+$bgcolor = $_POST['BgColor'];
+$borderColor = $_POST['BorderColor'];
+$full_name = $first_name." ".$last_name;
+$text = $_POST["CommentText"];//rteSafe($_POST["CommentText"]);
+$type = $_POST["type"];
+$game_id = 5;
 
-<Table width = '90%'  cellspacing='0' bgcolor = '#<?=$bgcolor?>' align = 'center' style='border-top:#<?=$borderColor?> 1px solid ;border-bottom:#<?=$borderColor?> 1px solid ;'>
-    <tr>
-        <td style='text-align:left;font-weight:bold'><a target = '_blank' href = '<?=$Website?>'><?=$FullName?></a></td>
-    </tr>
-    <tr>
-        <td style='text-align:left;'><?=$PublishDate?></td>
-    </tr>
-    <tr>
-        <td style='text-align:left;'><?=$CommentText?></td>
-    </tr>
-
-<?php
-function rteSafe($strText) {
-	//returns safe code for preloading in the RTE
-	$tmpString = $strText;
-
-	//convert all types of single quotes
-	$tmpString = str_replace(chr(145), chr(39), $tmpString);
-	$tmpString = str_replace(chr(146), chr(39), $tmpString);
-	$tmpString = str_replace("'", "&#39;", $tmpString);
-
-	//convert all types of double quotes
-	$tmpString = str_replace(chr(147), chr(34), $tmpString);
-	$tmpString = str_replace(chr(148), chr(34), $tmpString);
-	$tmpString = str_replace("<", "&lt;", $tmpString);
-	$tmpString = str_replace(">", "&gt;", $tmpString);
-    $tmpString = str_replace("&lt;br&gt;", "<br>", $tmpString);
-
-	return $tmpString;
+   if ($type == 0){
+      $ret = $database->add_comment($game_id, $uid, $text, COMMENT_TYPE_CITY);
+      if ($ret == FALSE) {
+         echo "Error inserting into database";
+      }
+   } else {
+      $database->add_comment($game_id, $uid, $text, COMMENT_TYPE_MAFIA);
+   }
 }
-?>
+
+echo display_comment($bgcolor, $borderColor, $profile_url, $pic_square, $full_name, $publish_date, $text);
+?>

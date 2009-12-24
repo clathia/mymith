@@ -37,7 +37,7 @@ function saveComment()
         bgColor =  "f5f5f5";
         borderColor = "c4c4c4";
     }
-
+   
    var text= document.getElementById('CommentText').value;
    var url = "comments/saveComment.php";
    var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=0';
@@ -56,6 +56,7 @@ function callback()
     if (xmlHttp.status == 200)
     {
         var response = xmlHttp.responseText;
+        alert(response);
         document.getElementById(idnum).innerHTML = response;
         document.getElementById('indicator').style.visibility = 'hidden';
         document.getElementById('CommentText').value = "";
@@ -107,7 +108,7 @@ div#textForTextArea{
 <tr>
 <div id="textForTextArea">Who is mafia ?</label>
 <td><textarea type="text" id="CommentText" style='width:400px;height:80px;' ></textarea></td>
-<td align = "left" ><input type ='submit' id="postButton" value = 'Accuse' OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';></td>
+<td align = "left" ><input type ='submit' id="postButton" value = 'Accuse' OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
 </table>
 </form></div>
 </center>

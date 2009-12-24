@@ -64,7 +64,7 @@ function display_date($date)
 
     // is it future date or past date
     if($now == $unix_date) {
-        return "Posted now";
+        return "Just Posted";
     }
     
     if($now > $unix_date) {   
