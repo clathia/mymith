@@ -67,6 +67,7 @@ class db_manager
     }
 
     /* Game Functions */
+    //Game_Id
     function create_new_game($admin_id, $ids)
     {
         if (!$this->id_valid($admin_id) || (count($ids) == 0)) {
@@ -128,6 +129,7 @@ class db_manager
         if (!$this->id_valid($game_id)) {
             return FALSE;
         }
+        return TRUE;
     }
 
 
@@ -364,22 +366,53 @@ class db_manager
         if (!$this->id_valid($game_id) || !$this->id_valid($vote_by) || !$this->id_valid($vote_against)) {
             return FALSE;
         }
+
+        //Get current round
+        $q = "SELECT curr_round FROM ".TBL_GAMES." WHERE game_id = '$game_id'";
+        $result = $this->run_query($q);
+        if (($result == FALSE) || (mysql_num_rows($result) == 0)) {
+            return FALSE;
+        }
+        $round = mysql_result($result, 0);
+        if ($round <= 0) {
+            return FALSE;
+        }
+
+        //Cast Vote
+        $q = "INSERT INTO ".TBL_VOTES." (game_id, uid, round, vote) VALUES ('$game_id', '$vote_by', '$round', '$vote_against')";
+        $result = $this->run_query($q, $this->connection);
+        if ($result == FALSE) {
+            return FALSE;
+        }
+        return TRUE;
     }
 
-    //uid
+/*    //uid
     function get_max_votes($game_id, $round)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
             return FALSE;
         }
+
+        $q = "SELECT vote FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round'";
+        $result = $this->run_query($q, $this->connection);
+        if ($result == FALSE) {
+            return FALSE;
+        }
         $num = mysql_result($result, 0);
         return $num;
-    }
+    }*/
 
     //Array of (uid, vote)
     function get_all_votes($game_id, $round)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
+            return FALSE;
+        }
+
+        $q = "SELECT uid, vote FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round'";
+        $result = $this->run_query($q, $this->connection);
+        if ($result == FALSE) {
             return FALSE;
         }
         $arr = array();
@@ -395,6 +428,12 @@ class db_manager
         if (!$this->id_valid($game_id) || !$this->round_valid($round) || !$this->id_valid($uid)) {
             return FALSE;
         }
+
+        $q = "SELECT uid FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round' AND vote = '$uid'";
+        $result = $this->run_query($q, $this->connection);
+        if ($result == FALSE) {
+            return FALSE;
+        }
         $arr = array();
         while ($row = mysql_fetch_assoc($result)) {
             $arr[] = $row;
@@ -408,10 +447,19 @@ class db_manager
         if (!$this->id_valid($game_id) || !$this->round_valid($round) || !$this->id_valid($uid)) {
             return FALSE;
         }
+
+        $q = "SELECT vote FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round' AND uid = '$uid'";
+        $result = $this->run_query($q, $this->connection);
+        if ($result == FALSE) {
+            return FALSE;
+        }
         $num = mysql_result($result, 0);
         return $num;
     }
 }
+
+$database = new db_manager;
+
 /*
 Log
  */

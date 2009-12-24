@@ -10,6 +10,7 @@ define("DB_PASS", "mith123");        // Database User Password
 define("TBL_PLAYERS", "players");
 define("TBL_GAMES", "game");
 define("TBL_COMMENTS", "comments");
+define("TBL_VOTES", "votes");
 
 define("GAME_STATE_MIN", 0);
 define("GAME_STATE_MAX", 2);
