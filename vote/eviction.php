@@ -70,12 +70,12 @@ function callback()
    include("/var/www/mithgit/core/top.layout.php");
    echo "<br /> <br />";
    
-   $vote = $database->get_players_by_state(5, PLAYER_STATE_ALIVE);
+   $vote = $database->get_num_votes(5, 1);
 
-   print_r($vote);
    //$ids = array(896250631, 1008714147, 1012279117, 1019638372, 1022408517, 1022737191, 1050467088, 1059871404);
    
    $i = 0;
+   
    $myuid = $facebook->api_client->users_GetLoggedInUser();
    for ($i = 0; $i < count($vote); $i++) {
     

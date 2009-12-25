@@ -413,22 +413,26 @@ class db_manager
         if ($result == FALSE) {
             return FALSE;
         }
+        echo print_r($result);
         $count = count($result);
-
+        echo $count;
         //Build default array
         $arr = array();
         for ($i = 0; $i < $count; $i++) {
             $arr[$i]["uid"] = $result[$i]["uid"];
             $arr[$i]["num_votes"] = 0;
         }
-
+        echo "<br /> Semi Semi final ";
+        echo print_r($arr);
         //Get votes
         $q = "SELECT vote, COUNT(*) as num_votes FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round' GROUP BY vote";
         $result = $this->run_query($q, $this->connection);
         if ($result == FALSE) {
+            echo "Returning false";
             return FALSE;
         }
-
+        echo "<br /> Semi final ";
+        echo print_r($result);
         //Update array
         while ($row = mysql_fetch_assoc($result)) {
             for ($i = 0; $i < $count; $i++) {
@@ -437,6 +441,8 @@ class db_manager
                 }
             }
         }
+        echo "<br />Final ";
+        echo print_r($arr);
         return $arr;
     }
 
