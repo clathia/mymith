@@ -5,22 +5,8 @@ require("core/helper.php");
 
 <script>
 var idnum = 0;
-var xmlHttp;
 var numComments = 0;
-
-function CreateXMLHttpRequest()
-{
-  if (window.ActiveXObject)
-  {
-    return new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  else if (window.XMLHttpRequest)
-  {
-    return new XMLHttpRequest();
-  }
-}
-
-function saveComment()
+function saveComment()
 {
    xmlHttp = CreateXMLHttpRequest();
    var bgColor;
@@ -117,7 +103,7 @@ div#textForTextArea{
 <table style='text-align:left' >
 <tr>
 <div id="textForTextArea">Muhahaha! Time to kill someone..</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp='verifyText()'></textarea></td>
+<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp=OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
 <td align = "left" ><input type ='submit' id="postButton" value = 'Kill' OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';></td>
 </table>
 </form></div>

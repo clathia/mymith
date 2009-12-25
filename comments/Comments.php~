@@ -5,20 +5,7 @@ require("core/helper.php");
 
 <script>
 var idnum = 0;
-var xmlHttp;
 var numComments = 0;
-
-function CreateXMLHttpRequest()
-{
-  if (window.ActiveXObject)
-  {
-    return new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  else if (window.XMLHttpRequest)
-  {
-    return new XMLHttpRequest();
-  }
-}
 
 function saveComment()
 {
@@ -38,7 +25,7 @@ function saveComment()
         borderColor = "c4c4c4";
     }
    
-   var text= document.getElementById('CommentText').value;
+   var text= fixText(document.getElementById('CommentText').value);
    var url = "comments/saveComment.php";
    var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=0';
    xmlHttp.open("POST", url, true);
@@ -64,15 +51,6 @@ function callback()
         idnum++;
     }
   }
-}
-
-function verifyText()
-{
-   if (document.getElementById('CommentText').value == '') {
-      document.getElementById('postButton').disabled = true;
-   } else {
-      document.getElementById('postButton').disabled = false;
-   }
 }
 
 </script>
@@ -132,7 +110,7 @@ echo "God says:"." ". $comment[0]['text'];
 <table style='text-align:left' >
 <tr>
 <div id="textForTextArea">Who is mafia ?</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp='verifyText()'></textarea></td>
+<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
 <td align = "left" ><input type ='submit' id="postButton" value = 'Accuse' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
 </table>
 </form></div>

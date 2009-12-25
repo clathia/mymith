@@ -1,24 +1,31 @@
-<?php 
-require_once("/var/www/mithgit/sql/database.php");
-require("/var/www/mithgit/core/helper.php");
+<?php
+/*
+ * Copyright 2009 MiTH.  All Rights Reserved. 
+ *
+ * Application: MiTH (Mafia in The House)
+ * File: 'mithkeys.php' 
+ */
+require("../mithkeys.php");
+require("../comments/head.php");
+require("../sql/database.php");
+require("../core/helper.php");
+
 ?>
 
 <head>
-<script language="javascript" type="text/javascript" src="/mithgit/calendar/datetimepicker_css.js">
-
-//Date Time Picker script- by TengYong Ng of http://www.rainforestnet.com
-//Script featured on JavaScript Kit (http://www.javascriptkit.com)
-//For this script, visit http://www.javascriptkit.com
-
-</script>
+<link rel="stylesheet" type="text/css" href="/mithgit/styles.css?2" />
 </head>
 
+<body>
+<div id="container">   <?php include("../core/top.layout.php"); ?>
+  
+   <div id="wrapper">
+    <div id="content">
 
 <script>
 var idnum = 0;
 var numComments = 0;
-
-function saveComment()
+function saveComment()
 {
    xmlHttp = CreateXMLHttpRequest();
    var bgColor;
@@ -35,10 +42,10 @@ function saveComment()
         bgColor =  "f5f5f5";
         borderColor = "c4c4c4";
     }
-   
+
    var text= document.getElementById('CommentText').value;
    var url = "/mithgit/comments/saveComment.php";
-   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=2';
+   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=1';
    xmlHttp.open("POST", url, true);
    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xmlHttp.setRequestHeader("Content-length", params.length);
@@ -70,8 +77,8 @@ function callback()
 <style>
 #postButton{
   float: left;
-  width: 50px;
-  height: 30px;
+  width: 100px;
+  height: 50px;
 }
 
 div#PostCommentdiv{
@@ -82,33 +89,32 @@ div#PostCommentdiv{
 
 div#textForTextArea{
   text-align:left;
-  width:50px;
-  font-size:15px;
+  width:200px;
+  font-size:20px;
 }
+
 </style>
-<br /><br />
-Deadline for Round 1:
-<input id="demo1" type="text" size="25">
-<a href="javascript:NewCssCal('demo1', 'MMddyyyy', 'Arrow', 'true', '12', 'true')">
-<img src="/mithgit/calendar/images/cal.gif" alt="Pick a date" /></a>
+
+
 
 <span id="indicator" style= 'visibility:hidden'>
 <br>
 <center>
-<img src ='/mithgit/comments/images/indicator.gif' />
+<img src ='/mithgit/comments/images/indicator.gif'/>
 <br>
 <b>Saving Your Comment</b>
 </center>
 </span>
 
 <center>
+
 <div id='PostCommentdiv'>
 <form method ="get" action ="" onsubmit = "return false;">
 <table style='text-align:left' >
 <tr>
-<div id="textForTextArea">Enter Message</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:30px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
-<td align = "left" ><input type ='submit' id="postButton" value = 'Post' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
+<div id="textForTextArea">Muhahaha! Time to kill someone..</label>
+<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp=OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
+<td align = "left" ><input type ='submit' id="postButton" value = 'Kill' OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';></td>
 </table>
 </form></div>
 </center>
@@ -119,7 +125,7 @@ for($i = 50; $i>=0; $i--) {
 echo "<span id = \"$i\"> </span>";
 }
 
-$comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 20);
+$comment = $database->get_comments(5, 1, COMMENT_TYPE_MAFIA, 5);
 $tmp = count($comment) - 1;
 ?>
 
@@ -142,19 +148,16 @@ while($i <= $tmp)
         $bgcolor =  "#f5f5f5";
         $borderColor = "#c4c4c4";
     }
-
-    $user_details = $facebook->api_client->users_getInfo($comment[$i]['uid'], 'last_name, first_name, profile_url, pic_square'); 
-    if ($user_details) {
-    $first_name = $user_details[0]['first_name']; 
-    $last_name = $user_details[0]['last_name'];
-    $full_name = $first_name." ".$last_name;
-    $profile_url = $user_details[0]['profile_url'];
-    $pic_square = $user_details[0]['pic_square'];
-    if (! $pic_square) {
-      $pic_square = "/mithgit/images/nullImage.gif";
-    }
-
-    echo display_comment($bgcolor, $borderColor, $profile_url, $pic_square, $full_name, $comment[$i]['timestamp'], $comment[$i]['text']);
+    $user = get_user_info($comment[$i]['uid'], $facebook);
+    if ($user) {
+       echo display_comment($bgcolor, $borderColor, $user['profile_url'], $user['pic_square'], $user['full_name'],$comment[$i]['timestamp'], $comment[$i]['text']);
     }
     $i++;
 }?>
+    </div>
+   </div>
+  
+   <?php include("../core/bottom.layout.php");?>
+  
+</div>
+</body>

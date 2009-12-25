@@ -43,7 +43,6 @@ function commentPost(id, myid)
    xmlHttp = CreateXMLHttpRequest();
    globalId = id;
    var url = 'registerVote.php?id='+id+'&myid='+myid;
-   alert(url);
    xmlHttp.onreadystatechange = callback;
    xmlHttp.open("GET", url, true);
    xmlHttp.send(null);
@@ -55,7 +54,7 @@ function callback()
   {
     if (xmlHttp.status == 200)
     {
-        var response = xmlHttp.responseText;     
+        var response = xmlHttp.responseText;
         document.getElementById(globalId).innerHTML = response;
     }
   }
@@ -96,8 +95,8 @@ function callback()
        <th><a target = '_blank' href ="<?=$profile_url?>"><?=$full_name?></a></th>
        <tr width='10%'><th rowspan="2"><a target = '_blank' href ="<?=$profile_url?>"><img src="<?=$pic_square?>" /></a></th> </tr>
        <tr>
-       <td>votes:<font size=20px><div id="<?=$ids[$i]['uid']?>"><?=$vote[$i]['vote']?> </div></font> </td>
-       <td><input type ='submit' id="voteButton" value = 'Vote' OnClick = 'commentPost("<?=$ids[$i]['uid']?>", "<?=$myuid?>")';></input></td>
+       <td>votes:<font size=20px><div id="<?=$vote[$i]['uid']?>"><?=$vote[$i]['num_votes']?> </div></font> </td>
+       <td><input type ='submit' id="voteButton" value = 'Vote' OnClick = 'commentPost("<?=$vote[$i]['uid']?>", "<?=$myuid?>")';></input></td>
        </tr>
     </tr>
 
