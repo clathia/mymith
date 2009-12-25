@@ -16,7 +16,7 @@ require("comments/head.php");
 
 <body>
 <div id="container">
-   <?php echo $_SERVER['DOCUMENT_ROOT'] ?>   <?php include("core/top.layout.php"); ?>
+   <?php include("core/top.layout.php"); ?>
   
    <div id="wrapper">
     <div id="content">
