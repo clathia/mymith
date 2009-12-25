@@ -16,20 +16,7 @@ require("/var/www/mithgit/core/helper.php");
 
 <script>
 var idnum = 0;
-var xmlHttp;
 var numComments = 0;
-
-function CreateXMLHttpRequest()
-{
-  if (window.ActiveXObject)
-  {
-    return new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  else if (window.XMLHttpRequest)
-  {
-    return new XMLHttpRequest();
-  }
-}
 
 function saveComment()
 {
@@ -111,7 +98,7 @@ div#textForTextArea{
 <br /><br />
 Deadline for Round 1:
 <input id="demo1" type="text" size="25">
-<a href="javascript:NewCssCal('demo1', , 'Arrow', 'true', '12', 'true')">
+<a href="javascript:NewCssCal('demo1', 'MMddyyyy', 'Arrow', 'true', '12', 'true')">
 <img src="/mithgit/calendar/images/cal.gif" alt="Pick a date" /></a>
 
 <span id="indicator" style= 'visibility:hidden'>
@@ -129,7 +116,7 @@ Deadline for Round 1:
 <table style='text-align:left' >
 <tr>
 <div id="textForTextArea">Enter Message</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:30px;' OnKeyUp='verifyText()'></textarea></td>
+<td><textarea type="text" id="CommentText" style='width:400px;height:30px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
 <td align = "left" ><input type ='submit' id="postButton" value = 'Post' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
 </table>
 </form></div>

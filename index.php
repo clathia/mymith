@@ -3,10 +3,10 @@
  * Copyright 2009 MiTH.  All Rights Reserved. 
  *
  * Application: MiTH (Mafia in The House)
- * File: 'mithkeys.php' 
+ * File: 'index.php' 
  */
-require_once("/var/www/mithgit/mithkeys.php");
-require("/var/www/mithgit/comments/includes/head.php");
+require_once("mithkeys.php");
+require("comments/head.php");
 
 ?>
 
@@ -19,7 +19,7 @@ require("/var/www/mithgit/comments/includes/head.php");
   
    <div id="wrapper">
     <div id="content">
-      <?php $ForeignID = '1'; include("comments/includes/Comments.php");?>
+      <?php $ForeignID = '1'; include("comments/Comments.php");?>
     </div>
    </div>
   

@@ -5,22 +5,8 @@ require("core/helper.php");
 
 <script>
 var idnum = 0;
-var xmlHttp;
 var numComments = 0;
-
-function CreateXMLHttpRequest()
-{
-  if (window.ActiveXObject)
-  {
-    return new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  else if (window.XMLHttpRequest)
-  {
-    return new XMLHttpRequest();
-  }
-}
-
-function saveComment()
+function saveComment()
 {
    xmlHttp = CreateXMLHttpRequest();
    var bgColor;
@@ -37,10 +23,10 @@ function saveComment()
         bgColor =  "f5f5f5";
         borderColor = "c4c4c4";
     }
-   
+
    var text= document.getElementById('CommentText').value;
    var url = "comments/saveComment.php";
-   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=0';
+   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=1';
    xmlHttp.open("POST", url, true);
    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xmlHttp.setRequestHeader("Content-length", params.length);
@@ -66,15 +52,6 @@ function callback()
   }
 }
 
-function verifyText()
-{
-   if (document.getElementById('CommentText').value == '') {
-      document.getElementById('postButton').disabled = true;
-   } else {
-      document.getElementById('postButton').disabled = false;
-   }
-}
-
 </script>
 
 
@@ -97,24 +74,9 @@ div#textForTextArea{
   font-size:20px;
 }
 
-div#GodMessage{
-  background:#f5f5f5;
-  text-align:left;
-  width:95%;
-  font-size:20px;
-  color:black;
-}
 </style>
-<br /> <br />
-<center>
-<div id="GodMessage">
-<?php
-$comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
-if (count($comment))
-echo "God says:"." ". $comment[0]['text'];
-?>
-</div>
-</center>
+
+
 
 <span id="indicator" style= 'visibility:hidden'>
 <br>
@@ -131,9 +93,9 @@ echo "God says:"." ". $comment[0]['text'];
 <form method ="get" action ="" onsubmit = "return false;">
 <table style='text-align:left' >
 <tr>
-<div id="textForTextArea">Who is mafia ?</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp='verifyText()'></textarea></td>
-<td align = "left" ><input type ='submit' id="postButton" value = 'Accuse' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
+<div id="textForTextArea">Muhahaha! Time to kill someone..</label>
+<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp=OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
+<td align = "left" ><input type ='submit' id="postButton" value = 'Kill' OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';></td>
 </table>
 </form></div>
 </center>
@@ -144,7 +106,7 @@ for($i = 50; $i>=0; $i--) {
 echo "<span id = \"$i\"> </span>";
 }
 
-$comment = $database->get_comments(5, 1, COMMENT_TYPE_CITY, 20);
+$comment = $database->get_comments(5, 1, COMMENT_TYPE_MAFIA, 5);
 $tmp = count($comment) - 1;
 ?>
 

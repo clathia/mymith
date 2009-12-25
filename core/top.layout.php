@@ -22,11 +22,11 @@ div#navigation li{margin-bottom:5px;}
 <a href="/mithgit/index.php"><h1>MiTH</h1></a>
 </div>
 <div id="navigation">
-<a href="/mithgit/index.php">Home</a>&nbsp;&nbsp;
-<a href="/mithgit/vote/eviction.php">Eviction</a>
-<a href="/mithgit/mafiabox.php">MafiaBox</a>
-<a href="/mithgit/god/godbox.php">GodBox</a>
-<a href="/mithgit/status.php">Status</a>
+<a href="../index.php">Home</a>&nbsp;&nbsp;
+<a href="../vote/eviction.php">Eviction</a>
+<a href="../mafia/mafiabox.php">MafiaBox</a>
+<a href="../god/godbox.php">GodBox</a>
+<a href="../status/status.php">Status</a>
 </div>
 
 
