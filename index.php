@@ -5,8 +5,8 @@
  * Application: MiTH (Mafia in The House)
  * File: 'index.php' 
  */
-require_once("mithkeys.php");
-require("comments/head.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/mithkeys.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/core/head.php");
 
 ?>
 
@@ -15,16 +15,15 @@ require("comments/head.php");
 </head>
 
 <body>
-<div id="container">
-   <?php include("core/top.layout.php"); ?>
-
+<div id="container">   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/top.layout.php"); ?>
+  
    <div id="wrapper">
     <div id="content">
-      <?php $ForeignID = '1'; include("comments/Comments.php");?>
-    </div>
+      <?php  include($_SERVER['DOCUMENT_ROOT'] . "/comments/Comments.php"); ?>
+    </div
    </div>
   
-   <?php include("core/bottom.layout.php");?>
+   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/bottom.layout.php"); ?>
   
 </div>
 </body>

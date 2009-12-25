@@ -3,21 +3,21 @@
  * Copyright 2009 MiTH.  All Rights Reserved. 
  *
  * Application: MiTH (Mafia in The House)
- * File: 'mithkeys.php' 
+ * File: 'mafiabox.php' 
  */
-require("../mithkeys.php");
-require("../comments/head.php");
-require("../sql/database.php");
-require("../core/helper.php");
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/mithkeys.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/core/helper.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/core/head.php");
 ?>
 
 <head>
-<link rel="stylesheet" type="text/css" href="/mithgit/styles.css?2" />
+<link rel="stylesheet" type="text/css" href="/styles.css?2" />
 </head>
 
 <body>
-<div id="container">   <?php include("../core/top.layout.php"); ?>
+<div id="container">   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/top.layout.php"); ?>
   
    <div id="wrapper">
     <div id="content">
@@ -44,7 +44,7 @@ var numComments = 0;
     }
 
    var text= document.getElementById('CommentText').value;
-   var url = "/mithgit/comments/saveComment.php";
+   var url = "/comments/saveComment.php";
    var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=1';
    xmlHttp.open("POST", url, true);
    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -100,7 +100,7 @@ div#textForTextArea{
 <span id="indicator" style= 'visibility:hidden'>
 <br>
 <center>
-<img src ='/mithgit/comments/images/indicator.gif'/>
+<img src ='/comments/images/indicator.gif'/>
 <br>
 <b>Saving Your Comment</b>
 </center>
@@ -113,8 +113,8 @@ div#textForTextArea{
 <table style='text-align:left' >
 <tr>
 <div id="textForTextArea">Muhahaha! Time to kill someone..</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp=OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
-<td align = "left" ><input type ='submit' id="postButton" value = 'Kill' OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';></td>
+<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
+<td align = "left" ><input type ='submit' id="postButton" value = 'Kill' disabled="disabled" OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';></td>
 </table>
 </form></div>
 </center>
@@ -157,7 +157,7 @@ while($i <= $tmp)
     </div>
    </div>
   
-   <?php include("../core/bottom.layout.php");?>
+   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/bottom.layout.php");?>
   
 </div>
 </body>

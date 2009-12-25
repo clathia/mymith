@@ -3,15 +3,15 @@
  * Copyright 2009 MiTH.  All Rights Reserved. 
  *
  * Application: MiTH (Mafia in The House)
- * File: 'mithkeys.php' 
+ * File: 'eviction.php' 
  */
-require_once("/var/www/mithgit/mithkeys.php");
-require_once("/var/www/mithgit/sql/database.php");
-
+require_once($_SERVER['DOCUMENT_ROOT'] . "/mithkeys.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/core/head.php");
 ?>
 
 <head>
-<link rel="stylesheet" type="text/css" href="/mithgit/styles.css?2" />
+<link rel="stylesheet" type="text/css" href="/styles.css?2" />
 </head>
 
 <style>
@@ -23,18 +23,6 @@ require_once("/var/www/mithgit/sql/database.php");
 </style>
 
 <script>
-var xmlHttp;
-function CreateXMLHttpRequest()
-{
-  if (window.ActiveXObject)
-  {
-    return new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  else if (window.XMLHttpRequest)
-  {
-    return new XMLHttpRequest();
-  }
-}
 
 var globalId;
 function commentPost(id, myid)
@@ -66,7 +54,7 @@ function callback()
 <div id="container">
    <Table width = '80%'  cellspacing='0' bgcolor = '#ffffff' align = 'center' valign= 'top'>   <?php 
    
-   include("/var/www/mithgit/core/top.layout.php");
+   include($_SERVER['DOCUMENT_ROOT'] . "/core/top.layout.php");
    echo "<br /> <br />";
    
    $vote = $database->get_num_votes(5, 1);
@@ -86,7 +74,7 @@ function callback()
        $profile_url = $user_details[0]['profile_url'];
        $pic_square = $user_details[0]['pic_square'];
        if (! $pic_square) {
-         $pic_square = "/mithgit/images/nullImage.gif";
+         $pic_square = "/images/nullImage.gif";
        }
     
    ?>
@@ -105,7 +93,7 @@ function callback()
    } ?>
    </Table>
 
-   <? include("/var/www/mithgit/core/bottom.layout.php"); ?>
+   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/bottom.layout.php"); ?>
   
 </div>
 </body>
