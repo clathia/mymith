@@ -6,7 +6,6 @@
  */
 
 include_once("constants.php");
-
 class db_manager
 {
     var $connection;         //The MySQL database connection
@@ -59,12 +58,20 @@ class db_manager
         return TRUE;
     }
 
+    function player_state_valid($state)
+    {
+        if (($role < PLAYER_STATE_MIN) || ($role > PLAYER_STATE_MAX))
+            return FALSE;
+        return TRUE;
+    }
+
     function comment_type_valid($type)
     {
         if (($type < COMMENT_TYPE_MIN) || ($type > COMMENT_TYPE_MAX))
             return FALSE;
         return TRUE;
     }
+
 
     /* Game Functions */
     //Game_Id
@@ -85,7 +92,6 @@ class db_manager
         if ($result == FALSE) {
             return FALSE;
         }
-
         $game_id = mysql_insert_id();
         $ret = $game_id;
 
@@ -223,6 +229,7 @@ class db_manager
         if ($result == FALSE) {
             return FALSE;
         }
+
         $arr = array();
         while ($row = mysql_fetch_assoc($result)) {
             $arr[] = $row;
@@ -245,6 +252,7 @@ class db_manager
         if ($result == FALSE) {
             return FALSE;
         }
+
         $arr = array();
         while ($row = mysql_fetch_assoc($result)) {
             $arr[] = $row;
@@ -285,21 +293,23 @@ class db_manager
         return $num;
     }
 
-    //Array of (uid, state)
+    //Array of (uid, {state})
     function get_players_by_state($game_id, $state)
     {
         if (!($this->id_valid($game_id))) {
             return FALSE;
         }
+
         if(!($this->player_state_valid($state))) {
             $q = "SELECT uid, state FROM ".TBL_PLAYERS." WHERE game_id = '$game_id'";
         } else {
-            $q = "SELECT uid, state FROM ".TBL_PLAYERS." WHERE game_id = '$game_id' AND state = '$state'";
+            $q = "SELECT uid FROM ".TBL_PLAYERS." WHERE game_id = '$game_id' AND state = '$state'";
         }
         $result = $this->run_query($q, $this->connection);
         if ($result == FALSE) {
             return FALSE;
         }
+
         $arr = array();
         while ($row = mysql_fetch_assoc($result)) {
             $arr[] = $row;
@@ -320,6 +330,7 @@ class db_manager
         }
         return TRUE;
     }
+
 
     //Player Role
     function get_player_role($game_id, $uid)
@@ -343,6 +354,7 @@ class db_manager
         if (!($this->id_valid($game_id))) {
             return FALSE;
         }
+
         if(!($this->player_role_valid($role))) {
             $q = "SELECT uid, role FROM ".TBL_PLAYERS." WHERE game_id = '$game_id'";
         } else {
@@ -352,6 +364,7 @@ class db_manager
         if ($result == FALSE) {
             return FALSE;
         }
+
         $arr = array();
         while ($row = mysql_fetch_assoc($result)) {
             $arr[] = $row;
@@ -373,6 +386,7 @@ class db_manager
         if (($result == FALSE) || (mysql_num_rows($result) == 0)) {
             return FALSE;
         }
+
         $round = mysql_result($result, 0);
         if ($round <= 0) {
             return FALSE;
@@ -387,23 +401,52 @@ class db_manager
         return TRUE;
     }
 
-/*    //uid
-    function get_max_votes($game_id, $round)
+    //Array of (uid, num_votes)
+    function get_num_votes($game_id, $round)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
             return FALSE;
         }
 
-        $q = "SELECT vote FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round'";
-        $result = $this->run_query($q, $this->connection);
+        //Get alive players list
+        $result = $this->get_players_by_state($game_id, PLAYER_STATE_ALIVE);
         if ($result == FALSE) {
             return FALSE;
         }
-        $num = mysql_result($result, 0);
-        return $num;
-    }*/
+        echo print_r($result);
+        $count = count($result);
+        echo $count;
+        //Build default array
+        $arr = array();
+        for ($i = 0; $i < $count; $i++) {
+            $arr[$i]["uid"] = $result[$i]["uid"];
+            $arr[$i]["num_votes"] = 0;
+        }
+        echo "<br /> Semi Semi final ";
+        echo print_r($arr);
+        //Get votes
+        $q = "SELECT vote, COUNT(*) as num_votes FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round' GROUP BY vote";
+        $result = $this->run_query($q, $this->connection);
+        if ($result == FALSE) {
+            echo "Returning false";
+            return FALSE;
+        }
+        echo "<br /> Semi final ";
+        echo print_r($result);
+        //Update array
+        while ($row = mysql_fetch_assoc($result)) {
+            for ($i = 0; $i < $count; $i++) {
+                if ($arr[$i]["uid"] == $row["vote"]) {
+                    $arr[$i]["num_votes"] = $row["num_votes"];
+                }
+            }
+        }
+        echo "<br />Final ";
+        echo print_r($arr);
+        return $arr;
+    }
 
-    //Array of (uid, vote)
+    //Array of (voteby, voteagainst)
     function get_all_votes($game_id, $round)
     {
         if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
@@ -415,6 +458,7 @@ class db_manager
         if ($result == FALSE) {
             return FALSE;
         }
+
         $arr = array();
         while ($row = mysql_fetch_assoc($result)) {
             $arr[] = $row;
@@ -434,6 +478,7 @@ class db_manager
         if ($result == FALSE) {
             return FALSE;
         }
+
         $arr = array();
         while ($row = mysql_fetch_assoc($result)) {
             $arr[] = $row;

@@ -11,7 +11,7 @@ require("/var/www/mithgit/comments/includes/head.php");
 ?>
 
 <head>
-<link rel="stylesheet" type="text/css" href="styles.css?2" />
+<link rel="stylesheet" type="text/css" href="/mithgit/styles.css?2" />
 </head>
 
 <body>

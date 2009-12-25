@@ -6,6 +6,8 @@
  * File: 'mithkeys.php' 
  */
 require_once("/var/www/mithgit/mithkeys.php");
+require_once("/var/www/mithgit/sql/database.php");
+
 ?>
 
 <head>
@@ -35,14 +37,13 @@ function CreateXMLHttpRequest()
 }
 
 var globalId;
-function commentPost(id)
+function commentPost(id, myid)
 {
    
    xmlHttp = CreateXMLHttpRequest();
    globalId = id;
-   
-   var url = 'registerVote.php?id='+id;
-   
+   var url = 'registerVote.php?id='+id+'&myid='+myid;
+   alert(url);
    xmlHttp.onreadystatechange = callback;
    xmlHttp.open("GET", url, true);
    xmlHttp.send(null);
@@ -54,15 +55,13 @@ function callback()
   {
     if (xmlHttp.status == 200)
     {
-        var response = xmlHttp.responseText;
+        var response = xmlHttp.responseText;     
         document.getElementById(globalId).innerHTML = response;
     }
   }
 }
 
-
 </script>
-
 
 <body>
 <div id="container">
@@ -70,17 +69,17 @@ function callback()
    
    include("/var/www/mithgit/core/top.layout.php");
    echo "<br /> <br />";
-   /*
-   Get remaining players and votes against them.  
-   $ids = getPlayers($game_id);
-   */
-   $ids = array(896250631, 1008714147, 1012279117, 1019638372, 1022408517, 1022737191, 1050467088, 1059871404);
+   
+   $vote = $database->get_num_votes(5, 1);
+
+   //$ids = array(896250631, 1008714147, 1012279117, 1019638372, 1022408517, 1022737191, 1050467088, 1059871404);
    
    $i = 0;
    
-   for ($i = 0; $i < count($ids); $i++) {
-   
-    $user_details = $facebook->api_client->users_getInfo($ids[$i], 'last_name, first_name, profile_url, pic_square');
+   $myuid = $facebook->api_client->users_GetLoggedInUser();
+   for ($i = 0; $i < count($vote); $i++) {
+    
+    $user_details = $facebook->api_client->users_getInfo($vote[$i]['uid'], 'last_name, first_name, profile_url, pic_square');
     if ($user_details) { 
        $first_name = $user_details[0]['first_name']; 
        $last_name = $user_details[0]['last_name'];
@@ -90,14 +89,15 @@ function callback()
        if (! $pic_square) {
          $pic_square = "/mithgit/images/nullImage.gif";
        }
+    
    ?>
 
     <tr>
        <th><a target = '_blank' href ="<?=$profile_url?>"><?=$full_name?></a></th>
        <tr width='10%'><th rowspan="2"><a target = '_blank' href ="<?=$profile_url?>"><img src="<?=$pic_square?>" /></a></th> </tr>
        <tr>
-       <td>votes:<font size=20px><div id="<?=$i?>"> 5</div></font> </td>
-       <td><input type ='submit' id="voteButton" value = 'Vote' OnClick = 'commentPost("<?=$i?>")';></input></td>
+       <td>votes:<font size=20px><div id="<?=$ids[$i]['uid']?>"><?=$vote[$i]['vote']?> </div></font> </td>
+       <td><input type ='submit' id="voteButton" value = 'Vote' OnClick = 'commentPost("<?=$ids[$i]['uid']?>", "<?=$myuid?>")';></input></td>
        </tr>
     </tr>
 

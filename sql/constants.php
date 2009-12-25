@@ -19,7 +19,7 @@ define("PLAYER_STATE_MAX", 2);
 define("PLAYER_ROLE_MIN", 0);
 define("PLAYER_ROLE_MAX", 5);
 define("COMMENT_TYPE_MIN", 0);
-define("COMMENT_TYPE_MAX", 1);
+define("COMMENT_TYPE_MAX", 2);
 
 define("GAME_STATE_CREATED", 0);
 define("GAME_STATE_STARTED", 1);
@@ -38,6 +38,7 @@ define("PLAYER_ROLE_INSPECTOR", 5);
 
 define("COMMENT_TYPE_CITY", 0);
 define("COMMENT_TYPE_MAFIA", 1);
+define("COMMENT_TYPE_GOD", 2);
 
-$comment_type_arr = array(0 => 'comment_num_city', 1 => 'comment_num_mafia');
+$comment_type_arr = array(0 => 'comment_num_city', 1 => 'comment_num_mafia', 2 => 'comment_num_god');
 ?>
