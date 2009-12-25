@@ -4,7 +4,7 @@
 define("DB_SERVER", "localhost");  // Database Server
 define("DB_NAME", "mith");           // Database Name
 define("DB_USER", "root");        // Database User
-define("DB_PASS", "shail123");        // Database User Password
+define("DB_PASS", "");        // Database User Password
 
 // **** Database Table Constants ****
 define("TBL_PLAYERS", "players");
