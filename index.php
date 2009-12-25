@@ -5,8 +5,8 @@
  * Application: MiTH (Mafia in The House)
  * File: 'mithkeys.php' 
  */
-require_once("/var/www/mithgit/mithkeys.php");
-require("/var/www/mithgit/comments/includes/head.php");
+require_once("mithkeys.php");
+require("comments/includes/head.php");
 
 ?>
 
@@ -15,7 +15,7 @@ require("/var/www/mithgit/comments/includes/head.php");
 </head>
 
 <body>
-<div id="container">   <?php include("/var/www/mithgit/core/top.layout.php"); ?>
+<div id="container">   <?php include("core/top.layout.php"); ?>
   
    <div id="wrapper">
     <div id="content">
@@ -23,7 +23,7 @@ require("/var/www/mithgit/comments/includes/head.php");
     </div>
    </div>
   
-   <?php include("/var/www/mithgit/core/bottom.layout.php");?>
+   <?php include("core/bottom.layout.php");?>
   
 </div>
 </body>
