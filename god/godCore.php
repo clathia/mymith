@@ -1,10 +1,11 @@
 <?php 
-require_once("/var/www/mithgit/sql/database.php");
-require("/var/www/mithgit/core/helper.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/core/helper.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/core/head.php");
 ?>
 
 <head>
-<script language="javascript" type="text/javascript" src="/mithgit/calendar/datetimepicker_css.js">
+<script language="javascript" type="text/javascript" src="/calendar/datetimepicker_css.js">
 
 //Date Time Picker script- by TengYong Ng of http://www.rainforestnet.com
 //Script featured on JavaScript Kit (http://www.javascriptkit.com)
@@ -37,7 +38,7 @@ function saveComment()
     }
    
    var text= document.getElementById('CommentText').value;
-   var url = "/mithgit/comments/saveComment.php";
+   var url = "/comments/saveComment.php";
    var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=2';
    xmlHttp.open("POST", url, true);
    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -90,12 +91,12 @@ div#textForTextArea{
 Deadline for Round 1:
 <input id="demo1" type="text" size="25">
 <a href="javascript:NewCssCal('demo1', 'MMddyyyy', 'Arrow', 'true', '12', 'true')">
-<img src="/mithgit/calendar/images/cal.gif" alt="Pick a date" /></a>
+<img src="/calendar/images/cal.gif" alt="Pick a date" /></a>
 
 <span id="indicator" style= 'visibility:hidden'>
 <br>
 <center>
-<img src ='/mithgit/comments/images/indicator.gif' />
+<img src ='/comments/images/indicator.gif' />
 <br>
 <b>Saving Your Comment</b>
 </center>
@@ -151,7 +152,7 @@ while($i <= $tmp)
     $profile_url = $user_details[0]['profile_url'];
     $pic_square = $user_details[0]['pic_square'];
     if (! $pic_square) {
-      $pic_square = "/mithgit/images/nullImage.gif";
+      $pic_square = "/images/nullImage.gif";
     }
 
     echo display_comment($bgcolor, $borderColor, $profile_url, $pic_square, $full_name, $comment[$i]['timestamp'], $comment[$i]['text']);

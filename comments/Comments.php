@@ -1,6 +1,6 @@
-<?php 
-require("sql/database.php");
-require("core/helper.php");
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/core/helper.php"); 
 ?>
 
 <script>
@@ -9,12 +9,10 @@ var numComments = 0;
 
 function saveComment()
 {
-   alert("in");
    xmlHttp = CreateXMLHttpRequest();
    var bgColor;
    var borderColor;
    numComments++;
-   alert("in1");
    if (numComments % 2 == 1)
     {
         bgColor =  "ffffff";
@@ -155,7 +153,7 @@ while($i <= $tmp)
     $profile_url = $user_details[0]['profile_url'];
     $pic_square = $user_details[0]['pic_square'];
     if (! $pic_square) {
-      $pic_square = "/mithgit/images/nullImage.gif";
+      $pic_square = "/images/nullImage.gif";
     }
 
     echo display_comment($bgcolor, $borderColor, $profile_url, $pic_square, $full_name, $comment[$i]['timestamp'], $comment[$i]['text']);

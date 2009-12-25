@@ -116,7 +116,7 @@ function get_user_info($uid, $obj)
     $profile_url = $user_details[0]['profile_url'];
     $pic_square = $user_details[0]['pic_square'];
     if (! $pic_square) {
-      $pic_square = "/mithgit/images/nullImage.gif";
+      $pic_square = "/images/nullImage.gif";
     }
     return array('full_name' => $full_name, 'profile_url' => $profile_url, 'pic_square' => $pic_square);
     }

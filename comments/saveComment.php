@@ -1,7 +1,6 @@
-
-<?php require_once '../mithkeys.php';
-require("../core/helper.php");
-require_once("/var/www/mithgit/sql/database.php");
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . "/mithkeys.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/core/helper.php");
 
 if($_POST )
 {
@@ -13,7 +12,7 @@ $last_name = $user_details[0]['last_name'];
 $profile_url = $user_details[0]['profile_url'];
 $pic_square = $user_details[0]['pic_square'];
 if (! $pic_square) {
-   $pic_square = "/mithgit/images/nullImage.gif";
+   $pic_square = "/images/nullImage.gif";
 }
 
 $publish_date = $mysqldate = date( 'Y-m-d H:i:s', time());
