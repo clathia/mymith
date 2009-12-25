@@ -1,4 +1,4 @@
--- Enter in the comments are lost
+-- Enter in the comments are lost. Also double quotes getting lost.
 -- Mafia should be able to see each other. When clicked on 'hide' things are hidden.
 -- Show summary of who is dead and who is alive
 -- Automatic votes feature
@@ -6,3 +6,7 @@
 -- See deadlines for round
 -- Present some statistics of who has done what etc.
 -- Images of doctor, police, mafia, civilians, god.
+-- Rank votes accordingly.
+-- Who has voted whom ?
+-- Should we have temporary votes ?
+-- On mousehover events on navigation bar.

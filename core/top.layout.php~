@@ -26,7 +26,7 @@ div#navigation li{margin-bottom:5px;}
 <a href="/mithgit/vote/eviction.php">Eviction</a>
 <a href="/mithgit/mafiabox.php">MafiaBox</a>
 <a href="/mithgit/god/godbox.php">GodBox</a>
-<a href="/mithgit/summary.php">Summary</a>
+<a href="/mithgit/status.php">Status</a>
 </div>
 
 
