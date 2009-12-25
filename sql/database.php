@@ -5,7 +5,7 @@
  * the function returns TRUE for success, and FALSE for failure.
  */
 
-include_once("constants.php");
+require_once("sql/constants.php");
 class db_manager
 {
     var $connection;         //The MySQL database connection

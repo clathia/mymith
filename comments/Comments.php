@@ -131,7 +131,7 @@ $tmp = count($comment) - 1;
 numComments=<?=$tmp?>;
 </script>
 
-<?
+<?php
 $i = 0;
 while($i <= $tmp)
 {   

@@ -17,7 +17,7 @@ require("comments/head.php");
 <body>
 <div id="container">
    <?php include("core/top.layout.php"); ?>
-  
+
    <div id="wrapper">
     <div id="content">
       <?php $ForeignID = '1'; include("comments/Comments.php");?>
