@@ -14,17 +14,17 @@ function CreateXMLHttpRequest()
     return new XMLHttpRequest();
   }
 }
-function saveNewsLetter()
+
+function sendPostAjaxRequest(url, params, callback)
 {
-
-    xmlHttp =CreateXMLHttpRequest();
-
-    var url = 'includes/SaveNewsLetter.php?NewsLetterEmail='+document.getElementById('NewsLetterEmail').value;
-    document.getElementById('indicator').style.display = 'block';
-    xmlHttp.onreadystatechange = nlCallback;
-    xmlHttp.open("get",url,true);
-    xmlHttp.send(null);
+   xmlHttp.open("POST", url, true);
+   xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xmlHttp.setRequestHeader("Content-length", params.length);
+   xmlHttp.setRequestHeader("Connection", "close");
+   document.getElementById('indicator').style.visibility = 'visible';   xmlHttp.onreadystatechange = callback;
+   xmlHttp.send(params);
 }
+
 
 function ajaxLoadUrl(url)
 {

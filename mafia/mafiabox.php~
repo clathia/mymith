@@ -46,12 +46,7 @@ var numComments = 0;
    var text= document.getElementById('CommentText').value;
    var url = "/mithgit/comments/saveComment.php";
    var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=1';
-   xmlHttp.open("POST", url, true);
-   xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-   xmlHttp.setRequestHeader("Content-length", params.length);
-   xmlHttp.setRequestHeader("Connection", "close");
-   document.getElementById('indicator').style.visibility = 'visible';   xmlHttp.onreadystatechange = callback;
-   xmlHttp.send(params);
+
 }
 
 function callback()

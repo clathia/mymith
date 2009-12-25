@@ -106,5 +106,21 @@ HTML;
 
 }
 
+function get_user_info($uid, $obj)
+{
+    $user_details = $obj->api_client->users_getInfo($uid, 'last_name, first_name, profile_url, pic_square'); 
+    if ($user_details) {
+    $first_name = $user_details[0]['first_name']; 
+    $last_name = $user_details[0]['last_name'];
+    $full_name = $first_name." ".$last_name;
+    $profile_url = $user_details[0]['profile_url'];
+    $pic_square = $user_details[0]['pic_square'];
+    if (! $pic_square) {
+      $pic_square = "/mithgit/images/nullImage.gif";
+    }
+    return array('full_name' => $full_name, 'profile_url' => $profile_url, 'pic_square' => $pic_square);
+    }
+}
+
 
 ?>

@@ -15,6 +15,7 @@ function CreateXMLHttpRequest()
   }
 }
 
+
 function ajaxLoadUrl(url)
 {
     xmlHttp =CreateXMLHttpRequest();
