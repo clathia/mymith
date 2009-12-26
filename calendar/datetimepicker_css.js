@@ -44,19 +44,19 @@ var SpanBorderColor = "#FFFFFF";//span border color
 var SpanBgColor = "#FFFFFF";//span background color
 var WeekChar=2;//number of character for week day. if 2 then Mo,Tu,We. if 3 then Mon,Tue,Wed.
 var DateSeparator="-";//Date Separator, you can change it to "-" if you want.
-var ShowLongMonth=true;//Show long month name in Calendar header. example: "January".
+var ShowLongMonth=false;//Show long month name in Calendar header. example: "January".
 var ShowMonthYear=true;//Show Month and Year in Calendar header.
-var MonthYearColor="#cc0033";//Font Color of Month and Year in Calendar header.
-var WeekHeadColor="#18861B";//var WeekHeadColor="#18861B";//Background Color in Week header.
-var SundayColor="#C0F64F";//var SundayColor="#C0F64F";//Background color of Sunday.
-var SaturdayColor="#C0F64F";//Background color of Saturday.
+var MonthYearColor="white";//"#254588";//Font Color of Month and Year in Calendar header.
+var WeekHeadColor="#254588";//var WeekHeadColor="#18861B";//Background Color in Week header.
+var SundayColor="white";//var SundayColor="#C0F64F";//Background color of Sunday.
+var SaturdayColor="white";//Background color of Saturday.
 var WeekDayColor="white";//Background color of weekdays.
 var FontColor="blue";//color of font in Calendar day cell.
-var TodayColor="#FFFF33";//var TodayColor="#FFFF33";//Background color of today.
-var SelDateColor = "#8DD53C";//var SelDateColor="#8DD53C";//Backgrond color of selected date in textbox.
-var YrSelColor="#cc0033";//color of font of Year selector.
-var MthSelColor="#cc0033";//color of font of Month selector if "MonthSelector" is "arrow".
-var HoverColor="#E0FF38"; //color when mouse move over.
+var TodayColor="#dddddd";//Background color of today.
+var SelDateColor = "#8DD53C";//Backgrond color of selected date in textbox.
+var YrSelColor="#254588";//color of font of Year selector.
+var MthSelColor="#254588";//color of font of Month selector if "MonthSelector" is "arrow".
+var HoverColor="#dddddd"; //color when mouse move over.
 var ThemeBg="";//Background image of Calendar window.
 var CalBgColor="";//Backgroud color of Calendar window.
 var PrecedeZero=true;//Preceding zero [true|false]
@@ -351,11 +351,11 @@ function RenderCssCal(bNewCal) {
 
     if (UseImageFiles)
     {
-  		vCalHeader+="<td><img onmousedown='javascript:Cal.DecYear();RenderCssCal();' src='/mithgit/calendar/images/cal_fastreverse.gif' width='13px' height='9' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>\n";//Year scroller (decrease 1 year)
-  		vCalHeader+="<td><img onmousedown='javascript:Cal.DecMonth();RenderCssCal();' src='/mithgit/calendar/images/cal_reverse.gif' width='13px' height='9' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>\n";//Month scroller (decrease 1 month)
+  		vCalHeader+="<td><img onmousedown='javascript:Cal.DecYear();RenderCssCal();' src='/calendar/images/cal_fastreverse.gif' width='13px' height='9' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>\n";//Year scroller (decrease 1 year)
+  		vCalHeader+="<td><img onmousedown='javascript:Cal.DecMonth();RenderCssCal();' src='/calendar/images/cal_reverse.gif' width='13px' height='9' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>\n";//Month scroller (decrease 1 month)
   		vCalHeader+="<td width='70%' class='calR'><font color='"+YrSelColor+"'>"+Cal.GetMonthName(ShowLongMonth)+" "+Cal.Year+"</font></td>\n"//Month and Year
-  		vCalHeader+="<td><img onmousedown='javascript:Cal.IncMonth();RenderCssCal();' src='/mithgit/calendar/images/cal_forward.gif' width='13px' height='9' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>\n";//Month scroller (increase 1 month)
-  		vCalHeader+="<td><img onmousedown='javascript:Cal.IncYear();RenderCssCal();' src='/mithgit/calendar/images/cal_fastforward.gif' width='13px' height='9' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>\n";//Year scroller (increase 1 year)
+  		vCalHeader+="<td><img onmousedown='javascript:Cal.IncMonth();RenderCssCal();' src='/calendar/images/cal_forward.gif' width='13px' height='9' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>\n";//Month scroller (increase 1 month)
+  		vCalHeader+="<td><img onmousedown='javascript:Cal.IncYear();RenderCssCal();' src='/calendar/images/cal_fastforward.gif' width='13px' height='9' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>\n";//Year scroller (increase 1 year)
 
   	    calHeight += 22;
 	  }
@@ -490,7 +490,7 @@ function RenderCssCal(bNewCal) {
 
 		if (ShowArrows && UseImageFiles) 
 		{   
-            vCalTime+="<td align='center'><table cellspacing='0' cellpadding='0' style='line-height:0pt'><tr><td><img onmousedown='startSpin(\"Hour\", \"plus\");' onmouseup='stopSpin();' src='/mithgit/calendar/images/cal_plus.gif' width='13px' height='9px' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td></tr><tr><td><img onmousedown='startSpin(\"Hour\", \"minus\");' onmouseup='stopSpin();' src='/mithgit/calendar/images/cal_minus.gif' width='13px' height='9px' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td></tr></table></td>\n"; 
+            vCalTime+="<td align='center'><table cellspacing='0' cellpadding='0' style='line-height:0pt'><tr><td><img onmousedown='startSpin(\"Hour\", \"plus\");' onmouseup='stopSpin();' src='/calendar/images/cal_plus.gif' width='13px' height='9px' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td></tr><tr><td><img onmousedown='startSpin(\"Hour\", \"minus\");' onmouseup='stopSpin();' src='/calendar/images/cal_minus.gif' width='13px' height='9px' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td></tr></table></td>\n"; 
 		}
 
 		vCalTime+="<td align='center' width='22px'><input type='text' name='hour' maxlength=2 size=1 style=\"WIDTH:22px\" value="+showHour+" onChange=\"javascript:Cal.SetHour(this.value)\">";
@@ -514,7 +514,7 @@ function RenderCssCal(bNewCal) {
 		}
 
 		if (ShowArrows && UseImageFiles) {
-		   vCalTime+="</td>\n<td align='center'><table cellspacing='0' cellpadding='0' style='line-height:0pt'><tr><td><img onmousedown='startSpin(\"Minute\", \"plus\");' onmouseup='stopSpin();' src='/mithgit/calendar/images/cal_plus.gif' width='13px' height='9px' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td></tr><tr><td><img onmousedown='startSpin(\"Minute\", \"minus\");' onmouseup='stopSpin();' src='/mithgit/calendar/images/cal_minus.gif' width='13px' height='9px' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td></tr></table>"; 
+		   vCalTime+="</td>\n<td align='center'><table cellspacing='0' cellpadding='0' style='line-height:0pt'><tr><td><img onmousedown='startSpin(\"Minute\", \"plus\");' onmouseup='stopSpin();' src='/calendar/images/cal_plus.gif' width='13px' height='9px' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td></tr><tr><td><img onmousedown='startSpin(\"Minute\", \"minus\");' onmouseup='stopSpin();' src='/calendar/images/cal_minus.gif' width='13px' height='9px' onmouseover='changeBorder(this, 0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td></tr></table>"; 
 		}
 
 		vCalTime+="</td>\n<td align='right' valign='bottom' width='"+HourCellWidth+"px'>";
@@ -525,7 +525,7 @@ function RenderCssCal(bNewCal) {
 
     if (UseImageFiles)
     {
-       vCalTime+="<img onmousedown='javascript:closewin(\"" + Cal.Ctrl + "\"); stopSpin();' src='/mithgit/calendar/images/cal_close.gif' width='16px' height='14px' onmouseover='changeBorder(this,0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>";
+       vCalTime+="<img onmousedown='javascript:closewin(\"" + Cal.Ctrl + "\"); stopSpin();' src='/calendar/images/cal_close.gif' width='16px' height='14px' onmouseover='changeBorder(this,0)' onmouseout='changeBorder(this, 1)' style='border:1px solid white'></td>";
     }
     else
     {

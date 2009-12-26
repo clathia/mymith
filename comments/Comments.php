@@ -93,17 +93,14 @@ echo "God says:"." ". $comment[0]['text'];
 </div>
 </center>
 
-<span id="indicator" style= 'visibility:hidden'>
-<br>
-<center>
-<img src ='comments/images/indicator.gif'/>
-<br>
+<span id="indicator" style= 'visibility:hidden'><br />
+<center> 
+<img src ='comments/images/indicator.gif'/> <br />
 <b>Saving Your Comment</b>
 </center>
 </span>
 
 <center>
-
 <div id='PostCommentdiv'>
 <form method ="get" action ="" onsubmit = "return false;">
 <table style='text-align:left' >
@@ -145,18 +142,9 @@ while($i <= $tmp)
         $borderColor = "#c4c4c4";
     }
 
-    $user_details = $facebook->api_client->users_getInfo($comment[$i]['uid'], 'last_name, first_name, profile_url, pic_square'); 
-    if ($user_details) {
-    $first_name = $user_details[0]['first_name']; 
-    $last_name = $user_details[0]['last_name'];
-    $full_name = $first_name." ".$last_name;
-    $profile_url = $user_details[0]['profile_url'];
-    $pic_square = $user_details[0]['pic_square'];
-    if (! $pic_square) {
-      $pic_square = "/images/nullImage.gif";
-    }
-
-    echo display_comment($bgcolor, $borderColor, $profile_url, $pic_square, $full_name, $comment[$i]['timestamp'], $comment[$i]['text']);
+    $user = get_user_info($comment[$i]['uid'], $facebook);
+    if ($user) {
+       echo display_comment($bgcolor, $borderColor, $user['profile_url'], $user['pic_square'], $user['full_name'],$comment[$i]['timestamp'], $comment[$i]['text']);
     }
     $i++;
 }?>

@@ -18,6 +18,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
 //Script featured on JavaScript Kit (http://www.javascriptkit.com)
 //For this script, visit http://www.javascriptkit.com
 </script>
+
 <script>
 var idnum = 0;
 var numComments = 0;
@@ -101,17 +102,13 @@ div#textForTextArea{
 <!--  Display calendar  -->
 Deadline for Round 1:
 <input id="deadline" type="text" size="25">
-<a href="javascript:NewCssCal('demo1', 'MMddyyyy', 'Arrow', 'true', '12', 'true')">
+<a href="javascript:NewCssCal('deadline', 'MMddyyyy', 'Arrow', 'true', '12', 'true')">
 <img src="/calendar/images/cal.gif" alt="Pick a date" /></a>
 
 
-
-
-<span id="indicator" style= 'visibility:hidden'>
-<br>
+<span id="indicator" style= 'visibility:hidden'><br />
 <center>
-<img src ='/comments/images/indicator.gif' />
-<br>
+<img src ='/comments/images/indicator.gif' /> <br />
 <b>Saving Your Comment</b>
 </center>
 </span>
@@ -122,8 +119,15 @@ Deadline for Round 1:
 <table style='text-align:left' >
 <tr>
 <div id="textForTextArea">Enter Message</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:30px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
-<td align = "left" ><input type ='submit' id="postButton" value = 'Post' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
+
+<td>
+<textarea type="text" id="CommentText" style='width:400px;height:30px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea>
+</td>
+
+<td align = "left" >
+<input type ='submit' id="postButton" value = 'Post' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";>
+</td>
+
 </table>
 </form>
 </div>
