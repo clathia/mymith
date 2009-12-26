@@ -27,12 +27,8 @@ function saveComment()
    var text= fixText(document.getElementById('CommentText').value);
    var url = "comments/saveComment.php";
    var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=0';
-   xmlHttp.open("POST", url, true);
-   xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-   xmlHttp.setRequestHeader("Content-length", params.length);
-   xmlHttp.setRequestHeader("Connection", "close");
-   document.getElementById('indicator').style.visibility = 'visible';   xmlHttp.onreadystatechange = callback;
-   xmlHttp.send(params);
+   document.getElementById('indicator').style.visibility = 'visible';
+   sendPostRequestAjax(xmlHttp, url, params, callback);
 }
 
 function callback()
@@ -63,7 +59,7 @@ function callback()
 }
 
 div#PostCommentdiv{
-  style=width:100%;
+  width:100%;
   height:150px;
   align:center;
 }
@@ -82,6 +78,10 @@ div#GodMessage{
   color:black;
 }
 </style>
+
+
+
+
 <br /> <br />
 <center>
 <div id="GodMessage">

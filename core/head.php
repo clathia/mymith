@@ -5,4 +5,4 @@
 <script language="JavaScript" type="text/javascript" src="/js/lib.js"></script>
 <script language="JavaScript" type="text/javascript" src="/js/scripts.js"></script>
 <script language="JavaScript" type="text/javascript" src="/js/richtext.js"></script>
-<script language="JavaScript" type="text/javascript" src="/js/html2xhtml.js"></script>
+

@@ -20,7 +20,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/core/head.php");
    <div id="wrapper">
     <div id="content">
       <?php  include($_SERVER['DOCUMENT_ROOT'] . "/comments/Comments.php"); ?>
-    </div
+    </div>
    </div>
   
    <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/bottom.layout.php"); ?>

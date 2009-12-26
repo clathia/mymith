@@ -58,6 +58,17 @@ function showHide(obj, td)
 	}
 }
 
+function sendPostRequestAjax(xmlHttp, url, params, callback)
+{
+	   xmlHttp.open("POST", url, true);
+	   xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	   xmlHttp.setRequestHeader("Content-length", params.length);
+	   xmlHttp.setRequestHeader("Connection", "close");
+	   xmlHttp.onreadystatechange = callback;
+	   xmlHttp.send(params);
+}
+
+
 function enableButtonOnText(textarea, button)
 {
    if (document.getElementById(textarea).value == '') {
@@ -74,8 +85,6 @@ function openWindow(url)
 
 function fixText(v)
 {
-    v = v.replace (/\n/gi,'<br>');
-    v = v.replace (/>/gi,'&gt;');
-    v = v.replace (/</gi,'&lt;');
+    v = v.replace (/\n/gi,"<br />");
     return v;
 }

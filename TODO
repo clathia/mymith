@@ -10,6 +10,5 @@
 -- Who has voted whom ?
 -- Should we have temporary votes ?
 -- On mousehover events on navigation bar.
--- Remove global.css file. Not needed.
--- Make path relative.
 -- When do you use require, require_once, include, include_once.
+-- Images in calendar is not displayed. Path problem.

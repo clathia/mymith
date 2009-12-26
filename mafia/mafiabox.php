@@ -13,19 +13,12 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/core/head.php");
 ?>
 
 <head>
-<link rel="stylesheet" type="text/css" href="/styles.css?2" />
-</head>
-
-<body>
-<div id="container">   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/top.layout.php"); ?>
-  
-   <div id="wrapper">
-    <div id="content">
 
 <script>
 var idnum = 0;
 var numComments = 0;
-function saveComment()
+
+function saveComment()
 {
    xmlHttp = CreateXMLHttpRequest();
    var bgColor;
@@ -43,15 +36,11 @@ var numComments = 0;
         borderColor = "c4c4c4";
     }
 
-   var text= document.getElementById('CommentText').value;
+   var text= fixText(document.getElementById('CommentText').value);
    var url = "/comments/saveComment.php";
    var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=1';
-   xmlHttp.open("POST", url, true);
-   xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-   xmlHttp.setRequestHeader("Content-length", params.length);
-   xmlHttp.setRequestHeader("Connection", "close");
-   document.getElementById('indicator').style.visibility = 'visible';   xmlHttp.onreadystatechange = callback;
-   xmlHttp.send(params);
+   document.getElementById('indicator').style.visibility = 'visible';
+   sendPostRequestAjax(xmlHttp, url, params, callback);
 }
 
 function callback()
@@ -73,7 +62,7 @@ function callback()
 
 </script>
 
-
+<link rel="stylesheet" type="text/css" href="/styles.css?2" />
 <style>
 #postButton{
   float: left;
@@ -82,7 +71,7 @@ function callback()
 }
 
 div#PostCommentdiv{
-  style=width:100%;
+  width:100%;
   height:150px;
   align:center;
 }
@@ -96,9 +85,16 @@ div#textForTextArea{
 </style>
 
 
+</head>
+
+<body>
+<div id="container">   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/top.layout.php"); ?>
+  
+   <div id="wrapper">
+    <div id="content">
 
 <span id="indicator" style= 'visibility:hidden'>
-<br>
+<br />
 <center>
 <img src ='/comments/images/indicator.gif'/>
 <br>
