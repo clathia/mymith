@@ -35,7 +35,24 @@ $game_id = 5;
       } else if ($role == PLAYER_ROLE_INSPECTOR) {
          echo "<img src=\"/images/Police.jpg\" />";
       }
-      echo "Players Alive: <br />";
+
+      $game = $database->get_game_details($game_id);
+      if ($game['round_state'] == ROUND_STATE_NIGHT)
+         $round_state = "Night";
+      else
+         $round_state = "Day";
+      echo "<br /><br />";
+      echo "Game State: ".$round_state." ".$game['curr_round'];
+      echo "<br /><br />";
+
+      $alive = count($database->get_players_by_state($game_id, PLAYER_STATE_ALIVE));
+      $total = count($database->get_players_by_state($game_id, PLAYER_STATE_MAX + 1)) - 1;
+      echo "Players Alive: ".$alive."/".$total."<br />";
+
+      $alive = count($database->get_players_by_state_role($game_id, PLAYER_STATE_ALIVE, PLAYER_ROLE_MAFIA));
+      $total = count($database->get_players_by_role($game_id, PLAYER_ROLE_MAFIA));
+      echo "Mafias Alive: ".$alive."/".$total."<br />";
+
       //Get alive players list
       $players_alive = $database->get_players_by_state($game_id, PLAYER_STATE_ALIVE);
       if ($players_alive == FALSE) {
@@ -56,8 +73,8 @@ $game_id = 5;
          }
       ?>
      <tr>
-       <th><a target = '_blank' href ="<?=$profile_url?>"><?=$full_name?></a></th>
-       <tr width='10%'><th rowspan="2"><a target = '_blank' href ="<?=$profile_url?>"><img src="<?=$pic_square?>" /></a></th> </tr>
+       <th><a target = '_blank' href ="<?php echo $profile_url?>"><?php echo $full_name?></a></th>
+       <tr width='10%'><th rowspan="2"><a target = '_blank' href ="<?php echo $profile_url?>"><img src="<?php echo $pic_square?>" /></a></th> </tr>
     </tr>
       <?php
       

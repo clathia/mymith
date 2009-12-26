@@ -126,7 +126,7 @@ $tmp = count($comment) - 1;
 ?>
 
 <script>
-numComments=<?=$tmp?>;
+numComments=<?php echo $tmp?>;
 </script>
 
 <?
