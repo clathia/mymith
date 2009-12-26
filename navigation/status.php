@@ -5,21 +5,40 @@
  * Application: MiTH (Mafia in The House)
  * File: 'mithkeys.php' 
  */
-require_once($_SERVER['DOCUMENT_ROOT'] . "/mithkeys.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/core/head.php");;
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 $game_id = 5;
 ?>
 
 <head>
 <link rel="stylesheet" type="text/css" href="/styles.css?2" />
+
+<script type="text/javascript" src="/shared/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/shared/js/jcarousellite_1.0.1.js"></script>
+<!-- Optional -->
+<script type="text/javascript" src="/shared/js/jquery.mousewheel.js"></script>
+
+<script>
+   $(function() {
+    $(".userSlide").jCarouselLite({
+        btnNext: ".next",
+        btnPrev: ".prev",
+        mouseWheel: true,
+        visible: 5
+    });
+   });
+	   
+   </script>
+
 </head>
 
 <body>
-<div id="container">   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/top.layout.php"); ?>
+<div id="container">   <?php include($_SERVER['DOCUMENT_ROOT'] . "/shared/top.layout.php"); ?>
   
    <div id="wrapper">
-    <div id="content">
+  <div id="content">
       <?php 
       $uid = $facebook->api_client->users_GetLoggedInUser();
       $role = $database->get_player_role($game_id, $uid);
@@ -59,31 +78,33 @@ $game_id = 5;
          echo "No players alive";
          return FALSE;
       }
-      for ($i = 0; $i < count($players_alive); $i++) {
-         $user_details = $facebook->api_client->users_getInfo($players_alive[$i]['uid'], 'last_name, first_name, profile_url, pic_square');
-         if ($user_details) { 
-            $first_name = $user_details[0]['first_name']; 
-            $last_name = $user_details[0]['last_name'];
-            $full_name = $first_name." ".$last_name;
-            $profile_url = $user_details[0]['profile_url'];
-            $pic_square = $user_details[0]['pic_square'];
-            if (! $pic_square) {
-               $pic_square = "/images/nullImage.gif";
-            }
-         }
       ?>
-     <tr>
-       <th><a target = '_blank' href ="<?php echo $profile_url?>"><?php echo $full_name?></a></th>
-       <tr width='10%'><th rowspan="2"><a target = '_blank' href ="<?php echo $profile_url?>"><img src="<?php echo $pic_square?>" /></a></th> </tr>
-    </tr>
+  <button class="prev"><<</button>
+  <button class="next">>></button>
+  <div class="userSlide">
+  <ul>
+  <?php 
+      for ($i = 0; $i < count($players_alive); $i++) {
+      	 $user = get_user_info($players_alive[$i]['uid'], $facebook);
+      ?>
+   
+     <li>
+     <table>
+     <tr><td><a target = '_blank' href ="<?php echo $user['profile_url']?>"><img src="<?php echo $user['pic_square']?>" /></a></td></tr>
+     <tr><td><input type="submit" value="vote"></input></td></tr>
+     </table>
+     </li>
+
       <?php
       
-      } 
+      }
       ?>
+          </ul>
+   </div>
     </div>
    </div>
   
-   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/bottom.layout.php"); ?>
+   <?php include($_SERVER['DOCUMENT_ROOT'] . "/shared/bottom.layout.php"); ?>
   
 </div>
 </body>

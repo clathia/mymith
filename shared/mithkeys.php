@@ -5,8 +5,7 @@
  * Application: MiTH (Mafia in The House)
  * File: 'mithkeys.php' 
  */
-
-require_once 'facebook.php';
+require_once($_SERVER['DOCUMENT_ROOT'] . "/facebook.php");
 
 if (php_uname("n") == "CHIRAG-RVBD") {
 

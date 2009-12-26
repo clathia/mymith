@@ -1,6 +1,6 @@
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . "/mithkeys.php");
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/core/helper.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 
 if($_POST )
 {

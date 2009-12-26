@@ -23,10 +23,10 @@ div#navigation li{margin-bottom:5px;}
 </div>
 <div id="navigation">
 <a href="/index.php">Home</a>&nbsp;&nbsp;
-<a href="/vote/eviction.php">Eviction</a>&nbsp;&nbsp;
-<a href="/mafia/mafiabox.php">MafiaBox</a>&nbsp;&nbsp;
-<a href="/god/godbox.php">GodBox</a>&nbsp;&nbsp;
-<a href="/status/status.php">Status</a>
+<a href="/navigation/eviction.php">Eviction</a>&nbsp;&nbsp;
+<a href="/navigation/mafiabox.php">MafiaBox</a>&nbsp;&nbsp;
+<a href="/navigation/godbox.php">GodBox</a>&nbsp;&nbsp;
+<a href="/navigation/status.php">Status</a>
 </div>
 
 

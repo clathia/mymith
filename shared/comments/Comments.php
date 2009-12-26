@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/core/helper.php"); 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php"); 
 ?>
 
 <script>
@@ -95,7 +95,7 @@ echo "God says:"." ". $comment[0]['text'];
 
 <span id="indicator" style= 'visibility:hidden'><br />
 <center> 
-<img src ='comments/images/indicator.gif'/> <br />
+<img src ='shared/comments/images/indicator.gif'/> <br />
 <b>Saving Your Comment</b>
 </center>
 </span>
