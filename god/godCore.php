@@ -125,10 +125,10 @@ $tmp = count($comment) - 1;
 ?>
 
 <script>
-numComments=<?=$tmp?>;
+numComments=<?php echo $tmp?>;
 </script>
 
-<?
+<?php
 $i = 0;
 while($i <= $tmp)
 {   

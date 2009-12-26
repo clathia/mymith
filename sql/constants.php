@@ -14,8 +14,10 @@ define("TBL_VOTES", "votes");
 
 define("GAME_STATE_MIN", 0);
 define("GAME_STATE_MAX", 2);
+define("ROUND_STATE_MIN", 0);
+define("ROUND_STATE_MAX", 2);
 define("PLAYER_STATE_MIN", 0);
-define("PLAYER_STATE_MAX", 2);
+define("PLAYER_STATE_MAX", 3);
 define("PLAYER_ROLE_MIN", 0);
 define("PLAYER_ROLE_MAX", 5);
 define("COMMENT_TYPE_MIN", 0);
@@ -25,9 +27,14 @@ define("GAME_STATE_CREATED", 0);
 define("GAME_STATE_STARTED", 1);
 define("GAME_STATE_OVER", 2);
 
+define("ROUND_STATE_DAY", 0);
+define("ROUND_STATE_VOTING", 1);
+define("ROUND_STATE_NIGHT", 2);
+
 define("PLAYER_STATE_INVITED", 0);
 define("PLAYER_STATE_ALIVE", 1);
 define("PLAYER_STATE_DEAD", 2);
+define("PLAYER_STATE_GOD", 3);
 
 define("PLAYER_ROLE_NONE", 0);
 define("PLAYER_ROLE_GOD", 1);

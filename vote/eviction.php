@@ -80,11 +80,11 @@ function callback()
    ?>
 
     <tr>
-       <th><a target = '_blank' href ="<?=$profile_url?>"><?=$full_name?></a></th>
-       <tr width='10%'><th rowspan="2"><a target = '_blank' href ="<?=$profile_url?>"><img src="<?=$pic_square?>" /></a></th> </tr>
+       <th><a target = '_blank' href ="<?php echo $profile_url?>"><?php echo $full_name?></a></th>
+       <tr width='10%'><th rowspan="2"><a target = '_blank' href ="<?php echo $profile_url?>"><img src="<?php echo $pic_square?>" /></a></th> </tr>
        <tr>
-       <td>votes:<font size=20px><div id="<?=$vote[$i]['uid']?>"><?=$vote[$i]['num_votes']?> </div></font> </td>
-       <td><input type ='submit' id="voteButton" value = 'Vote' OnClick = 'commentPost("<?=$vote[$i]['uid']?>", "<?=$myuid?>")';></input></td>
+       <td>votes:<font size=20px><div id="<?php echo $vote[$i]['uid']?>"><?php echo $vote[$i]['num_votes']?> </div></font> </td>
+       <td><input type ='submit' id="voteButton" value = 'Vote' OnClick = 'commentPost("<?php echo $vote[$i]['uid']?>", "<?php echo $myuid?>")';></input></td>
        </tr>
     </tr>
 
