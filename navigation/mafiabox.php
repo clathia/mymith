@@ -6,10 +6,10 @@
  * File: 'mafiabox.php' 
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/mithkeys.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/core/helper.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/core/head.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
 <head>
@@ -63,6 +63,7 @@ function callback()
 </script>
 
 <link rel="stylesheet" type="text/css" href="/styles.css?2" />
+
 <style>
 #postButton{
   float: left;
@@ -83,36 +84,27 @@ div#textForTextArea{
 }
 
 </style>
-
-
 </head>
 
 <body>
-<div id="container">   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/top.layout.php"); ?>
-  
-   <div id="wrapper">
-    <div id="content">
 
-<span id="indicator" style= 'visibility:hidden'>
-<br />
+<span id="indicator" style= 'visibility:hidden'> <br />
 <center>
-<img src ='/comments/images/indicator.gif'/>
-<br>
+<img src ='/comments/images/indicator.gif'/> <br />
 <b>Saving Your Comment</b>
 </center>
 </span>
 
 <center>
-
 <div id='PostCommentdiv'>
 <form method ="get" action ="" onsubmit = "return false;">
 <table style='text-align:left' >
 <tr>
-<div id="textForTextArea">Muhahaha! Time to kill someone..</label>
+<div id="textForTextArea">Muhahaha! Time to kill someone..</label></div>
 <td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
 <td align = "left" ><input type ='submit' id="postButton" value = 'Kill' disabled="disabled" OnClick = 'opacity("PostCommentdiv", 100, 0, 500);setTimeout("saveComment()",500)';></td>
 </table>
-</form></div>
+</form></div> <!-- End PostCommentdiv -->
 </center>
 
 <?php
@@ -150,10 +142,4 @@ while($i <= $tmp)
     }
     $i++;
 }?>
-    </div>
-   </div>
-  
-   <?php include($_SERVER['DOCUMENT_ROOT'] . "/core/bottom.layout.php");?>
-  
-</div>
 </body>
