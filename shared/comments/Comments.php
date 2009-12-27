@@ -12,6 +12,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 <link rel="stylesheet" type="text/css" href="styles.css?3" />
+<script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 <script>
 var idnum = 0;
 var numComments = 0;
@@ -55,6 +56,10 @@ function callback()
    }
 }
 
+$("#abc").click(function () {
+    $(".godMessage").slideToggle("slow");
+  });
+
 </script>
 
 <br /> <br />
@@ -65,6 +70,7 @@ if (count($comment))
 echo "God says:"." ". $comment[0]['text'];
 ?>
 </div>
+<button id="abc">Show/Hide</button>
 
 <span id="indicator" style= 'visibility:hidden'><br />
 <center> 

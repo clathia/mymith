@@ -49,6 +49,12 @@ function callback()
    
    $game = $database->get_game_details($game_id);
    $round_state = $game['round_state'] == ROUND_STATE_NIGHT ? "Night" : "Day";
+ ?>  
+   I am not a mafia because ...
+   <div class="edit_area" id="div_2"> I have written come crap, ok?.</div>
+<?php
+
+   
    
    echo "You are !<br />";
    
@@ -95,8 +101,8 @@ function callback()
    echo "Mafias Alive: ".$alive."/".$total."<br />";
    ?>
  
-   <button class="prev"><<</button>
-   <button class="next">>></button>  
+   <button class="prev">left</button>
+   <button class="next">right</button>  
    <div id="userSlide">
    <ul>
 
@@ -125,7 +131,7 @@ function callback()
       }
       ?>
    </ul>
-   </div> <!--  userSlide1 -->
+   </div> <!--  userSlide -->
 </body>
 
 
