@@ -65,9 +65,7 @@ div#PostCommentdiv{
 }
 
 div#textForTextArea{
-  text-align:left;
-  width:200px;
-  font-size:20px;
+  font-size:large;
 }
 
 div#GodMessage{
@@ -77,6 +75,26 @@ div#GodMessage{
   font-size:20px;
   color:black;
 }
+
+div#full_name a{
+  font-size:medium;
+  margin-left:1px;
+  font-family:"Times New Roman";
+}
+
+div#date{
+  font-size:x-small;
+  color:#8E8F95;
+  margin-left:5px;
+  margin-top:1px;
+  margin-bottom:4px;
+}
+
+div#comment_text{
+  margin-left:5px;
+  font-family:"Georgia";
+}
+
 </style>
 
 
@@ -105,8 +123,8 @@ echo "God says:"." ". $comment[0]['text'];
 <form method ="get" action ="" onsubmit = "return false;">
 <table style='text-align:left' >
 <tr>
-<div id="textForTextArea">Who is mafia ?</label>
-<td><textarea type="text" id="CommentText" style='width:400px;height:80px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
+<div id="textForTextArea">Who is mafia?</label>
+<td><textarea type="text" id="CommentText" style='width:400px;height:50px;' OnKeyUp="enableButtonOnText('CommentText', 'postButton')"></textarea></td>
 <td align = "left" ><input type ='submit' id="postButton" value = 'Accuse' disabled="disabled" OnClick = "opacity('PostCommentdiv', 100, 0, 500);setTimeout('saveComment()',500)";></td>
 </table>
 </form></div>

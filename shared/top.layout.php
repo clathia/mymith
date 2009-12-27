@@ -11,11 +11,12 @@
 <style type="text/css">
 div#header{background-color:#F3F2ED;}
 div#header h1{height:30px;line-height:30px;margin:0;padding-left:10px; text-align:left; color:#000000}
-div#navigation{background:#254588;}
-div#navigation{width:100%}
+div#navigation{background:#254588; width: 100%}
+div#navigation{color:#fff;display:block;font-weight:bold;margin-top:0;padding:10px 7px 5px 8px;height:13px;}
+div#navigation a:hover{background-color:#5c75aa;text-decoration:none}
 div#navigation a{color:#ffffff; font-weight:bold;}
-div#navigation ul{margin:15px 0; padding:0; list-style-type:none;}
-div#navigation li{margin-bottom:5px;}
+div#navigation ul{margin:15px 0; list-style-type:none;}
+div#navigation li{margin-bottom:35px;}
 </style>
 
 <div id="header">

@@ -96,9 +96,9 @@ function display_comment($bg_color, $border_color, $profile_url, $pic_square, $f
        <Table width = '90%'  cellspacing='0' bgcolor = '$bg_color' align = 'center'  style='border-top:$border_color 1px solid ;border-bottom:$border_color 1px solid ;'>
        <tr>
         <td width=55px valign="top"><a target = '_blank' href=$profile_url><img src=$pic_square /></a></td>
-        <td style='text-align:left;'><a target = '_blank' href=$profile_url>$full_name</a><br />
-        <font size="1">$date</font><br />
-        $comment_text
+        <td><div id="full_name"><a target = '_blank' href=$profile_url>$full_name</a></div>
+        <div id="date">$date</div>
+        <div id="comment_text">$comment_text</div>
         </td>
     </tr>
 </Table>
