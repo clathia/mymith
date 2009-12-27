@@ -96,7 +96,7 @@ class db_manager
       $ret = $game_id;
 
       //add admin_id in players table
-      $q = "INSERT INTO ".TBL_PLAYERS." (uid, game_id, state, role) VALUES ('$admin_id', '$game_id', ".PLAYER_STATE_ALIVE.", ".PLAYER_ROLE_GOD.")";
+      $q = "INSERT INTO ".TBL_PLAYERS." (uid, game_id, state, role) VALUES ('$admin_id', '$game_id', ".PLAYER_STATE_GOD.", ".PLAYER_ROLE_GOD.")";
       $result = $this->run_query($q, $this->connection);
       if ($result == FALSE) {
          $ret = FALSE;
@@ -446,16 +446,16 @@ class db_manager
       if ($result == FALSE) {
          return FALSE;
       }
-      
+
       $count = count($result);
-      
+
       //Build default array
       $arr = array();
       for ($i = 0; $i < $count; $i++) {
          $arr[$i]["uid"] = $result[$i]["uid"];
          $arr[$i]["num_votes"] = 0;
       }
-      
+
       //Get votes
       $q = "SELECT vote, COUNT(*) as num_votes FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round' GROUP BY vote";
       $result = $this->run_query($q, $this->connection);
@@ -463,7 +463,7 @@ class db_manager
          
          return FALSE;
       }
-      
+
       //Update array
       while ($row = mysql_fetch_assoc($result)) {
          for ($i = 0; $i < $count; $i++) {
@@ -472,7 +472,7 @@ class db_manager
             }
          }
       }
-      
+
       return $arr;
    }
 

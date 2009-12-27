@@ -6,7 +6,7 @@
  * File: 'index.php' 
  */
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 
 ?>
 
@@ -27,37 +27,37 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
    });
 
    $(function() {
-       $(".userSlide").jCarouselLite({
-          btnNext: ".next",
-          btnPrev: ".prev",
-          mouseWheel: true,
-          visible: 3,
-          circular:false
-       });
-    }); 
+      $(".userSlide").jCarouselLite({
+         btnNext: ".next",
+         btnPrev: ".prev",
+         mouseWheel: true,
+         visible: 3,
+         circular:false
+      });
+   }); 
    </script>
 
 </head>
 
 <body>
-<div id="container">
-   <div id="wrapper">
-      <div id="content">
+<div class="container">
+   <div class="wrapper">
+      <div class="content">
          <div class="demo">
-           <div id="tabs">
-	          <ul>
-		      <li><a href="#status">Status</a></li>
-		      <li><a href="/shared/comments/Comments.php">CityBox</a></li>
-		      <li><a href="/navigation/mafiabox.php">MafiaBox</a></li>
-	          </ul>
-	          <div id="status">
-              <?php 
+            <div id="tabs">
+            <ul>
+            <li><a href="#status">Status</a></li>
+            <li><a href="/shared/comments/Comments.php">CityBox</a></li>
+            <li><a href="/navigation/mafiabox.php">MafiaBox</a></li>
+            </ul>
+            <div id="status">
+              <?php
               /* include($_SERVER['DOCUMENT_ROOT'] . "/shared/comments/Comments.php"); 
-               * 
+               *
                */
                include($_SERVER['DOCUMENT_ROOT'] . "/navigation/status.php"); 
                ?>
-	          </div> <!--  End CityBox -->
+            </div> <!--  End CityBox -->
            </div> <!-- End tabs -->
          </div><!-- End demo -->
       </div> <!-- End content -->
