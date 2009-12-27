@@ -58,8 +58,8 @@ $(document).ready(function() {
             <div id="tabs">
             <ul>
             <li><a href="#status">Status</a></li>
-            <li><a href="/shared/comments/Comments.php">CityBox</a></li>
-            <li><a href="/navigation/mafiabox.php">MafiaBox</a></li>
+            <li><a href="/navigation/cityBox.php">CityBox</a></li>
+            <li><a href="/navigation/mafiaBox.php">MafiaBox</a></li>
             </ul>
             <div id="status">
               <?php

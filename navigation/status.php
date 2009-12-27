@@ -12,6 +12,13 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 $game_id = 5;
 ?>
 
+<script language="javascript" type="text/javascript" src="/calendar/datetimepicker_css.js">
+
+//Date Time Picker script- by TengYong Ng of http://www.rainforestnet.com
+//Script featured on JavaScript Kit (http://www.javascriptkit.com)
+//For this script, visit http://www.javascriptkit.com
+</script>
+
 <script>
 
 var globalId;
@@ -52,6 +59,11 @@ function callback()
  ?>  
    I am not a mafia because ...
    <div class="edit_area" id="div_2"> I have written come crap, ok?.</div>
+   <!--  Display calendar  -->
+   Deadline for Round 1:
+   <input id="deadline" type="text" size="25">
+   <a href="javascript:NewCssCal('deadline', 'MMddyyyy', 'Arrow', 'true', '12', 'true')">
+   <img src="/calendar/images/cal.gif" alt="Pick a date" /></a>
 <?php
 
    
