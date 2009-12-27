@@ -32,7 +32,7 @@ function saveComment()
       borderColor = "c4c4c4";
    }
    var text= fixText(document.getElementById('CommentText').value);
-   var url = "/comments/saveComment.php";
+   var url = "shared/comments/saveComment.php";
    var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type=0';
    document.getElementById('indicator').style.visibility = 'visible';
    sendPostRequestAjax(xmlHttp, url, params, callback);

@@ -11,31 +11,29 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
 <head>
-<link rel="stylesheet" type="text/css" href="styles.css?2" />
- 
-<link type="text/css" href="/shared/jquery-ui-1.7.2.custom/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
-<script type="text/javascript" src="/shared/jquery-ui-1.7.2.custom/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/shared/jquery-ui-1.7.2.custom/js/jquery-ui-1.7.2.custom.min.js"></script>
+<link type="text/css" href="/shared/js/jquery-ui-1.7.2.custom/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="/shared/js/jquery-ui-1.7.2.custom/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/shared/js/jquery-ui-1.7.2.custom/js/jquery-ui-1.7.2.custom.min.js"></script>
 <script type="text/javascript" src="/shared/js/jcarousellite_1.0.1.js"></script>
-<!-- Optional -->
 <script type="text/javascript" src="/shared/js/jquery.mousewheel.js"></script>
 
 <script type="text/javascript">
 
-   $(function() {
-      $("#tabs").tabs();
-   });
+$(document).ready(function() {
+      $("#tabs").tabs({
+    	  collapsible: true,
+    	  /* Make this onselect whatever tab */
+    	  show: function(event, ui) { $("#userSlide").jCarouselLite({
+    	       btnNext: ".next",
+    	       btnPrev: ".prev",
+    	       mouseWheel: true,
+    	       visible: 3,
+    	       circular:false
+    	    }); }
 
-   $(function() {
-      $(".userSlide").jCarouselLite({
-         btnNext: ".next",
-         btnPrev: ".prev",
-         mouseWheel: true,
-         visible: 3,
-         circular:false
       });
-   }); 
-   </script>
+   });
+</script>
 
 </head>
 
@@ -52,9 +50,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
             </ul>
             <div id="status">
               <?php
-              /* include($_SERVER['DOCUMENT_ROOT'] . "/shared/comments/Comments.php"); 
-               *
-               */
                include($_SERVER['DOCUMENT_ROOT'] . "/navigation/status.php"); 
                ?>
             </div> <!--  End CityBox -->
