@@ -74,6 +74,7 @@ echo "God says:"." ". $comment[0]['text'];
 </span>
 
 <div class="textForTextArea">Who is mafia?</div>
+
 <div class="postComment">
 <center>
 <form method ="get" action ="" onsubmit = "return false;">
@@ -91,9 +92,11 @@ for($i = 50; $i>=0; $i--) {
 $comment = $database->get_comments(5, 1, COMMENT_TYPE_CITY, 20);
 $tmp = count($comment) - 1;
 ?>
+
 <script>
 numComments=<?php echo $tmp?>;
 </script>
+
 <?php
 for($i = 0; $i <= $tmp; $i++) {
    if ($i % 2 == 1) {
