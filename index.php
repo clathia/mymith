@@ -11,28 +11,41 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
 <head>
-<link type="text/css" href="/shared/js/jquery-ui-1.7.2.custom/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
-<script type="text/javascript" src="/shared/js/jquery-ui-1.7.2.custom/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/shared/js/jquery-ui-1.7.2.custom/js/jquery-ui-1.7.2.custom.min.js"></script>
+<link type="text/css" href="/shared/js/jquery-lite/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-ui-1.7.2.custom.min.js"></script>
 <script type="text/javascript" src="/shared/js/jcarousellite_1.0.1.js"></script>
 <script type="text/javascript" src="/shared/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/shared/js/jquery.jeditable.js"></script>
 
 <script type="text/javascript">
 
 $(document).ready(function() {
-      $("#tabs").tabs({
-    	  collapsible: true,
-    	  /* Make this onselect whatever tab */
-    	  show: function(event, ui) { $("#userSlide").jCarouselLite({
-    	       btnNext: ".next",
-    	       btnPrev: ".prev",
-    	       mouseWheel: true,
-    	       visible: 3,
-    	       circular:false
-    	    }); }
-
-      });
+      $("#tabs").tabs()
    });
+
+$(document).ready(function() {
+   $("#userSlide").jCarouselLite({
+    btnNext: ".next",
+    btnPrev: ".prev",
+    mouseWheel: true,
+    visible: 3,
+    circular:false
+ })
+});
+
+
+$(document).ready(function() {
+    $('.edit_area').editable('shared/comments/saveStatus.php', { 
+        type      : 'textarea',
+        cancel    : 'Cancel',
+        submit    : 'OK',
+        indicator : '<img src="/shared/comments/images/indicator.gif">',
+        tooltip   : 'Click to edit...'
+    });
+});
+
+
 </script>
 
 </head>
