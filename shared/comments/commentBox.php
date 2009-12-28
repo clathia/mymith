@@ -70,6 +70,8 @@ $(".abc").click(function () {
 
 </script>
 
+<!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error --> 
+<div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div> 
 
 <br /> <br />
 <div class="godMessage">
@@ -145,7 +147,8 @@ HTML;
 
 <script type="text/javascript">  
 FB_RequireFeatures(["XFBML"], function(){ 
-   FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm"); 
+   FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm");
+   FB.CanvasClient.startTimerToSizeToContent();
    }); 
 </script>
 
