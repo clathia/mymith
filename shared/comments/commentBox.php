@@ -21,7 +21,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 
 <body>
 <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
-<script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 
 <script>
 var idnum = 0;
@@ -69,6 +68,8 @@ $(".abc").click(function () {
 
 </script>
 
+<!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error --> 
+<div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div> 
 
 <div class="godMessage">
 <?php
@@ -146,7 +147,8 @@ HTML;
 
 <script type="text/javascript">  
 FB_RequireFeatures(["XFBML"], function(){ 
-   FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm"); 
+   FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm");
+   FB.CanvasClient.startTimerToSizeToContent();
    }); 
 </script>
 
