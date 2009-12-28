@@ -1,3 +1,6 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml"> 
+
 <?php
 /*
  * Copyright 2009 MiTH.  All Rights Reserved. 
@@ -12,8 +15,13 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
+<head>
 <link rel="stylesheet" type="text/css" href="styles.css?4" />
+</head>
 
+
+<body>
+<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 
 <script>
@@ -61,6 +69,7 @@ $(".abc").click(function () {
 });
 
 </script>
+
 
 <br /> <br />
 <div class="godMessage">
@@ -113,8 +122,32 @@ for($i = 0; $i <= $tmp; $i++) {
       $bgcolor =  "#f5f5f5";
       $borderColor = "#c4c4c4";
    }
-   $user = get_user_info($comment[$i]['uid'], $facebook);
-   if ($user) {
-      echo display_comment($bgcolor, $borderColor, $user['profile_url'], $user['pic_square'], $user['full_name'],$comment[$i]['timestamp'], $comment[$i]['text']);
-   }
-}?>
+
+   $text = $comment[$i]['text'];
+   $date = display_date($comment[$i]['timestamp']);
+   $uid = $comment[$i]['uid'];
+   echo <<<HTML
+      <table width = '90%' cellspacing='0' bgcolor='$bgColor' align='center' style='border-top:$borderColor 1px solid; border-bottom:$borderColor 1px solid;'>
+      <tr>
+      <td width=55px valign="top">
+      <fb:profile-pic uid='$uid' facebook-logo="false" size="thumb" linked="true">
+      </fb:profile-pic>
+      </td>
+      <td><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
+      <span class="date">$date</span></div>
+      <div class="commentText">$text</div>
+      </td>
+      </tr>
+      </table>
+HTML;
+  }
+?>
+
+<script type="text/javascript">  
+FB_RequireFeatures(["XFBML"], function(){ 
+   FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm"); 
+   }); 
+</script>
+
+</body>
+</html>
