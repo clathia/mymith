@@ -17,11 +17,16 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 <script type="text/javascript" src="/shared/js/jcarousellite_1.0.1.js"></script>
 <script type="text/javascript" src="/shared/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="/shared/js/jquery.jeditable.js"></script>
+<script type="text/javascript" src="/shared/js/jquery.cookie.js"></script>
 
 <script type="text/javascript">
 
 $(document).ready(function() {
-      $("#tabs").tabs()
+      $("#tabs").tabs({
+         cookie: { expires: 30 },
+         fx: { opacity: 'toggle'},
+         spinner: 'Retrieving data...'
+      })
    });
 
 $(document).ready(function() {
@@ -33,7 +38,6 @@ $(document).ready(function() {
     circular:false
  })
 });
-
 
 $(document).ready(function() {
     $('.edit_area').editable('shared/comments/saveStatus.php', { 

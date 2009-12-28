@@ -56,8 +56,8 @@ function callback()
    }
 }
 
-$("#abc").click(function () {
-   $(".godMessage").slideToggle("slow");
+$(".abc").click(function () {
+   $(".godMessage").slideToggle("fast");
 });
 
 </script>
@@ -70,7 +70,7 @@ if (count($comment))
 echo "God says:"." ". $comment[0]['text'];
 ?>
 </div>
-<button id="abc">Show/Hide</button>
+<button class="abc">Show/Hide</button>
 
 <center> 
 <span id="indicator" style= 'visibility:hidden'><br />
