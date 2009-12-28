@@ -12,8 +12,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
-<link rel="stylesheet" type="text/css" href="styles.css?4" />
-
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 
 <?php

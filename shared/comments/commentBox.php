@@ -12,7 +12,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
-<link rel="stylesheet" type="text/css" href="styles.css?4" />
+<link rel="stylesheet" type="text/css" href="styles.css?10" />
 
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 
@@ -89,7 +89,8 @@ echo "God says:"." ". $comment[0]['text'];
 <td><textarea class="commentText" style='width:400px;height:50px;' OnKeyUp="enableButtonOnText('commentText', 'postButton')"></textarea></td>
 <td align="left" ><input type='submit' class="postButton" value=<?php echo $button_value; ?> disabled="disabled" OnClick="opacity('postComment', 100, 0, 500);setTimeout('saveComment()',500)";></td>
 </table>
-</form></center>
+</form>
+</center>
 </div>
 
 <?php
@@ -107,14 +108,32 @@ numComments=<?php echo $tmp?>;
 <?php
 for($i = 0; $i <= $tmp; $i++) {
    if ($i % 2 == 1) {
-      $bgcolor =  "#ffffff";
+      $bgColor =  "#ffffff";
       $borderColor ="#ffffff";
    } else {
-      $bgcolor =  "#f5f5f5";
+      $bgColor =  "#f5f5f5";
       $borderColor = "#c4c4c4";
    }
    $user = get_user_info($comment[$i]['uid'], $facebook);
-   if ($user) {
-      echo display_comment($bgcolor, $borderColor, $user['profile_url'], $user['pic_square'], $user['full_name'],$comment[$i]['timestamp'], $comment[$i]['text']);
+   if (!$user) {
+      trigger_error("User does not exist", E_ERROR);
+   } else {
+      $profile_url = $user['profile_url'];
+      $pic_square = $user['pic_square'];
+      $full_name = $user['full_name'];
+      $text = $comment[$i]['text'];
+      $date = display_date($comment[$i]['timestamp']);
+      echo <<<HTML
+         <table width='90%' cellspacing='0' bgcolor='$bgColor' align='center' style='border-top:$borderColor 1px solid; border-bottom:$borderColor 1px solid;'>
+         <tr>
+         <td width=55px valign="top"><a target='_blank' href=$profile_url><img src=$pic_square /></a></td>
+         <td><div class="fullName"><a target='_blank' href=$profile_url>$full_name</a>
+         <span class="date">$date</span></div>
+         <div class="commentText">$text</div>
+         </td>
+         </tr>
+         </table>
+HTML;
    }
-}?>
+}
+?>

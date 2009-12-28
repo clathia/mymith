@@ -13,7 +13,6 @@ p{
 }
 
 a{
-   padding:5px;
    font: "lucida grande",tahoma,verdana,arial,sans-serif; 
    text-decoration:none;
    color:#3b5998
@@ -55,20 +54,21 @@ a{
 
 .fullName a{
    font-size:medium;
-   margin-left:1px;
+   margin-left:5px;
+   margin-bottom:5px;
    font-family:"Times New Roman";
 }
 
 .date{
    font-size:x-small;
    color:#8E8F95;
-   margin-left:5px;
-   margin-top:1px;
-   margin-bottom:4px;
+   text-align:right;
+   margin-right:1px;
 }
 
 .commentText{
    margin-left:5px;
+   margin-top:5px;
    font-family:"Georgia";
 }
 
