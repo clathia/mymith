@@ -16,7 +16,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
 <head>
-<link rel="stylesheet" type="text/css" href="styles.css?11" />
+<link rel="stylesheet" type="text/css" href="styles.css?15" />
 </head>
 
 <body>
@@ -41,9 +41,9 @@ function saveComment()
       bgColor =  "f5f5f5";
       borderColor = "c4c4c4";
    }
-   var text= fixText(document.getElementById('CommentText').value);
+   var text= fixText(document.getElementById('commentText').value);
    var url = "shared/comments/saveComment.php";
-   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type?>;
+   var params = 'commentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type?>;
    document.getElementById('indicator').style.visibility = 'visible';
    sendPostRequestAjax(xmlHttp, url, params, callback);
 }
@@ -55,8 +55,8 @@ function callback()
          var response = xmlHttp.responseText;
          document.getElementById(idnum).innerHTML = response;
          document.getElementById('indicator').style.visibility = 'hidden';
-         document.getElementById('CommentText').value = "";
-         opacity("PostCommentdiv", 0, 100, 1500);
+         document.getElementById('commentText').value = "";
+         opacity("postComment", 0, 100, 1500);
          document.getElementById('postButton').disabled = true;
          idnum++;
       }
@@ -70,7 +70,6 @@ $(".abc").click(function () {
 </script>
 
 
-<br /> <br />
 <div class="godMessage">
 <?php
 $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
@@ -81,21 +80,22 @@ echo "God says:"." ". $comment[0]['text'];
 <button class="abc">Show/Hide</button>
 
 <center>
-<span id="indicator" style= 'visibility:hidden'><br />
-<img src ='shared/comments/images/indicator.gif'/> <br />
+<span id="indicator" style='visibility:hidden'>
+<img src ='shared/comments/images/indicator.gif'/>
 <b>Saving Your Comment</b>
 </span>
 </center>
 
 <div class="textForTextArea"><?php echo $text; ?></div>
 
-<div class="postComment">
+<div id="postComment">
 <center>
-<form method ="get" action ="" onsubmit = "return false;">
-<table style='text-align:left'>
+<form method="get" action="" onsubmit="return false;">
+<table width='100%' style='text-align:left'>
 <tr>
-<td><textarea class="commentText" style='width:400px;height:50px;' OnKeyUp="enableButtonOnText('commentText', 'postButton')"></textarea></td>
-<td align="left" ><input type='submit' class="postButton" value=<?php echo $button_value; ?> disabled="disabled" OnClick="opacity('postComment', 100, 0, 500);setTimeout('saveComment()',500)";></td>
+<td><textarea id="commentText" OnKeyUp="enableButtonOnText('commentText', 'postButton')"></textarea></td>
+<td align="left"><input type='submit' id="postButton" value=<?php echo $button_value; ?> disabled="disabled" OnClick="opacity('postComment', 100, 0, 500);setTimeout('saveComment()',500)";></td>
+</tr>
 </table>
 </form>
 </center>
@@ -126,18 +126,20 @@ for($i = 0; $i <= $tmp; $i++) {
    $date = display_date($comment[$i]['timestamp']);
    $uid = $comment[$i]['uid'];
    echo <<<HTML
-      <table width = '90%' cellspacing='0' bgcolor='$bgColor' align='center' style='border-top:$borderColor 1px solid; border-bottom:$borderColor 1px solid;'>
+      <div class="commentTable">
+      <table width='100%' cellspacing='0' bgcolor='$bgColor' align='center' style='border-top:$borderColor 1px solid; border-bottom:$borderColor 1px solid;'>
       <tr>
       <td width=55px valign="top">
-      <fb:profile-pic uid='$uid' facebook-logo="false" size="thumb" linked="true">
+      <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
       </fb:profile-pic>
       </td>
-      <td><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
+      <td valign="top"><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
       <span class="date">$date</span></div>
-      <div class="commentText">$text</div>
+      <div class="commentTextOld">$text</div>
       </td>
       </tr>
       </table>
+      </div>
 HTML;
   }
 ?>

@@ -3,18 +3,8 @@ html,body{
    padding:0
 }
 
-body{
-   font: "lucida grande",tahoma,verdana,arial,sans-serif;
-   text-align:center;
-}
-
-p{
-   margin:0 10px 10px
-}
-
 a{
-   font: "lucida grande",tahoma,verdana,arial,sans-serif; 
-   text-decoration:none;
+   font-family: "lucida grande",tahoma,verdana,arial,sans-serif; 
    color:#3b5998
 }
 
@@ -29,19 +19,8 @@ a{
    width:95%;
 }
 
-.postButton{
-   float: left;
-   width: 100px;
-   height: 50px;
-}
-
-.postComment{
-   width:100%;
-   height:150px;
-}
-
-.textForTextArea{
-   font-size:large;
+span#indicator{
+   text-align:center;
 }
 
 .godMessage{
@@ -52,24 +31,50 @@ a{
    color:black;
 }
 
+.textForTextArea{
+   font-size:large;
+   width:95%;
+}
+
+#postComment{
+   width:95%;
+   height:90px;
+   text-align:center;
+}
+
+textarea#commentText{
+   float:left;
+   width:110%;
+   height:50px;
+}
+
+input#postButton{
+   float:right;
+   width:70%;
+   height:50px;
+}
+
+.commentTable{
+   width:95%;
+   text-align:center;
+}
+
 .fullName a{
-   font-size:medium;
-   margin-left:5px;
+   font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+   font-size:12px;
+   valign:top;
    margin-bottom:5px;
-   font-family:"Times New Roman";
+   font-weight:bold;
 }
 
 .date{
    font-size:x-small;
    color:#8E8F95;
-   text-align:right;
-   margin-right:1px;
 }
 
-.commentText{
-   margin-left:5px;
+.commentTextOld{
    margin-top:5px;
-   font-family:"Georgia";
+   font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
 }
 
 

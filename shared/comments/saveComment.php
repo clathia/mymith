@@ -18,7 +18,7 @@ if ($_POST) {
    $bgcolor = $_POST['BgColor'];
    $borderColor = $_POST['BorderColor'];
    $full_name = $first_name." ".$last_name;
-   $text = $_POST["CommentText"];//rteSafe($_POST["CommentText"]);
+   $text = $_POST["commentText"];//rteSafe($_POST["commentText"]);
    $type = $_POST["type"];
    $game_id = 5;
 
