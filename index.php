@@ -21,7 +21,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 <script type="text/javascript">
 
 $(document).ready(function() {
-      $("#tabs").tabs()
+      $("#tabs").tabs();
    });
 
 $(document).ready(function() {
@@ -31,7 +31,7 @@ $(document).ready(function() {
     mouseWheel: true,
     visible: 3,
     circular:false
- })
+ });
 });
 
 

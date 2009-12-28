@@ -12,7 +12,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
-<link rel="stylesheet" type="text/css" href="styles.css?3" />
+<link rel="stylesheet" type="text/css" href="styles.css?4" />
 
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 
@@ -36,7 +36,7 @@ function saveComment()
    }
    var text= fixText(document.getElementById('CommentText').value);
    var url = "shared/comments/saveComment.php";
-   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+type;
+   var params = 'CommentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type?>;
    document.getElementById('indicator').style.visibility = 'visible';
    sendPostRequestAjax(xmlHttp, url, params, callback);
 }
