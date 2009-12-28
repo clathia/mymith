@@ -4,7 +4,7 @@ html,body{
 }
 
 body{
-   font: 11px "lucida grande",tahoma,verdana,arial,sans-serif;
+   font: "lucida grande",tahoma,verdana,arial,sans-serif;
    text-align:center;
 }
 
@@ -14,7 +14,7 @@ p{
 
 a{
    padding:5px;
-   font: 11px "lucida grande",tahoma,verdana,arial,sans-serif; 
+   font: "lucida grande",tahoma,verdana,arial,sans-serif; 
    text-decoration:none;
    color:#3b5998
 }

@@ -26,7 +26,7 @@ $(document).ready(function() {
          cookie: { expires: 30 },
          fx: { opacity: 'toggle'},
          spinner: 'Retrieving data...'
-      })
+      });
    });
 
 $(document).ready(function() {
@@ -36,7 +36,7 @@ $(document).ready(function() {
     mouseWheel: true,
     visible: 3,
     circular:false
- })
+ });
 });
 
 $(document).ready(function() {
