@@ -22,7 +22,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 
 <body>
 <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
-<script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 
 <script>
 var idnum = 0;

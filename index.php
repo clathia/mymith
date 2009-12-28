@@ -18,39 +18,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 <script type="text/javascript" src="/shared/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="/shared/js/jquery.jeditable.js"></script>
 <script type="text/javascript" src="/shared/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/shared/js/jtabs.userfunction.js"></script>
 
-<script type="text/javascript">
-
-$(document).ready(function() {
-      $("#tabs").tabs({
-         cookie: { expires: 30 },
-         fx: { opacity: 'toggle'},
-         spinner: 'Retrieving data...'
-      });
-   });
-
-$(document).ready(function() {
-   $("#userSlide").jCarouselLite({
-    btnNext: ".next",
-    btnPrev: ".prev",
-    mouseWheel: true,
-    visible: 3,
-    circular:false
- });
-});
-
-$(document).ready(function() {
-    $('.edit_area').editable('shared/comments/saveStatus.php', { 
-        type      : 'textarea',
-        cancel    : 'Cancel',
-        submit    : 'OK',
-        indicator : '<img src="/shared/comments/images/indicator.gif">',
-        tooltip   : 'Click to edit...'
-    });
-});
-
-
-</script>
 
 </head>
 

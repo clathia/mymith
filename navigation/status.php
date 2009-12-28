@@ -12,7 +12,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 $game_id = 5;
 ?>
 
-<script language="javascript" type="text/javascript" src="/calendar/datetimepicker_css.js">
+<script language="javascript" type="text/javascript" src="/shared/calendar/datetimepicker_css.js">
 
 //Date Time Picker script- by TengYong Ng of http://www.rainforestnet.com
 //Script featured on JavaScript Kit (http://www.javascriptkit.com)
@@ -112,6 +112,17 @@ function callback()
    $total = count($database->get_players_by_role($game_id, PLAYER_ROLE_MAFIA));
    echo "Mafias Alive: ".$alive."/".$total."<br />";
    ?>
+ 
+ 
+<script type="text/javascript">
+    $("#userSlide").jCarouselLite({
+    btnNext: ".next",
+    btnPrev: ".prev",
+    mouseWheel: true,
+    visible: 3,
+    circular:false
+    });
+ </script>
  
    <button class="prev">left</button>
    <button class="next">right</button>  
