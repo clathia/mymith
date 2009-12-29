@@ -8,7 +8,6 @@
  * Application: MiTH (Mafia in The House)
  * File: 'commentBox.php' 
  */
- 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
@@ -26,27 +25,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 <script type="text/javascript">
 var numComments = 0;
 
-function commentBoxSaveComment()
-{
-   xmlHttp = CreateXMLHttpRequest();
-   var bgColor;
-   var borderColor;
-   numComments++;
-   /* TODO: .toggleclass could be used to get rid of silly %2 */
-   if (numComments % 2 == 1) {
-      bgColor =  "ffffff";
-      borderColor ="ffffff";
-   } else {
-      bgColor =  "f5f5f5";
-      borderColor = "c4c4c4";
-   }
-   var text= fixText(document.getElementById('commentText').value);
-   var url = "shared/comments/saveComment.php";
-   var params = 'commentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type?>;
-   document.getElementById('indicator').style.visibility = 'visible';
-   sendPostRequestAjax(xmlHttp, url, params, commentBoxCallback);
-}
-
 function commentBoxCallback()
 {
    if (xmlHttp.readyState == 4) {
@@ -55,7 +33,6 @@ function commentBoxCallback()
          $("#commentBlob").prepend(response);
          document.getElementById('indicator').style.visibility = 'hidden';
          document.getElementById('commentText').value = "";
-         opacity("postComment", 0, 100, 1500);
          document.getElementById('postButton').disabled = true;
       }
    }
@@ -64,6 +41,27 @@ function commentBoxCallback()
 $(".togglelink").click(function () {
    $(".godMessage").slideToggle("fast");
    $(this).text($(this).text() == "hide" ? "show" : "hide");
+});
+
+$("#postButton").click(function () {
+   xmlHttp = CreateXMLHttpRequest();
+	var bgColor;
+	var borderColor;
+	numComments++;
+	   
+	/* TODO: .toggleclass could be used to get rid of silly %2 */
+	if (numComments % 2 == 1) {
+	   bgColor =  "ffffff";
+	   borderColor ="ffffff";
+	} else {
+	   bgColor =  "f5f5f5";
+	   borderColor = "c4c4c4";
+	}
+	var text= fixText(document.getElementById('commentText').value);
+	var url = "shared/comments/saveComment.php";
+	var params = 'commentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type?>;
+	document.getElementById('indicator').style.visibility = 'visible';
+	sendPostRequestAjax(xmlHttp, url, params, commentBoxCallback);
 });
 
 </script>
@@ -98,12 +96,10 @@ $(".togglelink").click(function () {
       <table width='100%' style='text-align:left'>
          <tr>
             <td>
-               <textarea id="commentText" onkeyup="enableButtonOnText('commentText', 'postButton')">
-               </textarea>
+               <textarea id="commentText" onkeyup="enableButtonOnText('commentText', 'postButton')"></textarea>
             </td>
             <td align="left">
-               <input type='submit' id="postButton" value=<?php echo $button_value; ?> disabled="disabled" onclick="opacity('postComment', 100, 0, 500);setTimeout('commentBoxSaveComment',500)";>
-               </input>
+               <input type='submit' id="postButton" value=<?php echo $button_value; ?> disabled="disabled"></input>
             </td>
          </tr>
       </table>
