@@ -127,28 +127,8 @@ for($i = 0; $i <= $tmp; $i++) {
       $bgColor =  "#f5f5f5";
       $borderColor = "#c4c4c4";
    }
-   //display_comment($bgColor, $borderColor, $comment[$i]['uid'], $comment[$i]['timestamp'], $comment[$i]['text']);
-   $text = $comment[$i]['text'];
-   $date = display_date($comment[$i]['timestamp']);
-   $uid = $comment[$i]['uid'];
-   echo <<<HTML
-      <div class="commentTable">
-      <table width='100%' cellspacing='0' bgcolor='$bgColor' align='center' style='border-top:$borderColor 1px solid; border-bottom:$borderColor 1px solid;'>
-      <tr>
-      <td width=55px valign="top">
-      <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
-      </fb:profile-pic>
-      </td>
-      <td valign="top"><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
-      <span class="date">$date</span></div>
-      <div class="commentTextOld">$text</div>
-      </td>
-      </tr>
-      </table>
-      </div>
-HTML;
-  }
-?>
+   echo display_comment($bgColor, $borderColor, $comment[$i]['uid'], $comment[$i]['timestamp'], $comment[$i]['text']);
+}?>
 </div>
 
 <!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
