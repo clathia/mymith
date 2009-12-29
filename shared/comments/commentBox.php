@@ -24,18 +24,17 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 
 <script type="text/javascript">
 var numComments = 0;
+var dummyId = 1;
 
 function commentBoxCallback()
 {
    if (xmlHttp.readyState == 4) {
       if (xmlHttp.status == 200) {
-         var response = xmlHttp.responseText;
+         var response = "<div id="+ dummyId + " > " + xmlHttp.responseText + "</div>";
          $("#commentBlob").prepend(response);
-         FB.XFBML.Host.parseDomElement(document.getElementById('commentBlob'));
-         //FB.XFBML.Host.parseDomTree();
+         FB.XFBML.Host.parseDomElement(document.getElementById(dummyId));
          document.getElementById('indicator').style.visibility = 'hidden';
          document.getElementById('commentText').value = "";
-         //document.getElementById('postButton').disabled = true;
       }
    }
 }
