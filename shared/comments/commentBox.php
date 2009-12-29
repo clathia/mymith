@@ -31,6 +31,8 @@ function commentBoxCallback()
       if (xmlHttp.status == 200) {
          var response = xmlHttp.responseText;
          $("#commentBlob").prepend(response);
+         FB.XFBML.Host.parseDomElement(document.getElementById('commentBlob'));
+         //FB.XFBML.Host.parseDomTree();
          document.getElementById('indicator').style.visibility = 'hidden';
          document.getElementById('commentText').value = "";
          document.getElementById('postButton').disabled = true;
@@ -47,8 +49,7 @@ $("#postButton").click(function () {
    xmlHttp = CreateXMLHttpRequest();
 	var bgColor;
 	var borderColor;
-	numComments++;
-	   
+
 	/* TODO: .toggleclass could be used to get rid of silly %2 */
 	if (numComments % 2 == 1) {
 	   bgColor =  "#ffffff";
@@ -57,6 +58,7 @@ $("#postButton").click(function () {
 	   bgColor =  "#f5f5f5";
 	   borderColor = "#c4c4c4";
 	}
+	numComments++;
 	var text= fixText(document.getElementById('commentText').value);
 	var url = "shared/comments/saveComment.php";
 	var params = 'commentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type?>;
@@ -66,7 +68,7 @@ $("#postButton").click(function () {
 
 </script>
 
-<!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error --> 
+<!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error -->
 <div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div> 
 
 <div class="godMessage">
