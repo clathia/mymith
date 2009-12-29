@@ -34,11 +34,11 @@ function commentBoxSaveComment()
    numComments++;
    /* TODO: .toggleclass could be used to get rid of silly %2 */
    if (numComments % 2 == 1) {
-      bgColor =  "ffffff";
-      borderColor ="ffffff";
+      bgColor =  "#ffffff";
+      borderColor ="#ffffff";
    } else {
-      bgColor =  "f5f5f5";
-      borderColor = "c4c4c4";
+      bgColor =  "#f5f5f5";
+      borderColor = "#c4c4c4";
    }
    var text= fixText(document.getElementById('commentText').value);
    var url = "shared/comments/saveComment.php";
@@ -129,6 +129,7 @@ for($i = 0; $i <= $tmp; $i++) {
       $bgColor =  "#f5f5f5";
       $borderColor = "#c4c4c4";
    }
+   //display_comment($bgColor, $borderColor, $comment[$i]['uid'], $comment[$i]['timestamp'], $comment[$i]['text']);
    $text = $comment[$i]['text'];
    $date = display_date($comment[$i]['timestamp']);
    $uid = $comment[$i]['uid'];
