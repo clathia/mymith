@@ -5,19 +5,18 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 if ($_POST) {
 
    $uid = $facebook->api_client->users_GetLoggedInUser();
-   $user_details = $facebook->api_client->users_GetInfo($user_id, 'last_name, first_name, profile_url, pic_square'); 
+/*   $user_details = $facebook->api_client->users_GetInfo($uid, 'last_name, first_name, profile_url, pic_square'); 
    $first_name = $user_details[0]['first_name']; 
    $last_name = $user_details[0]['last_name']; 
-   $profile_url = $user_details[0]['profile_url'];
+   $full_name = $first_name." ".$last_name;   $profile_url = $user_details[0]['profile_url'];
    $pic_square = $user_details[0]['pic_square'];
    if (! $pic_square) {
       $pic_square = "/images/nullImage.gif";
-   }
+   }*/
 
    $publish_date = $mysqldate = date( 'Y-m-d H:i:s', time());
    $bgcolor = $_POST['BgColor'];
    $borderColor = $_POST['BorderColor'];
-   $full_name = $first_name." ".$last_name;
    $text = $_POST["commentText"];//rteSafe($_POST["commentText"]);
    $type = $_POST["type"];
    $game_id = 5;
@@ -37,5 +36,5 @@ if ($_POST) {
    }
 }
 
-echo display_comment($bgcolor, $borderColor, $profile_url, $pic_square, $full_name, $publish_date, $text);
+echo display_comment($bgcolor, $borderColor, $uid, $publish_date, $text);
 ?>

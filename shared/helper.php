@@ -90,19 +90,24 @@ function display_date($date)
    return "$difference $periods[$j] {$tense}";
 }
 
-function display_comment($bg_color, $border_color, $profile_url, $pic_square, $full_name, $publish_date, $comment_text)
+function display_comment($bgColor, $borderColor, $uid, $publish_date, $text)
 {
    $date = display_date($publish_date);
    return <<<HTML
-      <Table width = '90%' cellspacing='0' bgcolor = '$bg_color' align = 'center'  style='border-top:$border_color 1px solid ;border-bottom:$border_color 1px solid ;'>
+      <div class="commentTable">
+      <table width='100%' cellspacing='0' bgcolor='$bgColor' align='center' style='border-top:$borderColor 1px solid; border-bottom:$borderColor 1px solid;'>
       <tr>
-      <td width=55px valign="top"><a target = '_blank' href=$profile_url><img src=$pic_square /></a></td>
-      <td><div class="fullName"><a target = '_blank' href=$profile_url>$full_name</a></div>
-      <div class="date">$date</div>
-      <div class="commentText">$comment_text</div>
+      <td width=55px valign="top">
+      <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
+      </fb:profile-pic>
+      </td>
+      <td valign="top"><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
+      <span class="date">$date</span></div>
+      <div class="commentTextOld">$text</div>
       </td>
       </tr>
-   </Table>
+      </table>
+      </div>
 HTML;
 }
 
@@ -121,5 +126,23 @@ function get_user_info($uid, $obj)
       return array('full_name' => $full_name, 'profile_url' => $profile_url, 'pic_square' => $pic_square);
    }
 }
+
+/*
+function display_comment($bg_color, $border_color, $profile_url, $pic_square, $full_name, $publish_date, $comment_text)
+{
+   $date = display_date($publish_date);
+   return <<<HTML
+      <Table width = '90%' cellspacing='0' bgcolor = '$bg_color' align = 'center'  style='border-top:$border_color 1px solid ;border-bottom:$border_color 1px solid ;'>
+      <tr>
+      <td width=55px valign="top"><a target = '_blank' href=$profile_url><img src=$pic_square /></a></td>
+      <td><div class="fullName"><a target = '_blank' href=$profile_url>$full_name</a></div>
+      <div class="date">$date</div>
+      <div class="commentText">$comment_text</div>
+      </td>
+      </tr>
+   </Table>
+HTML;
+}
+*/
 
 ?>
