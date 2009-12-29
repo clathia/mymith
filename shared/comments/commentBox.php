@@ -24,18 +24,17 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 
 <script type="text/javascript">
 var numComments = 0;
+var dummyId = 1;
 
 function commentBoxCallback()
 {
    if (xmlHttp.readyState == 4) {
       if (xmlHttp.status == 200) {
-         var response = xmlHttp.responseText;
+         var response = "<div id="+ dummyId + " > " + xmlHttp.responseText + "</div>";
          $("#commentBlob").prepend(response);
-         FB.XFBML.Host.parseDomElement(document.getElementById('commentBlob'));
-         //FB.XFBML.Host.parseDomTree();
+         FB.XFBML.Host.parseDomElement(document.getElementById(dummyId));
          document.getElementById('indicator').style.visibility = 'hidden';
          document.getElementById('commentText').value = "";
-         document.getElementById('postButton').disabled = true;
       }
    }
 }
@@ -85,7 +84,6 @@ $("#postButton").click(function () {
 
 <div id="indicator">
    <img src ='shared/comments/images/indicator.gif'/>
-   <b>Saving Your Comment</b>
 </div>
 
 <div class="textForTextArea">
@@ -98,10 +96,10 @@ $("#postButton").click(function () {
       <table width='100%' style='text-align:left'>
          <tr>
             <td>
-               <textarea id="commentText" onkeyup="enableButtonOnText('commentText', 'postButton')"></textarea>
+               <textarea id="commentText"></textarea>
             </td>
             <td align="left">
-               <input type='submit' id="postButton" value=<?php echo $button_value; ?> disabled="disabled"></input>
+               <input type='submit' id="postButton" value=<?php echo $button_value; ?>></input>
             </td>
          </tr>
       </table>
