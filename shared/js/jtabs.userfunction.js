@@ -1,5 +1,5 @@
 $(document).ready(function() {
-   $("#userSlide").jCarouselLite({
+   $(".userSlide").jCarouselLite({
     btnNext: ".next",
     btnPrev: ".prev",
     mouseWheel: true,
@@ -18,7 +18,20 @@ $(document).ready(function() {
     });
 });
 
-/* Need to keep this last */
+$(function () {
+    //You can change the defaults like this:
+    //$.extend($.fn.dtpicker.defaults, { squeeze: true });
+    //You can apply the dtpicker to all inputs (type=date, datetime, time, datetime-local) like this:
+    $("#deadline").dtpicker();
+    //Or you could have done the same thing but applying options:
+    //$("input").dtpicker({ squeeze: true });
+    //I've used the metadata plugin and applied options in the class attribute below
+});
+
+/* 
+ * Need to keep this as the last function so that all other events are still registered when tabs are
+ * switched automagically. Don't mess with it.
+ */
 $(document).ready(function() {
       $("#tabs").tabs({
          cookie: { expires: 30 },

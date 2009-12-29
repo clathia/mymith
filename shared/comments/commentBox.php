@@ -20,19 +20,19 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 </head>
 
 <body>
+<!-- Needs to be kept here in the start of body tag. Don't mess with it. -->
 <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
 
-<script>
-var idnum = 0;
+<script type="text/javascript">
 var numComments = 0;
 
-function saveComment()
+function commentBoxSaveComment()
 {
    xmlHttp = CreateXMLHttpRequest();
    var bgColor;
    var borderColor;
    numComments++;
-
+   /* TODO: .toggleclass could be used to get rid of silly %2 */
    if (numComments % 2 == 1) {
       bgColor =  "ffffff";
       borderColor ="ffffff";
@@ -44,26 +44,26 @@ function saveComment()
    var url = "shared/comments/saveComment.php";
    var params = 'commentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type?>;
    document.getElementById('indicator').style.visibility = 'visible';
-   sendPostRequestAjax(xmlHttp, url, params, callback);
+   sendPostRequestAjax(xmlHttp, url, params, commentBoxCallback);
 }
 
-function callback()
+function commentBoxCallback()
 {
    if (xmlHttp.readyState == 4) {
       if (xmlHttp.status == 200) {
          var response = xmlHttp.responseText;
-         document.getElementById(idnum).innerHTML = response;
+         $("#commentBlob").prepend(response);
          document.getElementById('indicator').style.visibility = 'hidden';
          document.getElementById('commentText').value = "";
          opacity("postComment", 0, 100, 1500);
          document.getElementById('postButton').disabled = true;
-         idnum++;
       }
    }
 }
 
-$(".abc").click(function () {
+$(".togglelink").click(function () {
    $(".godMessage").slideToggle("fast");
+   $(this).text($(this).text() == "hide" ? "show" : "hide");
 });
 
 </script>
@@ -72,48 +72,54 @@ $(".abc").click(function () {
 <div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div> 
 
 <div class="godMessage">
-<?php
-$comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
-if (count($comment))
-echo "God says:"." ". $comment[0]['text'];
-?>
+   <?php
+      $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
+      if (count($comment)) {
+         echo "God says:"." ". $comment[0]['text'];
+      }
+   ?>
 </div>
-<button class="abc">Show/Hide</button>
 
-<center>
-<span id="indicator" style='visibility:hidden'>
-<img src ='shared/comments/images/indicator.gif'/>
-<b>Saving Your Comment</b>
-</span>
-</center>
+<a class="togglelink" href=#>hide</a>
 
-<div class="textForTextArea"><?php echo $text; ?></div>
 
+<div id="indicator">
+   <img src ='shared/comments/images/indicator.gif'/>
+   <b>Saving Your Comment</b>
+</div>
+
+<div class="textForTextArea">
+   <?php echo $text; ?>
+</div>
+
+<!-- All the files that include this file should provide with $button_value text -->
 <div id="postComment">
-<center>
-<form method="get" action="" onsubmit="return false;">
-<table width='100%' style='text-align:left'>
-<tr>
-<td><textarea id="commentText" OnKeyUp="enableButtonOnText('commentText', 'postButton')"></textarea></td>
-<td align="left"><input type='submit' id="postButton" value=<?php echo $button_value; ?> disabled="disabled" OnClick="opacity('postComment', 100, 0, 500);setTimeout('saveComment()',500)";></td>
-</tr>
-</table>
-</form>
-</center>
-</div>
+   <form method="get" action="" onsubmit="return false;">
+      <table width='100%' style='text-align:left'>
+         <tr>
+            <td>
+               <textarea id="commentText" onkeyup="enableButtonOnText('commentText', 'postButton')">
+               </textarea>
+            </td>
+            <td align="left">
+               <input type='submit' id="postButton" value=<?php echo $button_value; ?> disabled="disabled" onclick="opacity('postComment', 100, 0, 500);setTimeout('commentBoxSaveComment',500)";>
+               </input>
+            </td>
+         </tr>
+      </table>
+   </form>
+</div> <!-- End postComment -->
 
 <?php
-for ($i = 50; $i >= 0; $i--) {
-   echo "<span id = \"$i\"> </span>";
-}
 $comment = $database->get_comments(5, 1, $comment_type, 20);
 $tmp = count($comment) - 1;
 ?>
 
-<script>
+<script type="text/javascript">
 numComments=<?php echo $tmp?>;
 </script>
 
+<div id="commentBlob">
 <?php
 for($i = 0; $i <= $tmp; $i++) {
    if ($i % 2 == 1) {
@@ -144,7 +150,9 @@ for($i = 0; $i <= $tmp; $i++) {
 HTML;
   }
 ?>
+</div>
 
+<!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
 <script type="text/javascript">  
 FB_RequireFeatures(["XFBML"], function(){ 
    FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm");

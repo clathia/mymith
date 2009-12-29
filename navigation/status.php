@@ -1,3 +1,6 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<head>
 <?php
 /*
  * Copyright 2009 MiTH.  All Rights Reserved. 
@@ -12,40 +15,34 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 $game_id = 5;
 ?>
 
-<script language="javascript" type="text/javascript" src="/shared/calendar/datetimepicker_css.js">
+<link rel="stylesheet" type="text/css" href="styles.css?16" />
 
-//Date Time Picker script- by TengYong Ng of http://www.rainforestnet.com
-//Script featured on JavaScript Kit (http://www.javascriptkit.com)
-//For this script, visit http://www.javascriptkit.com
-</script>
-
-<script>
-
+<script type="text/javascript">
 var globalId;
-function commentPost(id, myid, type)
-{
-   
+function statusRegisterVote(id, myid, type)
+{  
    xmlHttp = CreateXMLHttpRequest();
    globalId = id;
    var url = 'navigation/registerVote.php?id='+id+'&myid='+myid;
-   xmlHttp.onreadystatechange = callback;
+   xmlHttp.onreadystatechange = statusCallback;  
    xmlHttp.open("GET", url, true);
    xmlHttp.send(null);
 }
 
-function callback()
+function statusCallback()
 {
   if (xmlHttp.readyState == 4)
   {
     if (xmlHttp.status == 200)
     {
         var response = xmlHttp.responseText;
+        alert(globalId);
         document.getElementById(globalId).innerHTML = response;
     }
   }
 }
-
 </script>
+</head>
 
 <body>
 
@@ -56,18 +53,17 @@ function callback()
    
    $game = $database->get_game_details($game_id);
    $round_state = $game['round_state'] == ROUND_STATE_NIGHT ? "Night" : "Day";
- ?>  
-   I am not a mafia because ...
+   ?>  
+   I am not a mafia 'coz ...
    <div class="edit_area" id="div_2"> I have written come crap, ok?.</div>
-   <!--  Display calendar  -->
-   Deadline for Round 1:
-   <input id="deadline" type="text" size="25">
-   <a href="javascript:NewCssCal('deadline', 'MMddyyyy', 'Arrow', 'true', '12', 'true')">
-   <img src="/calendar/images/cal.gif" alt="Pick a date" /></a>
-<?php
+   <br /><br />
+   
+   <input id="deadline" type="datetime-local" min="2009-08-01T12:15" max="2009-09-08T13:25"></input> 
+
+   <?php
 
    
-   
+   echo "<br /><br />";
    echo "You are !<br />";
    
    switch ($role) {
@@ -113,20 +109,9 @@ function callback()
    echo "Mafias Alive: ".$alive."/".$total."<br />";
    ?>
  
- 
-<script type="text/javascript">
-    $("#userSlide").jCarouselLite({
-    btnNext: ".next",
-    btnPrev: ".prev",
-    mouseWheel: true,
-    visible: 3,
-    circular:false
-    });
- </script>
- 
    <button class="prev">left</button>
    <button class="next">right</button>  
-   <div id="userSlide">
+   <div class="userSlide">
    <ul>
 
    <?php 
@@ -139,7 +124,7 @@ function callback()
    <tr><td><a target = '_blank' href ="<?php echo $user['profile_url']?>"><img src="<?php echo $user['pic_square']?>" /></a></td></tr>
    <tr><td>
    <div class="buttons">
-      <button type="submit" class="simple" OnClick = 'commentPost("<?php echo $uid ?>", "<?php echo $myuid?>")';><?php echo $button_name ?> </button>
+      <button type="submit" class="simple" onclick = 'statusRegisterVote("<?php echo $uid ?>", "<?php echo $myuid?>")';><?php echo $button_name ?> </button>
    </div> <!-- End buttons -->
    </td></tr>
    <tr><td>
@@ -155,6 +140,7 @@ function callback()
       ?>
    </ul>
    </div> <!--  userSlide -->
+   <br /><br />
 </body>
 
 

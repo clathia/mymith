@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <?php
 /*
  * Copyright 2009 MiTH.  All Rights Reserved. 
@@ -11,16 +13,21 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
 <head>
-<link type="text/css" href="/shared/js/jquery-lite/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+<link type="text/css" href="/shared/js/jquery-lite/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+<link type="text/css" href="/shared/js/jquery-dtpicker-1.0a5/jquery.dtpicker.css" rel="stylesheet" />
+	
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-ui-1.7.2.custom.min.js"></script>
+
 <script type="text/javascript" src="/shared/js/jcarousellite_1.0.1.js"></script>
 <script type="text/javascript" src="/shared/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="/shared/js/jquery.jeditable.js"></script>
 <script type="text/javascript" src="/shared/js/jquery.cookie.js"></script>
+
+<script type="text/javascript" src="/shared/js/jquery-dtpicker-1.0a5/jquery.metadata.min.js"></script>
+<script type="text/javascript" src="/shared/js/jquery-dtpicker-1.0a5/jquery.dtpicker.min.js"></script>
+  
 <script type="text/javascript" src="/shared/js/jtabs.userfunction.js"></script>
-
-
 </head>
 
 <body>
