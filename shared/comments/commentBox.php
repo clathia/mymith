@@ -15,7 +15,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 ?>
 
 <head>
-<link rel="stylesheet" type="text/css" href="styles.css?15" />
+<link rel="stylesheet" type="text/css" href="styles.css?16" />
 </head>
 
 <body>
@@ -70,6 +70,8 @@ $("#postButton").click(function () {
 <!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error -->
 <div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div> 
 
+<div class="commentTab">
+
 <div class="godMessage">
    <?php
       $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
@@ -78,7 +80,6 @@ $("#postButton").click(function () {
       }
    ?>
 </div>
-
 <a class="togglelink" href=#>hide</a>
 
 
@@ -93,12 +94,14 @@ $("#postButton").click(function () {
 <!-- All the files that include this file should provide with $button_value text -->
 <div id="postComment">
    <form method="get" action="" onsubmit="return false;">
-      <table width='100%' style='text-align:left'>
+      <table width='100%' border='0' cellpadding='0' cellspacing='0px'>
          <tr>
             <td>
                <textarea id="commentText"></textarea>
             </td>
-            <td align="left">
+         </tr>
+         <tr>
+            <td>
                <input type='submit' id="postButton" value=<?php echo $button_value; ?>></input>
             </td>
          </tr>
@@ -128,7 +131,7 @@ for($i = 0; $i <= $tmp; $i++) {
    echo display_comment($bgColor, $borderColor, $comment[$i]['uid'], $comment[$i]['timestamp'], $comment[$i]['text']);
 }?>
 </div>
-
+</div>
 <!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
 <script type="text/javascript">  
 FB_RequireFeatures(["XFBML"], function(){ 

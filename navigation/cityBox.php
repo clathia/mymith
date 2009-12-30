@@ -17,5 +17,5 @@ $text = "Who is mafia?";
 $button_value = "Accuse";
 $comment_type = COMMENT_TYPE_CITY;
 
-include($_SERVER['DOCUMENT_ROOT'] . "/shared/comments/commentBox.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/comments/commentBox.php");
 ?>

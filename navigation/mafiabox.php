@@ -17,5 +17,5 @@ $text = "Muahahaha! Time to kill someone...";
 $button_value = "Kill";
 $comment_type = COMMENT_TYPE_MAFIA;
 
-include($_SERVER['DOCUMENT_ROOT'] . "/shared/comments/commentBox.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/comments/commentBox.php");
 ?>
