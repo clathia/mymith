@@ -25,8 +25,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 
 <script type="text/javascript" src="/shared/js/jquery-dtpicker-1.0a5/jquery.metadata.min.js"></script>
 <script type="text/javascript" src="/shared/js/jquery-dtpicker-1.0a5/jquery.dtpicker.min.js"></script>
-  
-<script type="text/javascript" src="/shared/js/jtabs.userfunction.js"></script>
+  <script type="text/javascript" src="/shared/js/jtabs.userfunction.js"></script>
 </head>
 
 <body>
@@ -51,4 +50,5 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
       </div> <!-- End content -->
    </div> <!-- End wrapper -->
 </div> <!--  End container -->
+
 </body>

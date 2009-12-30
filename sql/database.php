@@ -227,6 +227,10 @@ class db_manager
    }
 
    //Array of (comment_id, uid, text, timestamp)
+   /*
+    * sajain: Changed ASC -> DESC and comment <= '$last_comment' to comment < '$last_comment
+    * i.e less than or equal to less than.
+    */
    function get_prev_comments($game_id, $round, $type, $num_comments, $last_comment)
    {
       if (!$this->id_valid($game_id)) {
@@ -235,8 +239,8 @@ class db_manager
 
       $q = "SELECT comment_id, uid, text, timestamp FROM ".TBL_COMMENTS."
           WHERE game_id = '$game_id' AND round = '$round'
-          AND type = '$type' AND comment_id <= '$last_comment'
-          ORDER BY comment_id ASC LIMIT $num_comments";
+          AND type = '$type' AND comment_id < '$last_comment'
+          ORDER BY comment_id DESC LIMIT $num_comments";
       $result = $this->run_query($q);
       if ($result == FALSE) {
          return FALSE;
@@ -249,6 +253,34 @@ class db_manager
       return $arr;
    }
 
+   //Array of (comment_id, uid, text, timestamp)
+   /* sajain: Added get_next_comments function.
+    * Changed ASC -> DESC and comment <= '$last_comment' to comment < '$last_comment
+    * i.e less than or equal to less than.
+    */
+   function get_next_comments($game_id, $round, $type, $num_comments, $last_comment)
+   {
+      if (!$this->id_valid($game_id)) {
+         return FALSE;
+      }
+
+      $q = "SELECT comment_id, uid, text, timestamp FROM ".TBL_COMMENTS."
+          WHERE game_id = '$game_id' AND round = '$round'
+          AND type = '$type' AND comment_id > '$last_comment'
+          ORDER BY comment_id DESC LIMIT $num_comments";
+      $result = $this->run_query($q);
+      if ($result == FALSE) {
+         return FALSE;
+      }
+
+      $arr = array();
+      while ($row = mysql_fetch_assoc($result)) {
+         $arr[] = $row;
+      }
+      return $arr;
+   }
+   
+   
    //Array of (comment_id, text, timestamp)
    function get_comments_by($game_id, $round, $type, $uid)
    {
