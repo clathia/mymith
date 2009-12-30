@@ -6,12 +6,10 @@ if ($_POST) {
 
    $uid = $facebook->api_client->users_GetLoggedInUser();
    $publish_date = $mysqldate = date( 'Y-m-d H:i:s', time());
-   $bgcolor = $_POST['BgColor'];
-   $borderColor = $_POST['BorderColor'];
    $text = $_POST["commentText"];//rteSafe($_POST["commentText"]);
    $type = $_POST["type"];
    $game_id = 5;
-
+   /*    * Adding user stuff directly to database. Risky!    *     * */
    if ($type == 0) {
       $ret = $database->add_comment($game_id, $uid, $text, COMMENT_TYPE_CITY);
       if ($ret == FALSE) {
@@ -27,5 +25,5 @@ if ($_POST) {
    }
 }
 
-echo display_comment($bgcolor, $borderColor, $uid, $publish_date, $text);
+echo display_comment($uid, $publish_date, $text);
 ?>

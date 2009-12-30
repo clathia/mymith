@@ -13,6 +13,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 
 <head>
 <link type="text/css" href="/shared/js/jquery-lite/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="styles.css?20" />
 <link type="text/css" href="/shared/js/jquery-dtpicker-1.0a5/jquery.dtpicker.css" rel="stylesheet" />
 	
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
@@ -25,7 +26,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 
 <script type="text/javascript" src="/shared/js/jquery-dtpicker-1.0a5/jquery.metadata.min.js"></script>
 <script type="text/javascript" src="/shared/js/jquery-dtpicker-1.0a5/jquery.dtpicker.min.js"></script>
-  <script type="text/javascript" src="/shared/js/jtabs.userfunction.js"></script>
+<script type="text/javascript" src="/shared/js/mithFunctions.js"></script>
 </head>
 
 <body>
