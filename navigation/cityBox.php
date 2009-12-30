@@ -90,7 +90,7 @@ $("#cbPostButton").click(function () {
    var text= fixText($("#cbCommentText").val());
    //alert(text);
    var url = "shared/comments/saveComment.php";
-   var params = 'commentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type?>;
+   var params = 'commentText='+text+'&BgColor='+bgColor+'&BorderColor='+borderColor+'&type='+<?php echo $comment_type ?>;
    document.getElementById("cbIndicator").style.visibility = 'visible';
    sendPostRequestAjax(xmlHttp, url, params, cbPostCommentCallback);
 });

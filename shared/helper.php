@@ -143,6 +143,25 @@ function display_comment($bg_color, $border_color, $profile_url, $pic_square, $f
    </Table>
 HTML;
 }
+   $text = $comment[$i]['text'];
+   $date = display_date($comment[$i]['timestamp']);
+   $uid = $comment[$i]['uid'];
+   echo <<<HTML
+      <div class="commentTable">
+      <table width='100%' cellspacing='0' bgcolor='$bgColor' align='center' style='border-top:$borderColor 1px solid; border-bottom:$borderColor 1px solid;'>
+      <tr>
+      <td width=55px valign="top">
+      <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
+      </fb:profile-pic>
+      </td>
+      <td valign="top"><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
+      <span class="date">$date</span></div>
+      <div class="commentTextOld">$text</div>
+      </td>
+      </tr>
+      </table>
+      </div>
+HTML;
 */
 
 ?>
