@@ -9,7 +9,7 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('.edit_area').editable('shared/comments/saveStatus.php', { 
+    $('.editStatus').editable('shared/comments/saveStatus.php', { 
         type      : 'textarea',
         cancel    : 'Cancel',
         submit    : 'OK',
