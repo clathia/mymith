@@ -19,7 +19,7 @@ a{
    width:95%;
 }
 
-#indicator{
+.indicator{
 	visibility:hidden;
    text-align:center;
 }
@@ -50,19 +50,19 @@ a{
    width:95%;
 }
 
-#postComment{
+.postComment{
    width:95%;
    height:120px;
    text-align:center;
 }
 
-textarea#commentText{
+.commentText{
    float:left;
    width:100%;
    height:50px;
 }
 
-input#postButton{
+.postButton{
    float:right;
    width:20%;
    height:40px;
