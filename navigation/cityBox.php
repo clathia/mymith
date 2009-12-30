@@ -126,10 +126,12 @@ $("#cbPostButton").click(function () {
       <table width='100%' style='text-align:left'>
          <tr>
             <td>
-               <textarea id="cbCommentText" class ="commentText"></textarea>
+               <textarea id="cbCommentText" class ="commentText">
+               </textarea>
             </td>
             <td align="left">
-               <input type='submit' id="cbPostButton" class ="postButton" value=<?php echo $button_value; ?>></input>
+               <input type='submit' id="cbPostButton" class ="postButton" value=<?php echo $button_value; ?>>
+               </input>
             </td>
          </tr>
       </table>

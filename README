@@ -1,5 +1,63 @@
-First Mith commit
+-- Coding standards for MiTH
 
-Dummy mith commit - Chirag
+Indentation - 3 spaces. No Tabs.
+Function Names - Camel casing. ex - mith{FileName|Fn}FunctionName
+Commenting a Function -
 
-Dummy commit - Shailesh Jain
+/*----------------------------------------------------------------------------------------
+ * FunctionName --
+ *   One line comment description.
+ *
+ *   [In detail description]
+ *
+ * @param1 Description1
+ * @param2 Description2
+ *
+ * @return params
+ *----------------------------------------------------------------------------------------
+ */
+
+function
+FunctionName(arg1, arg2, arg3)
+{
+
+
+}
+
+
+Variable Names - Camel casing. div id/Global Var - mith{FileName}VarName. Locals are Ok. div Class - mithVarName
+Comments - Php and Javascript comments /* */. HTML <!-- -->
+
+
+If/Else block -
+Ex.
+if (condition) {
+
+} else {
+
+} 
+
+For loop - 
+for ( ; ;) {
+
+}
+
+HTML Tags: 
+    Ex.
+    <table width='100%' style='text-align:left'>
+         <tr>
+            <td>
+               <textarea id="cbCommentText" class="commentText">
+               </textarea>
+            </td>
+            <td align="left">
+               <input type='submit' id="cbPostButton" class ="postButton" value=<?php echo $button_value; ?>>
+               </input>
+            </td>
+         </tr>
+      </table>
+          
+Div Tags:
+<div id="dummy1">
+</div> <!-- End dummy1 -->
+End with Id. If no Id, end with class. 

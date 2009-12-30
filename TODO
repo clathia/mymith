@@ -21,3 +21,6 @@
 -- Last evicted
 -- timeago plugin may be superuseful. It will update 0 minutes ago .. etc auto.
 -- Chirag -- Read this http://www.brainbell.com/tutors/php/php_mysql/When_and_how_to_lock_tables.html
+
+-- Seperate css, presentation, javascript and business logic
+-- Remove %2 hack.

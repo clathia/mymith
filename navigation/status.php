@@ -29,7 +29,8 @@ function statusRegisterVote(id, myid, type)
    xmlHttp.send(null);
 }
 
-function statusCallback()
+function
+statusCallback()
 {
   if (xmlHttp.readyState == 4)
   {
@@ -58,7 +59,7 @@ function statusCallback()
    <div class="edit_area" id="div_2"> I have written come crap, ok?.</div>
    <br /><br />
    
-   <input id="deadline" type="datetime-local" min="2009-08-01T12:15" max="2009-09-08T13:25"></input> 
+   <input id="deadline" type="datetime-local"></input> 
 
    <?php
 
