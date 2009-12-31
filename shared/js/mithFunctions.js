@@ -88,6 +88,29 @@ $(document).ready(function() {
 });
 
 
+function
+mithGenerateCommentResponse(commentText,
+		                    commentDate,
+		                    uid)
+{
+	return
+	<div class="commentTable">
+    <table width='100%' cellspacing='0' align='center'>
+    <tr>
+    <td width=55px valign="top">
+    <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
+    </fb:profile-pic>
+    </td>
+    <td valign="top"><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
+    <span class="date">$date</span></div>
+    <div class="commentTextOld">$text</div>
+    </td>
+    </tr>
+    </table>
+    </div>
+	alert(commentText + " "+commentDate+" "+uid);
+}
+
 /*----------------------------------------------------------------------------------------
  * mithPostComment --
  *   Post the comment to the server and display it.
@@ -116,8 +139,16 @@ mithPostComment(commentTextId,
       type: "POST",
       global: false,
       url: "shared/comments/saveComment.php",
+      dataType: "json",
       data: 'commentText='+text+'&type='+commentType,
-      success: function(html){
+      error: function(XMLHttpRequest, textStatus) {
+   	     alert("Some error occured. We will fix asap."); 
+      },
+      success: function(json){
+    	 if (json.ret == 0) {
+            mithGenerateCommentResponse(text, json.date, json.uid);
+    	 }
+    	  /*
          var response = "<div id="+ mithDummyId + " > " + html + "</div>";
 	     $("#"+commentBlobId).prepend(response);
 	     FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
@@ -126,6 +157,7 @@ mithPostComment(commentTextId,
 	     var newClass = $("#"+commentBlobId +" .commentTable").length % 2 == 0 ? 'commentTableClassEven' : 'commentTableClassOdd';
 	 	 $("#"+mithDummyId).addClass(newClass);
 	     mithDummyId++;
+	     */
       }
 	 });
 }
@@ -145,27 +177,37 @@ mithPostComment(commentTextId,
  * @return none
  *----------------------------------------------------------------------------------------
  */
-/*
+
 var cbLastComment;
 
 function 
-mithGetNewComments(commentTextId,
-		           commentBlobId,
+mithGetNewComments(commentBlobId,
 		           commentType,
 		           commentPostIndicator)
 {
+   alert("this function called\n");
+   
    $.ajax({
       type: "POST",
+      global: false,
       url: "navigation/getNewComments.php",
-      data: 'lastComment='+cbLastComment+'&type='+<?php echo $comment_type?>,
-      success: function(msg){
+      dataType: "json",
+      data: 'lastComment='+cbLastComment+'&type='+commentType,
+      error: function(XMLHttpRequest, textStatus) {
+	     alert("Some error occured. We will fix asap.");
+      },
+      success: function(json){
+    	 alert("got datatype json"+ json.numNewComments);
+    	  /*
          var response = "<div id="+ mithDummyId + " > " + xmlHttp.responseText + "</div>";
          $("#cbCommentBlob").prepend(response);
          FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
          document.getElementById("cbIndicator").style.visibility = 'hidden';
          $("#cbCommentText").val("");
          cbDummyId++;
+         */
       }
    });
+   
 }
-*/
+

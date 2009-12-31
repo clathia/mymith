@@ -43,7 +43,7 @@
    </form>
 </div> <!-- End div.mithPostComment -->
 
-<a class="mithRefreshNowLink" href=#>Refresh Now</a> <br /><br />
+<a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>")'>Refresh Now</a> <br /><br />
 
 <?php
 $comment = $database->get_comments(5, 1, $mithCommentType, 20);
