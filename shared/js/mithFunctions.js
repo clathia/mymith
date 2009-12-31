@@ -60,7 +60,8 @@ $("a.mithToggleLink").live("click", function () {
  *   After the DOM is ready, event is registered on #tabs.
  *
  *   Tabs uses this functionality. Need to keep this as the last function so that all
- *   other events are still registered when tabs are switched automagically.
+ *   other events are still registered when tabs are switched automagically. Note that
+ *   I have enabled caching currently. If there are problems we will need to think.
  *   Don't mess with it.
  *
  * @cookie    Keep note of last selected tab by user.
@@ -77,10 +78,11 @@ $(document).ready(function() {
    $("#tabs").tabs({
       cookie: { expires: 30 },
       fx: { opacity: 'toggle'},
+      cache: true,
       spinner: 'Retrieving data...',
       load: function(event, ui) {
-    	  $(".commentTable:odd").addClass("commentTableClass1");
-    	  $(".commentTable:even").addClass("commentTableClass2");
+    	  $(".commentTable:odd").addClass("commentTableClassOdd");
+    	  $(".commentTable:even").addClass("commentTableClassEven");
       }
    });   
 });
@@ -101,7 +103,6 @@ $(document).ready(function() {
  *----------------------------------------------------------------------------------------
  */
 var mithDummyId = 1;
-var cbLastComment;
 
 function 
 mithPostComment(commentTextId,
@@ -113,6 +114,7 @@ mithPostComment(commentTextId,
    document.getElementById(commentPostIndicator).style.visibility = 'visible';
    $.ajax({
       type: "POST",
+      global: false,
       url: "shared/comments/saveComment.php",
       data: 'commentText='+text+'&type='+commentType,
       success: function(html){
@@ -121,14 +123,37 @@ mithPostComment(commentTextId,
 	     FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
 	     document.getElementById(commentTextId).value = '';
 	     document.getElementById(commentPostIndicator).style.visibility = 'hidden';
+	     var newClass = $("#"+commentBlobId +" .commentTable").length % 2 == 0 ? 'commentTableClassEven' : 'commentTableClassOdd';
+	 	 $("#"+mithDummyId).addClass(newClass);
 	     mithDummyId++;
-	   }
+      }
 	 });
 }
 
-/* Get new messages from the server */
+
+/*----------------------------------------------------------------------------------------
+ * mithGetNewComments --
+ *   Get new messages from the server.
+ *
+ *   Both cityBox and mafiaBox uses this function. As a side-effect page will get updated
+ *   when the response arrives. One day, I will add ajax error function too.
+ *
+ * @commentTextId Id of comment textarea
+ * @commentBlobId Id of comment blob, area where comments are displayed
+ * @commentType   can be COMMENT_CITY_TYPE or COMMENT_MAFIA_TYPE
+ *
+ * @return none
+ *----------------------------------------------------------------------------------------
+ */
 /*
-$("#cbRefreshNowLink").click(function () {
+var cbLastComment;
+
+function 
+mithGetNewComments(commentTextId,
+		           commentBlobId,
+		           commentType,
+		           commentPostIndicator)
+{
    $.ajax({
       type: "POST",
       url: "navigation/getNewComments.php",
@@ -142,5 +167,5 @@ $("#cbRefreshNowLink").click(function () {
          cbDummyId++;
       }
    });
-});
+}
 */

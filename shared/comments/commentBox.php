@@ -1,7 +1,3 @@
-<head>
-<link rel="stylesheet" type="text/css" href="styles.css?20" />
-</head>
-
 <body>
 <!-- Needs to be kept here in the start of body tag. Don't mess with it. -->
 <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
@@ -47,12 +43,9 @@
    </form>
 </div> <!-- End div.mithPostComment -->
 
-
 <a class="mithRefreshNowLink" href=#>Refresh Now</a> <br /><br />
 
-
 <?php
-
 $comment = $database->get_comments(5, 1, $mithCommentType, 20);
 $tmp = count($comment) - 1;
 ?>
