@@ -4,7 +4,7 @@ Indentation - 3 spaces. No Tabs.
 Function Names - Camel casing. ex - mith{FileName|Fn}FunctionName
 Commenting a Function -
 
-/*----------------------------------------------------------------------------------------
+/*------------------------------------------------------------------------------
  * FunctionName --
  *   One line comment description.
  *
@@ -14,7 +14,7 @@ Commenting a Function -
  * @param2 Description2
  *
  * @return params
- *----------------------------------------------------------------------------------------
+ *------------------------------------------------------------------------------
  */
 
 function
@@ -60,4 +60,4 @@ HTML Tags:
 Div Tags:
 <div id="dummy1">
 </div> <!-- End dummy1 -->
-End with Id. If no Id, end with class. 
+End with Id. If no Id, end with class.

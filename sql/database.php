@@ -1,28 +1,74 @@
 <?php
-
-/* The return types are mentioned over the function names. These are the return
+/*
+ * Copyright 2009 MiTH.  All Rights Reserved.
+ *
+ * Application: MiTH (Mafia in The House)
+ * File: 'mafiabox.php'
+ * Provides the API for database interaction.
+ * The return types are mentioned over the function names. These are the return
  * types for success cases. For failures, FALSE is returned. If not specified,
  * the function returns TRUE for success, and FALSE for failure.
  */
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/constants.php");
-class db_manager
-{
-   var $connection;       //The MySQL database connection
 
-   function __construct()
+
+/*------------------------------------------------------------------------------
+ * mithDbManager --
+ *   Connects to the db and executes commands given by the business logic.
+ *
+ *------------------------------------------------------------------------------
+ */
+
+class
+mithDbManager
+{
+   private $connection;
+
+
+   /*---------------------------------------------------------------------------
+    * __construct --
+    *   mithDbManager Constructor
+    *
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   __construct()
    {
       /* Make connection to database */
       $this->connection = mysql_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysql_error());
       mysql_select_db(DB_NAME, $this->connection) or die(mysql_error());
    }
 
-   function __destruct()
+
+   /*---------------------------------------------------------------------------
+    * __destruct --
+    *   mithDbManager Destructor
+    *
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   __destruct()
    {
       mysql_close($this->connection);
    }
 
-   function run_query($q)
+
+   /*---------------------------------------------------------------------------
+    * runQuery --
+    *   Executes a given SQL query
+    *
+    * @q The SQL query to be executed
+    *
+    * @return result/TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   runQuery($q)
    {
       $result = mysql_query($q, $this->connection);
       return $result;
@@ -30,42 +76,124 @@ class db_manager
 
 
    /* Validation Functions */
-   function id_valid($id)
+
+   /*---------------------------------------------------------------------------
+    * idValid --
+    *   Validates the game id and user id
+    *
+    *   Only checks if it is a positive number
+    *
+    * @id The id to be validated
+    *
+    * @return TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   idValid($id)
    {
       if ($id <= 0)
          return FALSE;
       return TRUE;
    }
 
-   function round_valid($round)
+
+   /*---------------------------------------------------------------------------
+    * roundValid --
+    *   Validates the round number
+    *
+    *   Only checks if it is a positive number
+    *
+    * @round The round number to be validated
+    *
+    * @return TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   roundValid($round)
    {
       if ($round <= 0)
          return FALSE;
       return TRUE;
    }
 
-   function game_state_valid($state)
+
+   /*---------------------------------------------------------------------------
+    * gameStateValid --
+    *   Validates the game state value passed
+    *
+    * @state The game state value to be validated
+    *
+    * @return TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   gameStateValid($state)
    {
       if (($state < GAME_STATE_MIN) || ($state > GAME_STATE_MAX))
          return FALSE;
       return TRUE;
    }
 
-   function player_role_valid($role)
+
+   /*---------------------------------------------------------------------------
+    * playerRoleValid --
+    *   Validates the player role value passed
+    *
+    * @role The player role value to be validated
+    *
+    * @return TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   playerRoleValid($role)
    {
       if (($role < PLAYER_ROLE_MIN) || ($role > PLAYER_ROLE_MAX))
          return FALSE;
       return TRUE;
    }
 
-   function player_state_valid($state)
+
+   /*---------------------------------------------------------------------------
+    * playerStateValid --
+    *   Validates the player state value passed
+    *
+    * @state The player state value to be validated
+    *
+    * @return TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   playerStateValid($state)
    {
       if (($state < PLAYER_STATE_MIN) || ($state > PLAYER_STATE_MAX))
          return FALSE;
       return TRUE;
    }
 
-   function comment_type_valid($type)
+
+   /*---------------------------------------------------------------------------
+    * commentTypeValid --
+    *   Validates the comment type value passed
+    *
+    * @type The comment type value to be validated
+    *
+    * @return TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   commentTypeValid($type)
    {
       if (($type < COMMENT_TYPE_MIN) || ($type > COMMENT_TYPE_MAX))
          return FALSE;
@@ -74,10 +202,26 @@ class db_manager
 
 
    /* Game Functions */
-   //Game_Id
-   function create_new_game($admin_id, $ids)
+
+   /*---------------------------------------------------------------------------
+    * createNewGame --
+    *   Creates a new game in the database
+    *
+    *   Adds a new game in 'games', adds admin as god and players as invited
+    *   in 'players'
+    *
+    * @adminId The uid of the game admin
+    * @ids     The ids of the players invited by the admin
+    *
+    * @return New game id on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   createNewGame($adminId, $ids)
    {
-      if (!$this->id_valid($admin_id) || (count($ids) == 0)) {
+      if (!$this->idValid($adminId) || (count($ids) == 0)) {
          return FALSE;
       }
       foreach ($ids as $id) {
@@ -87,25 +231,25 @@ class db_manager
       }
 
       //add a row in game table
-      $q = "INSERT INTO ".TBL_GAMES." (admin_id) VALUES ('$admin_id')";
-      $result = $this->run_query($q, $this->connection);
+      $q = "INSERT INTO ".TBL_GAMES." (admin_id) VALUES ('$adminId')";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
-      $game_id = mysql_insert_id();
-      $ret = $game_id;
+      $gameId = mysql_insert_id();
+      $ret = $gameId;
 
-      //add admin_id in players table
-      $q = "INSERT INTO ".TBL_PLAYERS." (uid, game_id, state, role) VALUES ('$admin_id', '$game_id', ".PLAYER_STATE_GOD.", ".PLAYER_ROLE_GOD.")";
-      $result = $this->run_query($q, $this->connection);
+      //add adminId in players table
+      $q = "INSERT INTO ".TBL_PLAYERS." (uid, gameId, state, role) VALUES ('$adminId', '$gameId', ".PLAYER_STATE_GOD.", ".PLAYER_ROLE_GOD.")";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          $ret = FALSE;
       }
 
       //add all uids in players table
       foreach ($ids as $id) {
-         $q = "INSERT INTO ".TBL_PLAYERS." (uid, game_id) VALUES ('$id', '$game_id')";
-         $result = $this->run_query($q, $this->connection);
+         $q = "INSERT INTO ".TBL_PLAYERS." (uid, gameId) VALUES ('$id', '$gameId')";
+         $result = $this->runQuery($q, $this->connection);
          if ($result == FALSE) {
             $ret = FALSE;
          }
@@ -113,28 +257,56 @@ class db_manager
       return $ret;
    }
 
-   function start_game($game_id)
+
+   /*---------------------------------------------------------------------------
+    * startGame --
+    *   Starts a created game
+    *
+    *   Sets the gameState to Started, currRound to 1 and deletes players who
+    *   have not yet accepted
+    *
+    * @gameId The gameId to be started
+    *
+    * @return TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   startGame($gameId)
    {
-      $q = "UPDATE ".TBL_GAMES." SET game_state = ".GAME_STATE_STARTED.", curr_round = '1' WHERE game_id = '$game_id'";
-      $result = $this->run_query($q);
+      $q = "UPDATE ".TBL_GAMES." SET gameState = ".GAME_STATE_STARTED.", currRound = '1' WHERE gameId = '$gameId'";
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
 
       //Delete all players who have not yet accepted
-      $q = "DELETE FROM ".TBL_PLAYERS." WHERE game_id = '$game_id' AND state = ".PLAYER_STATE_INVITED."";
-      $result = $this->run_query($q);
+      $q = "DELETE FROM ".TBL_PLAYERS." WHERE gameId = '$gameId' AND state = ".PLAYER_STATE_INVITED;
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
       return TRUE;
    }
 
-   //Associative array of game fields
-   function get_game_details($game_id)
+
+   /*---------------------------------------------------------------------------
+    * getGameDetails --
+    *   Returns a row from the game table corresponding to the gameId
+    *
+    * @gameId The row to be returned
+    *
+    * @return Associative array of 'games' table fields on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   getGameDetails($gameId)
    {
-      $q = "SELECT * FROM ".TBL_GAMES." WHERE game_id = '$game_id'";
-      $result = $this->run_query($q);
+      $q = "SELECT * FROM ".TBL_GAMES." WHERE gameId = '$gameId'";
+      $result = $this->runQuery($q);
       if (($result == FALSE) || (mysql_num_rows($result) == 0)) {
          return FALSE;
       }
@@ -142,9 +314,24 @@ class db_manager
       return $row;
    }
 
-   function mark_game_finished($game_id)
+
+   /*---------------------------------------------------------------------------
+    * markGameFinished --
+    *   Finishes a game
+    *
+    *   TODO
+    *
+    * @gameId The completed game
+    *
+    * @return TRUE on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   markGameFinished($gameId)
    {
-      if (!$this->id_valid($game_id)) {
+      if (!$this->idValid($gameId)) {
          return FALSE;
       }
       return TRUE;
@@ -152,52 +339,80 @@ class db_manager
 
 
    /* Comment Functions */
-   function add_comment($game_id, $uid, $text, $type)
+
+   /*---------------------------------------------------------------------------
+    * addComment --
+    *   Adds a comment to the comment table
+    *
+    *   TODO
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   addComment($gameId, $uid, $text, $type)
    {
-      if (!($this->id_valid($game_id)) || !($this->id_valid($uid)) || !($this->comment_type_valid($type))) {
+      if (!($this->idValid($gameId)) || !($this->idValid($uid)) || !($this->commentTypeValid($type))) {
          return FALSE;
       }
 
-      global $comment_type_arr;
-      $comment_type = $comment_type_arr[$type];
+      global $commentTypeArr;
+      $commentType = $commentTypeArr[$type];
 
-      //Read last comment number for game_id
-      $q = "SELECT curr_round, $comment_type FROM ".TBL_GAMES." WHERE game_id = '$game_id'";
-      $result = $this->run_query($q);
+      //Read last comment number for gameId
+      $q = "SELECT currRound, $commentType FROM ".TBL_GAMES." WHERE gameId = '$gameId'";
+      $result = $this->runQuery($q);
       if (($result == FALSE) || (mysql_num_rows($result) == 0)) {
          return FALSE;
       }
       $arr = mysql_fetch_row($result);
       $round = $arr[0];
-      $comm_id = $arr[1];
+      $commId = $arr[1];
 
       //Increment the value in the table
-      $comm_id++;
-      $q = "UPDATE ".TBL_GAMES." SET $comment_type = '$comm_id' WHERE game_id = '$game_id'";
-      $result = $this->run_query($q);
+      $commId++;
+      $q = "UPDATE ".TBL_GAMES." SET $commentType = '$commId' WHERE gameId = '$gameId'";
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
 
       //Add comment to comments
-      $q = "INSERT INTO ".TBL_COMMENTS." (comment_id, game_id, round, uid, type, text) VALUES ('$comm_id', '$game_id', '$round', '$uid', '$type', '$text')";
-      $result = $this->run_query($q);
+      $q = "INSERT INTO ".TBL_COMMENTS." (commentId, gameId, round, uid, type, text) VALUES ('$commId', '$gameId', '$round', '$uid', '$type', '$text')";
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
       return TRUE;
    }
 
-   //Number of Comments
-   function get_total_comments($game_id, $round, $type)
+
+   /*---------------------------------------------------------------------------
+    * getTotalComments --
+    *   Returns the total number of comments for any round of a game
+    *
+    * @gameId Which game
+    * @round  Which round
+    * @type   What type
+    *
+    * @return Number of Comments on success
+    *         FALSE on failure
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   getTotalComments($gameId, $round, $type)
    {
-      if (!$this->id_valid($game_id)) {
+      if (!$this->idValid($gameId)) {
          return FALSE;
       }
 
       $q = "SELECT COUNT(*) FROM ".TBL_COMMENTS."
-          WHERE game_id = '$game_id' AND round = '$round' AND type = '$type'";
-      $result = $this->run_query($q);
+          WHERE gameId = '$gameId' AND round = '$round' AND type = '$type'";
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -205,17 +420,31 @@ class db_manager
       return $num;
    }
 
-   //Array of (comment_id, uid, text, timestamp)
-   function get_comments($game_id, $round, $type, $num_comments)
+
+   /*---------------------------------------------------------------------------
+    * getComments --
+    *   Get the latest few comments
+    *
+    *   Returns latest numComments for a particular gameId, round and type
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   //Array of (commentId, uid, text, timestamp)
+   function
+   getComments($gameId, $round, $type, $numComments)
    {
-      if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
+      if (!$this->idValid($gameId) || !$this->roundValid($round)) {
          return FALSE;
       }
 
-      $q = "SELECT comment_id, uid, text, timestamp FROM ".TBL_COMMENTS."
-          WHERE game_id = '$game_id' AND round = '$round' AND type = '$type'
-          ORDER BY comment_id DESC LIMIT $num_comments";
-      $result = $this->run_query($q);
+      $q = "SELECT commentId, uid, text, timestamp FROM ".TBL_COMMENTS."
+          WHERE gameId = '$gameId' AND round = '$round' AND type = '$type'
+          ORDER BY commentId DESC LIMIT $numComments";
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -226,22 +455,36 @@ class db_manager
       return $arr;
    }
 
-   //Array of (comment_id, uid, text, timestamp)
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   //Array of (commentId, uid, text, timestamp)
    /*
-    * sajain: Changed ASC -> DESC and comment <= '$last_comment' to comment < '$last_comment
+    * sajain: Changed ASC -> DESC and comment <= '$lastComment' to comment < '$lastComment
     * i.e less than or equal to less than.
     */
-   function get_prev_comments($game_id, $round, $type, $num_comments, $last_comment)
+   function
+   getPrevComments($gameId, $round, $type, $numComments, $lastComment)
    {
-      if (!$this->id_valid($game_id)) {
+      if (!$this->idValid($gameId)) {
          return FALSE;
       }
 
-      $q = "SELECT comment_id, uid, text, timestamp FROM ".TBL_COMMENTS."
-          WHERE game_id = '$game_id' AND round = '$round'
-          AND type = '$type' AND comment_id < '$last_comment'
-          ORDER BY comment_id DESC LIMIT $num_comments";
-      $result = $this->run_query($q);
+      $q = "SELECT commentId, uid, text, timestamp FROM ".TBL_COMMENTS."
+          WHERE gameId = '$gameId' AND round = '$round'
+          AND type = '$type' AND commentId < '$lastComment'
+          ORDER BY commentId DESC LIMIT $numComments";
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -253,22 +496,36 @@ class db_manager
       return $arr;
    }
 
-   //Array of (comment_id, uid, text, timestamp)
-   /* sajain: Added get_next_comments function.
-    * Changed ASC -> DESC and comment <= '$last_comment' to comment < '$last_comment
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   //Array of (commentId, uid, text, timestamp)
+   /* sajain: Added getNextComments function.
+    * Changed ASC -> DESC and comment <= '$lastComment' to comment < '$lastComment
     * i.e less than or equal to less than.
     */
-   function get_next_comments($game_id, $round, $type, $num_comments, $last_comment)
+   function
+   getNextComments($gameId, $round, $type, $numComments, $lastComment)
    {
-      if (!$this->id_valid($game_id)) {
+      if (!$this->idValid($gameId)) {
          return FALSE;
       }
 
-      $q = "SELECT comment_id, uid, text, timestamp FROM ".TBL_COMMENTS."
-          WHERE game_id = '$game_id' AND round = '$round'
-          AND type = '$type' AND comment_id > '$last_comment'
-          ORDER BY comment_id DESC LIMIT $num_comments";
-      $result = $this->run_query($q);
+      $q = "SELECT commentId, uid, text, timestamp FROM ".TBL_COMMENTS."
+          WHERE gameId = '$gameId' AND round = '$round'
+          AND type = '$type' AND commentId > '$lastComment'
+          ORDER BY commentId DESC LIMIT $numComments";
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -279,20 +536,33 @@ class db_manager
       }
       return $arr;
    }
-   
-   
-   //Array of (comment_id, text, timestamp)
-   function get_comments_by($game_id, $round, $type, $uid)
+
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   //Array of (commentId, text, timestamp)
+   function
+   getCommentsBy($gameId, $round, $type, $uid)
    {
-      if (!$this->id_valid($game_id) || !$this->id_valid($uid)) {
+      if (!$this->idValid($gameId) || !$this->idValid($uid)) {
          return FALSE;
       }
 
-      $q = "SELECT comment_id, text, timestamp FROM ".TBL_COMMENTS."
-          WHERE game_id = '$game_id' AND round = '$round'
+      $q = "SELECT commentId, text, timestamp FROM ".TBL_COMMENTS."
+          WHERE gameId = '$gameId' AND round = '$round'
           AND type = '$type' AND uid = '$uid'
-          ORDER BY comment_id DESC";
-      $result = $this->run_query($q);
+          ORDER BY commentId DESC";
+      $result = $this->runQuery($q);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -306,30 +576,58 @@ class db_manager
 
 
    /* Player functions */
-   function set_player_state($game_id, $uid, $state)
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   setPlayerState($gameId, $uid, $state)
    {
-      if (!$this->id_valid($game_id) || !$this->id_valid($uid) || !$this->game_state_valid($state)) {
+      if (!$this->idValid($gameId) || !$this->idValid($uid) || !$this->gameStateValid($state)) {
          return FALSE;
       }
 
       //set this user's state to $state
-      $q = "UPDATE ".TBL_PLAYERS." SET state = '$state' WHERE uid = '$uid' AND game_id = '$game_id'";
-      $result = $this->run_query($q, $this->connection);
+      $q = "UPDATE ".TBL_PLAYERS." SET state = '$state' WHERE uid = '$uid' AND gameId = '$gameId'";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
       return TRUE;
    }
+
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
 
    //Player State
-   function get_player_state($game_id, $uid)
+   function
+   getPlayerState($gameId, $uid)
    {
-      if (!$this->id_valid($game_id) || !$this->id_valid($uid)) {
+      if (!$this->idValid($gameId) || !$this->idValid($uid)) {
          return FALSE;
       }
 
-      $q = "SELECT state FROM ".TBL_PLAYERS." WHERE uid = '$uid' AND game_id = '$game_id'";
-      $result = $this->run_query($q, $this->connection);
+      $q = "SELECT state FROM ".TBL_PLAYERS." WHERE uid = '$uid' AND gameId = '$gameId'";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -337,19 +635,33 @@ class db_manager
       return $num;
    }
 
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
    //Array of (uid, {state})
-   function get_players_by_state($game_id, $state)
+   function
+   getPlayersByState($gameId, $state)
    {
-      if (!($this->id_valid($game_id))) {
+      if (!($this->idValid($gameId))) {
          return FALSE;
       }
 
-      if(!($this->player_state_valid($state))) {
-         $q = "SELECT uid, state FROM ".TBL_PLAYERS." WHERE game_id = '$game_id'";
+      if(!($this->playerStateValid($state))) {
+         $q = "SELECT uid, state FROM ".TBL_PLAYERS." WHERE gameId = '$gameId'";
       } else {
-         $q = "SELECT uid FROM ".TBL_PLAYERS." WHERE game_id = '$game_id' AND state = '$state'";
+         $q = "SELECT uid FROM ".TBL_PLAYERS." WHERE gameId = '$gameId' AND state = '$state'";
       }
-      $result = $this->run_query($q, $this->connection);
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -361,14 +673,28 @@ class db_manager
       return $arr;
    }
 
-   function set_player_role($game_id, $uid, $role)
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   setPlayerRole($gameId, $uid, $role)
    {
-      if (!$this->id_valid($game_id) || !$this->id_valid($uid) || !$this->player_role_valid($role)) {
+      if (!$this->idValid($gameId) || !$this->idValid($uid) || !$this->playerRoleValid($role)) {
          return FALSE;
       }
 
-      $q = "UPDATE ".TBL_PLAYERS." SET role = '$role' WHERE uid = '$uid' AND game_id = '$game_id'";
-      $result = $this->run_query($q, $this->connection);
+      $q = "UPDATE ".TBL_PLAYERS." SET role = '$role' WHERE uid = '$uid' AND gameId = '$gameId'";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -376,15 +702,28 @@ class db_manager
    }
 
 
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
    //Player Role
-   function get_player_role($game_id, $uid)
+   function
+   getPlayerRole($gameId, $uid)
    {
-      if (!$this->id_valid($game_id) || !$this->id_valid($uid)) {
+      if (!$this->idValid($gameId) || !$this->idValid($uid)) {
          return FALSE;
       }
 
-      $q = "SELECT role FROM ".TBL_PLAYERS." WHERE uid = '$uid' AND game_id = '$game_id'";
-      $result = $this->run_query($q, $this->connection);
+      $q = "SELECT role FROM ".TBL_PLAYERS." WHERE uid = '$uid' AND gameId = '$gameId'";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -392,19 +731,33 @@ class db_manager
       return $num;
    }
 
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
    //Array of (uid, role)
-   function get_players_by_role($game_id, $role)
+   function
+   getPlayersByRole($gameId, $role)
    {
-      if (!($this->id_valid($game_id))) {
+      if (!($this->idValid($gameId))) {
          return FALSE;
       }
 
-      if(!($this->player_role_valid($role))) {
-         $q = "SELECT uid, role FROM ".TBL_PLAYERS." WHERE game_id = '$game_id'";
+      if(!($this->playerRoleValid($role))) {
+         $q = "SELECT uid, role FROM ".TBL_PLAYERS." WHERE gameId = '$gameId'";
       } else {
-         $q = "SELECT uid, role FROM ".TBL_PLAYERS." WHERE game_id = '$game_id' AND role = '$role'";
+         $q = "SELECT uid, role FROM ".TBL_PLAYERS." WHERE gameId = '$gameId' AND role = '$role'";
       }
-      $result = $this->run_query($q, $this->connection);
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -417,15 +770,28 @@ class db_manager
    }
 
 
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
    //Array of uid,
-   function get_players_by_state_role($game_id, $state, $role)
+   function
+   getPlayersByStateRole($gameId, $state, $role)
    {
-      if (!($this->id_valid($game_id)) || !($this->player_state_valid($state)) || !($this->player_role_valid($role))) {
+      if (!($this->idValid($gameId)) || !($this->playerStateValid($state)) || !($this->playerRoleValid($role))) {
          return FALSE;
       }
 
-      $q = "SELECT uid FROM ".TBL_PLAYERS." WHERE game_id = '$game_id' AND state = '$state' AND role = '$role'";
-      $result = $this->run_query($q, $this->connection);
+      $q = "SELECT uid FROM ".TBL_PLAYERS." WHERE gameId = '$gameId' AND state = '$state' AND role = '$role'";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -439,15 +805,29 @@ class db_manager
 
 
    /* Voting */
-   function cast_vote($game_id, $vote_by, $vote_against)
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   function
+   castVote($gameId, $voteBy, $voteAgainst)
    {
-      if (!$this->id_valid($game_id) || !$this->id_valid($vote_by) || !$this->id_valid($vote_against)) {
+      if (!$this->idValid($gameId) || !$this->idValid($voteBy) || !$this->idValid($voteAgainst)) {
          return FALSE;
       }
-      
+
       //Get current round
-      $q = "SELECT curr_round FROM ".TBL_GAMES." WHERE game_id = '$game_id'";
-      $result = $this->run_query($q);
+      $q = "SELECT currRound FROM ".TBL_GAMES." WHERE gameId = '$gameId'";
+      $result = $this->runQuery($q);
       if (($result == FALSE) || (mysql_num_rows($result) == 0)) {
          return FALSE;
       }
@@ -458,23 +838,37 @@ class db_manager
       }
 
       //Cast Vote
-      $q = "INSERT INTO ".TBL_VOTES." (game_id, uid, round, vote) VALUES ('$game_id', '$vote_by', '$round', '$vote_against')";
-      $result = $this->run_query($q, $this->connection);
+      $q = "INSERT INTO ".TBL_VOTES." (gameId, uid, round, vote) VALUES ('$gameId', '$voteBy', '$round', '$voteAgainst')";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
       return TRUE;
    }
 
-   //Array of (uid, num_votes)
-   function get_num_votes($game_id, $round)
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
+   //Array of (uid, numVotes)
+   function
+   getNumVotes($gameId, $round)
    {
-      if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
+      if (!$this->idValid($gameId) || !$this->roundValid($round)) {
          return FALSE;
       }
 
       //Get alive players list
-      $result = $this->get_players_by_state($game_id, PLAYER_STATE_ALIVE);
+      $result = $this->getPlayersByState($gameId, PLAYER_STATE_ALIVE);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -485,14 +879,14 @@ class db_manager
       $arr = array();
       for ($i = 0; $i < $count; $i++) {
          $arr[$i]["uid"] = $result[$i]["uid"];
-         $arr[$i]["num_votes"] = 0;
+         $arr[$i]["numVotes"] = 0;
       }
 
       //Get votes
-      $q = "SELECT vote, COUNT(*) as num_votes FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round' GROUP BY vote";
-      $result = $this->run_query($q, $this->connection);
+      $q = "SELECT vote, COUNT(*) as numVotes FROM ".TBL_VOTES." WHERE gameId = '$gameId' AND round = '$round' GROUP BY vote";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
-         
+
          return FALSE;
       }
 
@@ -500,7 +894,7 @@ class db_manager
       while ($row = mysql_fetch_assoc($result)) {
          for ($i = 0; $i < $count; $i++) {
             if ($arr[$i]["uid"] == $row["vote"]) {
-               $arr[$i]["num_votes"] = $row["num_votes"];
+               $arr[$i]["numVotes"] = $row["numVotes"];
             }
          }
       }
@@ -508,15 +902,29 @@ class db_manager
       return $arr;
    }
 
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
    //Array of (voteby, voteagainst)
-   function get_all_votes($game_id, $round)
+   function
+   getAllVotes($gameId, $round)
    {
-      if (!$this->id_valid($game_id) || !$this->round_valid($round)) {
+      if (!$this->idValid($gameId) || !$this->roundValid($round)) {
          return FALSE;
       }
 
-      $q = "SELECT uid, vote FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round'";
-      $result = $this->run_query($q, $this->connection);
+      $q = "SELECT uid, vote FROM ".TBL_VOTES." WHERE gameId = '$gameId' AND round = '$round'";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -527,16 +935,30 @@ class db_manager
       }
       return $arr;
    }
+
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
 
    //Array of uid
-   function get_votes_against($game_id, $round, $uid)
+   function
+   getVotesAgainst($gameId, $round, $uid)
    {
-      if (!$this->id_valid($game_id) || !$this->round_valid($round) || !$this->id_valid($uid)) {
+      if (!$this->idValid($gameId) || !$this->roundValid($round) || !$this->idValid($uid)) {
          return FALSE;
       }
 
-      $q = "SELECT uid FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round' AND vote = '$uid'";
-      $result = $this->run_query($q, $this->connection);
+      $q = "SELECT uid FROM ".TBL_VOTES." WHERE gameId = '$gameId' AND round = '$round' AND vote = '$uid'";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -548,15 +970,29 @@ class db_manager
       return $arr;
    }
 
+
+   /*---------------------------------------------------------------------------
+    * F --
+    *   O
+    *
+    *   D
+    *
+    * @
+    *
+    * @return
+    *---------------------------------------------------------------------------
+    */
+
    //uid
-   function get_votes_by($game_id, $round, $uid)
+   function
+   getVotesBy($gameId, $round, $uid)
    {
-      if (!$this->id_valid($game_id) || !$this->round_valid($round) || !$this->id_valid($uid)) {
+      if (!$this->idValid($gameId) || !$this->roundValid($round) || !$this->idValid($uid)) {
          return FALSE;
       }
 
-      $q = "SELECT vote FROM ".TBL_VOTES." WHERE game_id = '$game_id' AND round = '$round' AND uid = '$uid'";
-      $result = $this->run_query($q, $this->connection);
+      $q = "SELECT vote FROM ".TBL_VOTES." WHERE gameId = '$gameId' AND round = '$round' AND uid = '$uid'";
+      $result = $this->runQuery($q, $this->connection);
       if ($result == FALSE) {
          return FALSE;
       }
@@ -565,9 +1001,6 @@ class db_manager
    }
 }
 
-$database = new db_manager;
+$database = new dbManager;
 
-/*
-Log
- */
 ?>
