@@ -32,6 +32,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 </head>
 
 <body>
+<!-- Needs to be kept here in the start of body tag. Don't mess with it. -->
+<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
+
+<!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error -->
+<div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div>
+
 
 <div class="container">
    <div class="wrapper">
@@ -42,6 +48,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
             <li><a href="#status">Status</a></li>
             <li><a href="/navigation/cityBox.php">CityBox</a></li>
             <li><a href="/navigation/mafiaBox.php">MafiaBox</a></li>
+            <li><a href="/navigation/play.php">Play</a></li>
             </ul>
             <div id="status">
               <?php
@@ -54,4 +61,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
    </div> <!-- End wrapper -->
 </div> <!--  End container -->
 
+<!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
+<script type="text/javascript">
+FB_RequireFeatures(["XFBML"], function(){
+   FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm");
+   FB.CanvasClient.startTimerToSizeToContent();
+});
+</script>
 </body>
+</html>

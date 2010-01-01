@@ -48,12 +48,6 @@ $(function () {
     //I've used the metadata plugin and applied options in the class attribute below
 });
 
-$("a.mithToggleLink").live("click", function () {
-   $("div.mithGodMessage").slideToggle("fast");
-   $(this).text($(this).text() == "hide" ? "show" : "hide");
-});
-
-
 
 /*----------------------------------------------------------------------------------------
  * Anonymous --
@@ -140,6 +134,16 @@ function stripslashes(str) {
 	return str;
 }
 
+
+function
+mithToggleLinkFunc(godMessageId,
+		           toggleLinkId)
+{
+	$("#"+godMessageId).toggle();
+	$("#"+toggleLinkId).text($("#"+toggleLinkId).text() == "show" ? "hide" : "show");
+}
+
+
 /*----------------------------------------------------------------------------------------
  * mithPostComment --
  *   Post the comment to the server and display it.
@@ -188,7 +192,7 @@ mithPostComment(commentTextId,
     		 alert("Server rejected your request.");
     	 }
       }
-	 });
+   });
 }
 
 
@@ -241,6 +245,21 @@ mithGetNewComments(commentBlobId,
 }
 
 
+/*----------------------------------------------------------------------------------------
+ * mithGetNewComments --
+ *   Get new messages from the server.
+ *
+ *   Both cityBox and mafiaBox uses this function. As a side-effect page will get updated
+ *   when the response arrives. One day, I will add ajax error function too.
+ *
+ * @commentTextId Id of comment textarea
+ * @commentBlobId Id of comment blob, area where comments are displayed
+ * @commentType   can be COMMENT_CITY_TYPE or COMMENT_MAFIA_TYPE
+ *
+ * @return none
+ *----------------------------------------------------------------------------------------
+ */
+
 function 
 mithGetOldComments(commentBlobId,
 		           commentType,
@@ -274,7 +293,6 @@ mithGetOldComments(commentBlobId,
 
 function mithStatusRegisterVote(id, myid, type)
 {  
-
    $.ajax({
       type: "POST",
 	  global: false,
@@ -291,5 +309,5 @@ function mithStatusRegisterVote(id, myid, type)
 	    		   alert("Server rejected your request.");
 	    	    }
 	         }
-	});   
+   });   
 }

@@ -1,32 +1,11 @@
-<body>
-<!-- Needs to be kept here in the start of body tag. Don't mess with it. -->
-<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
-
-<!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error -->
-<div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div>
-
 <script type="text/javascript">
 {
 	var html = 0;
 	var i = 0;
-	var mithCbNumComments;
+
    <?php
    $comment = $database->get_comments(5, 1, $mithCommentType, 20);
    $tmp = count($comment) - 1;
-   ?>
-
-   mithCbNumComments = <?php echo $tmp?>;
-
-   <?php
-   if ($mithCommentType == COMMENT_TYPE_MAFIA) {
-   ?>
-      mithCbMafiaLastComment = <?php echo $comment[0]['comment_id']?>;
-   <?php
-   } else {
-   ?>
-	   mithCbCityLastComment = <?php echo $comment[0]['comment_id']?>;
-   <?php
-	}
    ?>
 
    mithCbComments = new Array(<?php echo $tmp ?>);
@@ -52,15 +31,17 @@
    }
    $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
    $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
+   /* Now that we have added all the FB tags, it is time to make sense of those tags. */
+   FB.XFBML.Host.parseDomTree();
 }
 </script>
 
 <input type='hidden' id=<?php echo $mithCbLastNewComment ?> value=<?php echo $comment[0]['comment_id'] ?> />
 <input type='hidden' id=<?php echo $mithCbLastOldComment ?> value=<?php echo $comment[$tmp]['comment_id'] ?> />
 
-<a class="mithToggleLink" href=#>hide</a>
+<a id=<?php echo $mithToggleLink ?> class="mithToggleLink" href=# onclick='mithToggleLinkFunc("<?php echo $mithGodMessage ?>", "<?php echo $mithToggleLink ?>")'>hide</a>
 
-<div class="mithGodMessage">
+<div id=<?php echo $mithGodMessage ?> class="mithGodMessage">
    <?php
       $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
       if (count($comment)) {
@@ -101,11 +82,3 @@ Refresh Now
 More
 </a>
 
-<!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
-<script type="text/javascript">
-FB_RequireFeatures(["XFBML"], function(){
-   FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm");
-   FB.CanvasClient.startTimerToSizeToContent();
-   });
-</script>
-</body>

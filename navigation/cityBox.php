@@ -19,6 +19,8 @@ $mithCommentPostIndicator = "mithCbCommentPostIndicatorId";
 $mithNewMessage = "mithCbNewMessageId";
 $mithCbLastNewComment = "mithCbLastNewCommentId";
 $mithCbLastOldComment = "mithCbLastOldCommentId";
+$mithGodMessage = "mithCbGodMessageId";
+$mithToggleLink = "mithCbToggleLinkId";
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/shared/comments/commentBox.php";
 ?>
