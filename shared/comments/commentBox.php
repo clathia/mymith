@@ -6,17 +6,6 @@
 <div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div>
 
 
-<a class="mithToggleLink" href=#>hide</a>
-
-<div class="mithGodMessage">
-   <?php
-      $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
-      if (count($comment)) {
-         echo "God says:"." ". $comment[0]['text'];
-      }
-   ?>
-</div>
-
 <script type="text/javascript">
 {
 	var html = 0;
@@ -50,7 +39,7 @@
          /* This processing can be done on client side too. Do it. */
          $timestamp = display_date($comment[$i]['timestamp']);
          echo "mithCbComments[$i] = new Array(3);";
-         echo "mithCbComments[$i][0] = '$text';\n";
+         echo "mithCbComments[$i][0] = escape('$text');\n";
          echo "mithCbComments[$i][1] = '$uid';\n";
          echo "mithCbComments[$i][2] = '$timestamp';\n";
       }
@@ -58,14 +47,23 @@
 
    for (i = 0; i < mithCbComments.length; i++) {
       html = mithCreateCommentHtml(mithCbComments[i][0], mithCbComments[i][1], mithCbComments[i][2]);
-      $("#" + "<?php echo $mithCommentBlob ?>").append(html);
+      $("#" + <?php echo $mithCommentBlob ?>).append(html);
    }
-   $(".commentEntry:odd").addClass("commentEntryClassOdd");
-   $(".commentEntry:even").addClass("commentEntryClassEven");
+   $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
+   $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
 }
 </script>
 
 <a class="mithToggleLink" href=#>hide</a>
+
+<div class="mithGodMessage">
+   <?php
+      $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
+      if (count($comment)) {
+         echo "God says:"." ". $comment[0]['text'];
+      }
+   ?>
+</div>
 
 <div id="<?php echo $mithCommentPostIndicator ?>" class ="mithCommentIndicator">
    <img src ='shared/comments/images/indicator.gif'/>

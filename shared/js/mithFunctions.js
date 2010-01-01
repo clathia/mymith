@@ -166,7 +166,7 @@ mithPostComment(commentTextId,
     		FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
     		document.getElementById(commentTextId).value = '';
     		document.getElementById(commentPostIndicator).style.visibility = 'hidden';
-    		var newClass = $("#"+commentBlobId +" .commentTable").length % 2 == 0 ? 'commentTableClassEven' : 'commentTableClassOdd';
+    		var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
     		$("#"+mithDummyId).addClass(newClass);
     		mithDummyId++;
     	 } else {
