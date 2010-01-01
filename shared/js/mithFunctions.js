@@ -81,8 +81,8 @@ $(document).ready(function() {
       cache: true,
       spinner: 'Retrieving data...',
       load: function(event, ui) {
-    	  $(".commentTable:odd").addClass("commentTableClassOdd");
-    	  $(".commentTable:even").addClass("commentTableClassEven");
+    	  $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
+    	  $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
       }
    });   
 });
@@ -93,7 +93,7 @@ mithGenerateCommentResponse(commentText,
 		                    commentDate,
 		                    uid)
 {
-	return
+/*	return
 	<div class="commentTable">
     <table width='100%' cellspacing='0' align='center'>
     <tr>
@@ -108,7 +108,7 @@ mithGenerateCommentResponse(commentText,
     </tr>
     </table>
     </div>
-	alert(commentText + " "+commentDate+" "+uid);
+	alert(commentText + " "+commentDate+" "+uid);*/
 }
 
 /*----------------------------------------------------------------------------------------

@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 
 <?php
 /*
- * Copyright 2009 MiTH.  All Rights Reserved. 
+ * Copyright 2009 MiTH.  All Rights Reserved.
  *
  * Application: MiTH (Mafia in The House)
- * File: 'mafiabox.php' 
+ * File: 'mafiabox.php'
  */
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php";

@@ -1,10 +1,10 @@
 <?php
 /*
  * <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
- * Copyright 2009 MiTH.  All Rights Reserved. 
+ * Copyright 2009 MiTH.  All Rights Reserved.
  *
  * Application: MiTH (Mafia in The House)
- * File: 'index.php' 
+ * File: 'index.php'
  */
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
@@ -14,8 +14,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 <head>
 <link type="text/css" href="/shared/js/jquery-lite/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
 <link type="text/css" href="/shared/js/jquery-dtpicker-1.0a5/jquery.dtpicker.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="styles.css?22" />
-	
+<link rel="stylesheet" type="text/css" href="styles.css?3" />
+
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-ui-1.7.2.custom.min.js"></script>
 
@@ -43,7 +43,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
             </ul>
             <div id="status">
               <?php
-               include($_SERVER['DOCUMENT_ROOT'] . "/navigation/status.php"); 
+               include($_SERVER['DOCUMENT_ROOT'] . "/navigation/status.php");
                ?>
             </div> <!--  End CityBox -->
            </div> <!-- End tabs -->

@@ -61,3 +61,41 @@ Div Tags:
 <div id="dummy1">
 </div> <!-- End dummy1 -->
 End with Id. If no Id, end with class.
+
+
+Chirag: Some junk code
+      <table width='100%' style='text-align:left'>
+         <tr>
+            <td>
+               <textarea id="<?php echo $mithCommentText ?>">
+               </textarea>
+            </td>
+            <td align="left">
+               <input type='submit' value="<?php echo $mithButtonValue ?>"
+                onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>");'>
+            </td>
+         </tr>
+      </table>
+
+   <div class="mithCommentEntry">
+      <table cellspacing='0'>
+         <tr>
+            <td width=55px valign="top">
+               <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
+               </fb:profile-pic>
+            </td>
+            <td valign="top">
+               <div class="mithFullName">
+                  <fb:name uid='$uid' linked="true" useyou="false">
+                  </fb:name>
+                  <span class="mithDate">
+                     $date
+                  </span>
+               </div>
+               <div class="mithCommentText">
+                  $text
+               </div>
+            </td>
+         </tr>
+      </table>
+   </div>

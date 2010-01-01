@@ -59,7 +59,7 @@ function display_date($date)
    $unix_date = strtotime($date);
 
    //check validity of date
-   if (empty($unix_date)) {   
+   if (empty($unix_date)) {
       return "Bad date";
    }
 
@@ -68,7 +68,7 @@ function display_date($date)
       return "Just now";
    }
 
-   if($now > $unix_date) {   
+   if($now > $unix_date) {
       $difference = $now - $unix_date;
       $tense = "ago";
    } else {
@@ -92,28 +92,36 @@ function display_comment($uid, $publish_date, $text)
 {
    $date = display_date($publish_date);
    return <<<HTML
-      <div class="commentTable">
-      <table width='100%' cellspacing='0' align='center'>
-      <tr>
-      <td width=55px valign="top">
-      <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
-      </fb:profile-pic>
-      </td>
-      <td valign="top"><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
-      <span class="date">$date</span></div>
-      <div class="commentTextOld">$text</div>
-      </td>
-      </tr>
+   <div class="mithCommentEntry">
+      <table cellspacing='0'>
+         <tr>
+            <td width=55px valign="top">
+               <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
+               </fb:profile-pic>
+            </td>
+            <td valign="top">
+               <div class="mithFullName">
+                  <fb:name uid='$uid' linked="true" useyou="false">
+                  </fb:name>
+                  <span class="mithDate">
+                     $date
+                  </span>
+               </div>
+               <div class="mithCommentText">
+                  $text
+               </div>
+            </td>
+         </tr>
       </table>
-      </div>
+   </div>
 HTML;
 }
 
 function get_user_info($uid, $obj)
 {
-   $user_details = $obj->api_client->users_getInfo($uid, 'last_name, first_name, profile_url, pic_square'); 
+   $user_details = $obj->api_client->users_getInfo($uid, 'last_name, first_name, profile_url, pic_square');
    if ($user_details) {
-      $first_name = $user_details[0]['first_name']; 
+      $first_name = $user_details[0]['first_name'];
       $last_name = $user_details[0]['last_name'];
       $full_name = $first_name." ".$last_name;
       $profile_url = $user_details[0]['profile_url'];
