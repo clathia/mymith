@@ -3,15 +3,15 @@
 <head>
 <?php
 /*
- * Copyright 2009 MiTH.  All Rights Reserved. 
+ * Copyright 2009 MiTH.  All Rights Reserved.
  *
  * Application: MiTH (Mafia in The House)
- * File: 'mithkeys.php' 
+ * File: 'mithkeys.php'
  */
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
-$game_id = 5;
+$mithStGameId = 5;
 ?>
 
 <link rel="stylesheet" type="text/css" href="styles.css?16" />
@@ -20,124 +20,168 @@ $game_id = 5;
 <body>
 
 <?php
-$myuid = $facebook->api_client->users_GetLoggedInUser();
-$role = $database->get_player_role($game_id, $myuid);
-$state = $database->get_player_state($game_id, $myuid);
+$mithStMyUid = $facebook->api_client->users_GetLoggedInUser();
+$mithStRole = $database->get_player_role($mithStGameId, $mithStMyUid);
+$mithStState = $database->get_player_state($mithStGameId, $mithStMyUid);
 
-$game = $database->get_game_details($game_id);
-$round_state = $game['round_state'] == ROUND_STATE_NIGHT ? "Night" : "Day";
-switch ($role) {
+$mithStGame = $database->get_game_details($mithStGameId);
+$mithStRoundState = $mithStGame['round_state'] == ROUND_STATE_NIGHT ? "Night" : "Day";
+switch ($mithStRole) {
  case PLAYER_ROLE_CIVILIAN:
-    $img = "Civilian.jpg";
-    $button_name = $round_state == "Night" ? "none" : "Vote";
+    $mithStRoleImg = "Civilian.jpg";
+    $mithStButtonName = $mithStRoundState == "Night" ? "none" : "Vote";
     break;
  case PLAYER_ROLE_MAFIA:
-    $img = "Mafia.jpg";
-    $button_name = $round_state == "Night" ? "Kill" : "Vote";
+    $mithStRoleImg = "Mafia.jpg";
+    $mithStButtonName = $mithStRoundState == "Night" ? "Kill" : "Vote";
     break;
  case PLAYER_ROLE_DOCTOR:
-    $img = "Doctor.jpg";
-    $button_name = $round_state == "Night" ? "Heal" : "Vote"; 
+    $mithStRoleImg = "Doctor.jpg";
+    $mithStButtonName = $mithStRoundState == "Night" ? "Heal" : "Vote";
     break;
  case PLAYER_ROLE_INSPECTOR:
-    $img = "Inspector.jpg";
-    $button_name = $round_state == "Night" ? "Ask" : "Vote";
+    $mithStRoleImg = "Inspector.jpg";
+    $mithStButtonName = $mithStRoundState == "Night" ? "Ask" : "Vote";
     break;
  case PLAYER_ROLE_GOD:
-    $img = "God.jpg";
-    $button_name = "none";
+    $mithStRoleImg = "God.jpg";
+    $mithStButtonName = "none";
     break;
 }
-$img = "images/".$img;
+$mithStRoleImg = "images/".$mithStRoleImg;
 
 /* TODO: Remove god from players list */
-$players_alive = $database->get_players_by_state($game_id, PLAYER_STATE_ALIVE);
-$players_alive_num = count($players_alive);
+$mithStPlayersAlive = $database->get_players_by_state($mithStGameId, PLAYER_STATE_ALIVE);
+$mithStPlayersAliveNum = count($mithStPlayersAlive);
 /* TODO: Remove god from players list and -1 should be replace with PLAYER_STATE_ALL */
-$total_players_num = count($database->get_players_by_state($game_id, -1)) - 1;
+$mithStTotalPlayersNum = count($database->get_players_by_state($mithStGameId, -1)) - 1;
 
-$mafias_alive_num = count($database->get_players_by_state_role($game_id, PLAYER_STATE_ALIVE, PLAYER_ROLE_MAFIA));
-$total_mafias_num = count($database->get_players_by_role($game_id, PLAYER_ROLE_MAFIA));
+$mithStMafiasAliveNum = count($database->get_players_by_state_role($mithStGameId, PLAYER_STATE_ALIVE, PLAYER_ROLE_MAFIA));
+$mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAYER_ROLE_MAFIA));
 ?>
 
-<div class="statusTab">
+<div class="mithDefense">
+   <div class="mithTextForDefense">
+   I am not a mafia because...
+   </div> <!-- End div.mithTextForDefense -->
 
-   <div class="notMafia">
-      <div class="textForNotMafia">
-      I am not a mafia because...
-      </div> <!-- End div.textForNotMafia -->
-
-      <div class="editStatus" id="div_2">
-      I have written come crap, ok?.
-      </div> <!-- End div.editStatus -->
-   </div> <!-- End div.notMafia -->
+   <div class="mithEditDefense" id="div_2">
+   I have written come crap, ok?.
+   </div> <!-- End div.mithEditDefense -->
+</div> <!-- End div.mithDefense -->
 
 
-   <div class="setDeadline">
-      <div class="textForSetDeadline">
-      </div> <!-- End div.textForSetDeadline -->
+<div class="mithSetDeadline">
+   <div class="mithTextForDeadline">
+      Set Deadline
+   </div> <!-- End div.mithTextForDeadline -->
 
-      <div class="editDeadline">
-         <input id="deadline" type="datetime-local" min="2009-08-01T12:15" max="2009-09-08T13:25">
-         </input> <!-- End input.deadline -->
-      </div> <!-- End div.editDeadline -->
+   <div class="mithDeadlineBox">
+      <input id="deadline" type="datetime-local" min="2009-08-01T12:15" max="2009-09-08T13:25">
+      </input> <!-- End input.deadline -->
+   </div> <!-- End div.mithDeadlineBox -->
+</div>
+
+
+<div class="mithYourRole">
+   <div class="mithTextForYourRole">
+      You Are...
+   </div> <!-- End div.mithTextForYourRole -->
+
+   <div class="mithPicForYourRole">
+      <img src=<?php echo $mithStRoleImg ?> />
+   </div> <!-- End div.mithPicForYourRole -->
+</div> <!-- End div.mithYourRole -->
+
+
+<div class="mithGameStatus">
+   <div class="mithGameState">
+      Game State: <?php echo $mithStRoundState ?> <?php echo $mithStGame['curr_round'] ?>
+   </div> <!-- End div.mithGameState -->
+
+   <div class="mithPlayersAlive">
+      Players Alive: <?php echo $mithStPlayersAliveNum ?>/<?php echo $mithStTotalPlayersNum ?>
+   </div> <!-- End div.mithPlayersAlive -->
+
+   <div class="mithMafiasAlive">
+      Mafias Alive: <?php echo $mithStMafiasAliveNum ?>/<?php echo $mithStTotalMafiasNum ?>
+   </div> <!-- End div.mithMafiasAlive -->
+</div> <!-- End div.mithGameState -->
+
+
+<div class="mithCarouselBlob">
+   <div class="mithCarouselBorder">
+      <button class="mithCarouselPrev">
+         &lt;&lt;
+      </button>
+      <button class="mithCarouselNext">
+         &gt;&gt;
+      </button>
    </div>
 
-
-   <div class="yourRole">
-      <div class="textForYourRole">
-      You Are...
-      </div> <!-- End div.textForYourRole -->
-
-      <div class="picForYourRole">
-         <img src=<?php echo $img ?> />
-      </div> <!-- End div.picForYourRole -->
-   </div> <!-- End div.yourRole -->
-
-
-   <div class="gameStatus">
-      <div class="gameState">
-      Game State: <?php echo $round_state ?> <?php echo $game['curr_round'] ?>
-      </div> <!-- End div.gameState -->
-
-      <div class="playersAlive">
-      Players Alive: <?php echo $players_alive_num ?>/<?php echo $total_players_num ?>
-      </div> <!-- End div.playersAlive -->
-
-      <div class="mafiasAlive">
-      Mafias Alive: <?php echo $mafias_alive_num ?>/<?php echo $total_mafias_num ?>
-      </div> <!-- End div.mafiasAlive -->
-   </div> <!-- End div.gameState -->
-
-   <button class="prev">left</button>
-   <button class="next">right</button>  
-   <div class="userSlide">
+   <div class="mithCarousel">
       <ul>
-      <?php
-      for ($i = 0; $i < count($players_alive); $i++) {
-         $uid = $players_alive[$i]['uid'];
-         $user = get_user_info($uid, $facebook);
-      ?>
+         <?php
+         for ($i = 0; $i < count($mithStPlayersAlive); $i++) {
+            $mithStUid = $mithStPlayersAlive[$i]['uid'];
+            $mithStQuery = "SELECT name, pic_big, profile_url FROM user WHERE uid = $mithStUid";
+            $mithStResult = $facebook->api_client->fql_query($mithStQuery);
+            if ($mithStResult != NULL) {
+               $mithStFullName = $mithStResult[0]['name'];
+               $mithStProfileUrl = $mithStResult[0]['profile_url'];
+               $mithStPicUrl = $mithStResult[0]['pic_big'];
+               if(!$mithStPicUrl) {
+                  $mithStPicUrl = "/images/nullImage.gif";
+               }
+            } else {
+               echo "User does not exist";
+            }
+            ?>
          <li>
-         <table>
-         <tr><td><a target='_blank' href="<?php echo $user['profile_url'] ?>"><img src="<?php echo $user['pic_square'] ?>" /></a></td></tr>
-         <tr><td>
-         <div class="buttons">
-            <button type="submit" class="simple" onclick = 'mithStatusRegisterVote("<?php echo $uid ?>", "<?php echo $myuid?>")';><?php echo $button_name ?> </button>
-         </div> <!-- End div.buttons -->
-         </td></tr>
-         <tr><td>
-         <div id="<?php echo $uid ?>"> 
-            <?php echo count($database->get_votes_against($game_id, 1 ,$uid)) ?>
-         </div> <!-- End div#uid -->
-         </td></tr>
-         </table>
+            <table>
+               <tr>
+                  <td>
+                     <div class="mithCarouselPic">
+	                     <a target='_blank' href="<?php echo $mithStProfileUrl ?>">
+   	                     <img src="<?php echo $mithStPicUrl ?>" />
+      	               </a>
+      	            </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <div class="mithCarouselName">
+                        <a target='_blank' href="<?php echo $mithStProfileUrl ?>">
+                           <?php echo $mithStFullName ?>
+                        </a>
+                     </div> <!-- End div.mithCarouselButtons -->
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <div class="mithCarouselButtons">
+                        <button type="submit" class="simple" onclick = 'mithStatusRegisterVote("<?php echo $mithStUid ?>", "<?php echo $mithStMyUid?>")';>
+                           <?php echo $mithStButtonName ?>
+                        </button>
+                     </div> <!-- End div.mithCarouselButtons -->
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <div id="<?php echo $mithStUid ?>" class="mithNumVotes">
+                        <?php echo count($database->get_votes_against($mithStGameId, 1, $mithStUid)) ?>
+                     </div> <!-- End div.mithNumVotes -->
+                  </td>
+               </tr>
+            </table>
          </li>
       <?php
       }
       ?>
       </ul>
-   </div> <!--  End div.userSlide -->
+   </div> <!--  End div.mithCarousel -->
 
-</div> <!-- End div.statusTab -->
+   <div class="mithCarouselBorder">
+   </div>
+</div> <!-- End div.mithCarouselBlob -->
 </body>

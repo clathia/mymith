@@ -19,11 +19,11 @@
  *----------------------------------------------------------------------------------------
  */
 $(document).ready(function() {
-   $(".userSlide").jCarouselLite({
-    btnNext: ".next",
-    btnPrev: ".prev",
+   $(".mithCarousel").jCarouselLite({
+    btnNext: ".mithCarouselNext",
+    btnPrev: ".mithCarouselPrev",
     mouseWheel: true,
-    visible: 3,
+    visible: 6,
     circular:false
  });
 });

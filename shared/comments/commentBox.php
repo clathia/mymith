@@ -54,8 +54,8 @@
 }
 </script>
 
-<a class="mithToggleLink" href=#>hide</a>
 
+<a class="mithToggleLink" href=#>hide</a>
 <div class="mithGodMessage">
    <?php
       $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
@@ -64,6 +64,7 @@
       }
    ?>
 </div>
+
 
 <div id="<?php echo $mithCommentPostIndicator ?>" class ="mithCommentIndicator">
    <img src ='shared/comments/images/indicator.gif'/>
@@ -82,16 +83,20 @@
    </form>
 </div> <!-- End div.mithPostComment -->
 
+
 <a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithNewMessage ?>")'>
 Refresh Now
 </a>
 <br />
 
+
 <div id=<?php echo $mithNewMessage ?>>
 </div>
 
+
 <div id=<?php echo $mithCommentBlob ?> class="mithCommentBlob">
 </div>
+
 
 <!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
 <script type="text/javascript">
