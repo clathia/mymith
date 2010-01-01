@@ -115,7 +115,7 @@ mithCreateCommentHtml(text,
    html +=    '<fb:name uid=\''+ uid + '\' linked="true" useyou="false">';
    html +=    '<\/fb:name>\n';
    html +=    '<span class="mithDate">'+ timestamp +'<\/span>\n';
-   html +=    '<div class="mithCommentText">'+ text +'<\/div>\n';
+   html +=    '<div class="mithCommentText">'+ stripslashes(text) +'<\/div>\n';
    html +=    '<\/td>\n';
    html +=    '<\/tr>\n';
    html +=    '<\/table>\n';
@@ -124,6 +124,21 @@ mithCreateCommentHtml(text,
 
 }
 
+function addslashes(str) {
+	str=str.replace(/\\/g,'\\\\');
+	str=str.replace(/\'/g,'\\\'');
+	str=str.replace(/\"/g,'\\"');
+	str=str.replace(/\0/g,'\\0');
+	return str;
+}
+	
+function stripslashes(str) {
+	str=str.replace(/\\'/g,'\'');
+	str=str.replace(/\\"/g,'"');
+	str=str.replace(/\\0/g,'\0');
+	str=str.replace(/\\\\/g,'\\');
+	return str;
+}
 
 /*----------------------------------------------------------------------------------------
  * mithPostComment --
@@ -147,7 +162,7 @@ mithPostComment(commentTextId,
 		        commentType,
 		        commentPostIndicator)
 {
-   var text = fixText(document.getElementById(commentTextId).value);
+   var text = document.getElementById(commentTextId).value;
    document.getElementById(commentPostIndicator).style.visibility = 'visible';
    $.ajax({
       type: "POST",
@@ -191,42 +206,71 @@ mithPostComment(commentTextId,
  * @return none
  *----------------------------------------------------------------------------------------
  */
-var mithCbMafiaLastComment;
-var mithCbCityLastComment;
 
 function 
 mithGetNewComments(commentBlobId,
 		           commentType,
 		           commentPostIndicator,
-		           commentNewMessage)
+		           lastNewCommentId,
+		           newMessageId)
 {
-   var lastComment = (commentType == 0 ? mithCbCityLastComment : mithCbMafiaLastComment);
-   
    $.ajax({
       type: "POST",
       global: false,
       url: "navigation/getNewComments.php",
       dataType: "json",
-      data: 'lastComment='+lastComment+'&type='+commentType,
+      data: 'lastComment='+$("#"+lastNewCommentId).val()+'&type='+commentType,
       error: function(XMLHttpRequest, textStatus) {
 	     alert("Some error occured. We will fix asap.");
       },
       success: function(json){
-    	 //alert("got datatype json"+ json.numNewComments);
-    	 $("#"+commentNewMessage).html(json.numNewComments + " New Comment");
-    	 ;
-    	  /*
-         var response = "<div id="+ mithDummyId + " > " + xmlHttp.responseText + "</div>";
-         $("#cbCommentBlob").prepend(response);
-         FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
-         document.getElementById("cbIndicator").style.visibility = 'hidden';
-         $("#cbCommentText").val("");
-         cbDummyId++;
-         */
+    	 if (json.ret == 0 && json.numNewComments > 0) {
+            $.each(json.comments, function (i, comment) {
+        	   var html = mithCreateCommentHtml(comment.text, comment.uid, comment.timestamp);
+         	   var response = "<div id="+ mithDummyId + " > " + html + "</div>";
+         	   $("#"+commentBlobId).prepend(response);
+               FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
+         	   var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
+         	   $("#"+mithDummyId).addClass(newClass); 
+         	   mithDummyId++;
+    	   })
+    	   $("#"+lastNewCommentId).val(json.lastCommentId);
+    	 }
       }
-   });
-   
+   }); 
 }
+
+
+function 
+mithGetOldComments(commentBlobId,
+		           commentType,
+		           commentPostIndicator,
+		           lastOldCommentId)
+{
+   $.ajax({
+      type: "POST",
+      global: false,
+      url: "navigation/getOldComments.php",
+      dataType: "json",
+      data: 'lastComment='+$("#"+lastOldCommentId).val()+'&type='+commentType,
+      error: function(XMLHttpRequest, textStatus) {
+	     alert("Some error occured. We will fix asap.");
+      },
+      success: function(json){
+         $.each(json.comments, function (i, comment) {
+        	 var html = mithCreateCommentHtml(comment.text, comment.uid, comment.timestamp);
+         	 var response = "<div id="+ mithDummyId + " > " + html + "</div>";
+         	 $("#"+commentBlobId).append(response);
+             FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
+         	 var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
+         	 $("#"+mithDummyId).addClass(newClass); 
+         	 mithDummyId++;
+    	 })
+    	 $("#"+lastOldCommentId).val(json.lastCommentId);
+      }
+   }); 
+}
+
 
 function mithStatusRegisterVote(id, myid, type)
 {  

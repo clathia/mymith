@@ -5,7 +5,6 @@
 <!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error -->
 <div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div>
 
-
 <script type="text/javascript">
 {
 	var html = 0;
@@ -34,7 +33,9 @@
 
    <?php
       for($i = 0; $i <= $tmp; $i++) {
-         $text = $comment[$i]['text'];
+         /* In order to send it to JS - escape quotes */
+         $text = addSlashes($comment[$i]['text']);
+         $text = preg_replace("/\\n/"," ", $text);
          $uid = $comment[$i]['uid'];
          /* This processing can be done on client side too. Do it. */
          $timestamp = display_date($comment[$i]['timestamp']);
@@ -53,6 +54,9 @@
    $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
 }
 </script>
+
+<input type='hidden' id=<?php echo $mithCbLastNewComment ?> value=<?php echo $comment[0]['comment_id'] ?> />
+<input type='hidden' id=<?php echo $mithCbLastOldComment ?> value=<?php echo $comment[$tmp]['comment_id'] ?> />
 
 <a class="mithToggleLink" href=#>hide</a>
 
@@ -82,7 +86,7 @@
    </form>
 </div> <!-- End div.mithPostComment -->
 
-<a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithNewMessage ?>")'>
+<a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithCbLastNewComment ?>", "<?php echo $mithNewMessage ?>")'>
 Refresh Now
 </a>
 <br />
@@ -92,6 +96,10 @@ Refresh Now
 
 <div id=<?php echo $mithCommentBlob ?> class="mithCommentBlob">
 </div>
+
+<a href="#" onclick='mithGetOldComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithCbLastOldComment ?>")'>
+More
+</a>
 
 <!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
 <script type="text/javascript">
