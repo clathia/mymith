@@ -39,7 +39,7 @@
          /* This processing can be done on client side too. Do it. */
          $timestamp = display_date($comment[$i]['timestamp']);
          echo "mithCbComments[$i] = new Array(3);";
-         echo "mithCbComments[$i][0] = escape('$text');\n";
+         echo "mithCbComments[$i][0] = '$text';\n";
          echo "mithCbComments[$i][1] = '$uid';\n";
          echo "mithCbComments[$i][2] = '$timestamp';\n";
       }
@@ -47,7 +47,7 @@
 
    for (i = 0; i < mithCbComments.length; i++) {
       html = mithCreateCommentHtml(mithCbComments[i][0], mithCbComments[i][1], mithCbComments[i][2]);
-      $("#" + <?php echo $mithCommentBlob ?>).append(html);
+      $("#" + "<?php echo $mithCommentBlob ?>").append(html);
    }
    $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
    $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
