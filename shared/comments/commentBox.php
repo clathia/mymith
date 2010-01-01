@@ -15,6 +15,54 @@
    ?> 
 </div>
 
+<script type="text/javascript">
+{
+	var html = 0;
+	var i = 0;
+	var mithCbNumComments;
+   <?php
+   $comment = $database->get_comments(5, 1, $mithCommentType, 20);
+   $tmp = count($comment) - 1;
+   ?>
+ 
+   mithCbNumComments = <?php echo $tmp?>;
+
+   <?php
+   if ($mithCommentType == COMMENT_TYPE_MAFIA) {
+   ?>
+      mithCbMafiaLastComment = <?php echo $comment[0]['comment_id']?>;
+   <?php
+   } else {
+   ?>
+	   mithCbCityLastComment = <?php echo $comment[0]['comment_id']?>;
+   <?php
+	}
+   ?>
+   
+   mithCbComments = new Array(<?php echo $tmp ?>);
+
+   <?php
+      for($i = 0; $i <= $tmp; $i++) {
+         $text = $comment[$i]['text'];
+         $uid = $comment[$i]['uid'];
+         /* This processing can be done on client side too. Do it. */
+         $timestamp = display_date($comment[$i]['timestamp']);
+         echo "mithCbComments[$i] = new Array(3);";
+         echo "mithCbComments[$i][0] = '$text';\n";
+         echo "mithCbComments[$i][1] = '$uid';\n";
+         echo "mithCbComments[$i][2] = '$timestamp';\n";
+      }
+   ?>
+
+   for (i = 0; i < mithCbComments.length; i++) {
+      html = mithCreateCommentHtml(mithCbComments[i][0], mithCbComments[i][1], mithCbComments[i][2]);
+      $("#" + "<?php echo $mithCommentBlob ?>").append(html);
+   }
+   $(".commentTable:odd").addClass("commentTableClassOdd");
+   $(".commentTable:even").addClass("commentTableClassEven");
+}
+</script>
+
 <a class="mithToggleLink" href=#>hide</a>
  
 <div id="<?php echo $mithCommentPostIndicator ?>" class ="mithCommentIndicator">
@@ -43,30 +91,16 @@
    </form>
 </div> <!-- End div.mithPostComment -->
 
-<a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>")'>Refresh Now</a> <br /><br />
+<a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithNewMessage ?>")'>Refresh Now</a> <br /><br />
 
-<?php
-$comment = $database->get_comments(5, 1, $mithCommentType, 20);
-$tmp = count($comment) - 1;
-?>
-
-<script type="text/javascript">
-cbNumComments=<?php echo $tmp?>;
-cbLastComment = <?php echo $comment[0]['comment_id']?>
-</script>
-
-<div id=<?php echo $mithCommentBlob ?> class="commentBlob">
-<?php
-for($i = 0; $i <= $tmp; $i++) {
-   $text = $comment[$i]['text'];
-   $uid = $comment[$i]['uid'];
-   echo display_comment($uid, $comment[$i]['timestamp'], $text);
-  }
-?>
+<div id=<?php echo $mithNewMessage ?>>
 </div>
 
+<div id=<?php echo $mithCommentBlob ?> class="commentBlob">
+</div>
+
+<script type="text/javascript">
 <!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
-<script type="text/javascript">  
 FB_RequireFeatures(["XFBML"], function(){ 
    FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm");
    FB.CanvasClient.startTimerToSizeToContent();

@@ -100,7 +100,7 @@ function display_comment($uid, $publish_date, $text)
       </fb:profile-pic>
       </td>
       <td valign="top"><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
-      <span class="date">$date</span></div>
+      <span class="date">$date</span>
       <div class="commentTextOld">$text</div>
       </td>
       </tr>

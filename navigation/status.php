@@ -10,39 +10,11 @@
  */
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
 $game_id = 5;
 ?>
 
 <link rel="stylesheet" type="text/css" href="styles.css?16" />
-
-<script type="text/javascript">
-var globalId;
-function statusRegisterVote(id, myid, type)
-{  
-   xmlHttp = CreateXMLHttpRequest();
-   globalId = id;
-   var url = 'navigation/registerVote.php?id='+id+'&myid='+myid;
-   xmlHttp.onreadystatechange = statusCallback;  
-   xmlHttp.open("GET", url, true);
-   xmlHttp.send(null);
-}
-
-function
-statusCallback()
-{
-  if (xmlHttp.readyState == 4)
-  {
-    if (xmlHttp.status == 200)
-    {
-        var response = xmlHttp.responseText;
-        alert(globalId);
-        document.getElementById(globalId).innerHTML = response;
-    }
-  }
-}
-</script>
 </head>
 
 <body>
@@ -151,7 +123,7 @@ $total_mafias_num = count($database->get_players_by_role($game_id, PLAYER_ROLE_M
          <tr><td><a target='_blank' href="<?php echo $user['profile_url'] ?>"><img src="<?php echo $user['pic_square'] ?>" /></a></td></tr>
          <tr><td>
          <div class="buttons">
-            <button type="submit" class="simple" onclick = 'statusRegisterVote("<?php echo $uid ?>", "<?php echo $myuid?>")';><?php echo $button_name ?> </button>
+            <button type="submit" class="simple" onclick = 'mithStatusRegisterVote("<?php echo $uid ?>", "<?php echo $myuid?>")';><?php echo $button_name ?> </button>
          </div> <!-- End div.buttons -->
          </td></tr>
          <tr><td>
