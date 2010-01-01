@@ -79,37 +79,51 @@ $(document).ready(function() {
       cookie: { expires: 30 },
       fx: { opacity: 'toggle'},
       cache: true,
-      spinner: 'Retrieving data...',
-      load: function(event, ui) {
-    	  $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
-    	  $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
-      }
+      spinner: 'Retrieving data...'
    });   
 });
 
 
+/*----------------------------------------------------------------------------------------
+ * mithCreateCommentHtml --
+ *   Post the comment to the server and display it.
+ *
+ *   Both cityBox and mafiaBox uses this function. As a side-effect page will get updated
+ *   when the response arrives. One day, I will add ajax error function too.
+ *
+ * @text     
+ * @uid 
+ * @timestamp   
+ *
+ * @return none
+ *----------------------------------------------------------------------------------------
+ */
 function
-mithGenerateCommentResponse(commentText,
-		                    commentDate,
-		                    uid)
-{
-/*	return
-	<div class="commentTable">
-    <table width='100%' cellspacing='0' align='center'>
-    <tr>
-    <td width=55px valign="top">
-    <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
-    </fb:profile-pic>
-    </td>
-    <td valign="top"><div class="fullName"><fb:name uid='$uid' linked="true" useyou="false"></fb:name>
-    <span class="date">$date</span></div>
-    <div class="commentTextOld">$text</div>
-    </td>
-    </tr>
-    </table>
-    </div>
-	alert(commentText + " "+commentDate+" "+uid);*/
+mithCreateCommentHtml(text,
+		              uid,
+		              timestamp) {
+
+   var html = '<div class="mithCommentEntry">\n';
+   html +=    '<table cellspacing=\'0\'>\n';
+   html +=    '<tr>\n';
+   html +=    '<td width=55px valign="top">\n';
+   html +=    '<fb:profile-pic uid=\''+ uid + '\' facebook-logo="false" size="square" linked="true">\n';
+   html +=    '<\/fb:profile-pic>\n';
+   html +=    '<\/td>\n';
+   html +=    '<td valign="top">';
+   html +=    '<div class="mithFullName">';
+   html +=    '<fb:name uid=\''+ uid + '\' linked="true" useyou="false">';
+   html +=    '<\/fb:name>\n';
+   html +=    '<span class="mithDate">'+ timestamp +'<\/span>\n';
+   html +=    '<div class="mithCommentText">'+ text +'<\/div>\n';
+   html +=    '<\/td>\n';
+   html +=    '<\/tr>\n';
+   html +=    '<\/table>\n';
+   html +=    '<\/div>';
+   return html;
+
 }
+
 
 /*----------------------------------------------------------------------------------------
  * mithPostComment --
@@ -146,18 +160,18 @@ mithPostComment(commentTextId,
       },
       success: function(json){
     	 if (json.ret == 0) {
-            mithGenerateCommentResponse(text, json.date, json.uid);
+            var html = mithCreateCommentHtml(text, json.uid, json.date);
+    	    var response = "<div id="+ mithDummyId + " > " + html + "</div>";
+    		$("#"+commentBlobId).prepend(response);
+    		FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
+    		document.getElementById(commentTextId).value = '';
+    		document.getElementById(commentPostIndicator).style.visibility = 'hidden';
+    		var newClass = $("#"+commentBlobId +" .commentTable").length % 2 == 0 ? 'commentTableClassEven' : 'commentTableClassOdd';
+    		$("#"+mithDummyId).addClass(newClass);
+    		mithDummyId++;
+    	 } else {
+    		 alert("Server rejected your request.");
     	 }
-    	  /*
-         var response = "<div id="+ mithDummyId + " > " + html + "</div>";
-	     $("#"+commentBlobId).prepend(response);
-	     FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
-	     document.getElementById(commentTextId).value = '';
-	     document.getElementById(commentPostIndicator).style.visibility = 'hidden';
-	     var newClass = $("#"+commentBlobId +" .commentTable").length % 2 == 0 ? 'commentTableClassEven' : 'commentTableClassOdd';
-	 	 $("#"+mithDummyId).addClass(newClass);
-	     mithDummyId++;
-	     */
       }
 	 });
 }
@@ -177,27 +191,30 @@ mithPostComment(commentTextId,
  * @return none
  *----------------------------------------------------------------------------------------
  */
-
-var cbLastComment;
+var mithCbMafiaLastComment;
+var mithCbCityLastComment;
 
 function 
 mithGetNewComments(commentBlobId,
 		           commentType,
-		           commentPostIndicator)
+		           commentPostIndicator,
+		           commentNewMessage)
 {
-   alert("this function called\n");
+   var lastComment = (commentType == 0 ? mithCbCityLastComment : mithCbMafiaLastComment);
    
    $.ajax({
       type: "POST",
       global: false,
       url: "navigation/getNewComments.php",
       dataType: "json",
-      data: 'lastComment='+cbLastComment+'&type='+commentType,
+      data: 'lastComment='+lastComment+'&type='+commentType,
       error: function(XMLHttpRequest, textStatus) {
 	     alert("Some error occured. We will fix asap.");
       },
       success: function(json){
-    	 alert("got datatype json"+ json.numNewComments);
+    	 //alert("got datatype json"+ json.numNewComments);
+    	 $("#"+commentNewMessage).html(json.numNewComments + " New Comment");
+    	 ;
     	  /*
          var response = "<div id="+ mithDummyId + " > " + xmlHttp.responseText + "</div>";
          $("#cbCommentBlob").prepend(response);
@@ -211,3 +228,24 @@ mithGetNewComments(commentBlobId,
    
 }
 
+function mithStatusRegisterVote(id, myid, type)
+{  
+
+   $.ajax({
+      type: "POST",
+	  global: false,
+	  url: "navigation/registerVote.php",
+	  dataType: "json",
+	  data: 'id='+id+'&myid='+myid,
+	  error: function(XMLHttpRequest, textStatus) {
+	   	     alert("Some error occured. We will fix asap."); 
+	         },
+	  success: function(json){
+	    	    if (json.ret == 0) {
+	    		   document.getElementById(id).innerHTML = json.voteCount
+	    	    } else {
+	    		   alert("Server rejected your request.");
+	    	    }
+	         }
+	});   
+}

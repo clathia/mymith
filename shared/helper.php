@@ -88,35 +88,6 @@ function display_date($date)
    return "$difference $periods[$j] {$tense}";
 }
 
-function display_comment($uid, $publish_date, $text)
-{
-   $date = display_date($publish_date);
-   return <<<HTML
-   <div class="mithCommentEntry">
-      <table cellspacing='0'>
-         <tr>
-            <td width=55px valign="top">
-               <fb:profile-pic uid='$uid' facebook-logo="false" size="square" linked="true">
-               </fb:profile-pic>
-            </td>
-            <td valign="top">
-               <div class="mithFullName">
-                  <fb:name uid='$uid' linked="true" useyou="false">
-                  </fb:name>
-                  <span class="mithDate">
-                     $date
-                  </span>
-               </div>
-               <div class="mithCommentText">
-                  $text
-               </div>
-            </td>
-         </tr>
-      </table>
-   </div>
-HTML;
-}
-
 function get_user_info($uid, $obj)
 {
    $user_details = $obj->api_client->users_getInfo($uid, 'last_name, first_name, profile_url, pic_square');
