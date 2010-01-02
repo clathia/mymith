@@ -106,4 +106,13 @@ function get_user_info($uid, $obj)
    }
 }
 
+
+function mithAddslashes($str) {
+   preg_replace("/\\/g",'\\\\', $str);
+   preg_replace("/\'/g",'\\\'', $str);
+   preg_replace("/\"/g",'\\"', $str);
+   preg_replace("/\0/g",'\\0', $str);
+   return $str;
+}
+
 ?>

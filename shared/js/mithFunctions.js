@@ -48,12 +48,6 @@ $(function () {
     //I've used the metadata plugin and applied options in the class attribute below
 });
 
-$("a.mithToggleLink").live("click", function () {
-   $("div.mithGodMessage").slideToggle("fast");
-   $(this).text($(this).text() == "hide" ? "show" : "hide");
-});
-
-
 
 /*----------------------------------------------------------------------------------------
  * Anonymous --
@@ -115,13 +109,38 @@ mithCreateCommentHtml(text,
    html +=    '<fb:name uid=\''+ uid + '\' linked="true" useyou="false">';
    html +=    '<\/fb:name>\n';
    html +=    '<span class="mithDate">'+ timestamp +'<\/span>\n';
-   html +=    '<div class="mithCommentText">'+ text +'<\/div>\n';
+   html +=    '<div class="mithCommentText">'+ stripslashes(text) +'<\/div>\n';
    html +=    '<\/td>\n';
    html +=    '<\/tr>\n';
    html +=    '<\/table>\n';
    html +=    '<\/div>';
    return html;
 
+}
+
+function addslashes(str) {
+	str=str.replace(/\\/g,'\\\\');
+	str=str.replace(/\'/g,'\\\'');
+	str=str.replace(/\"/g,'\\"');
+	str=str.replace(/\0/g,'\\0');
+	return str;
+}
+	
+function stripslashes(str) {
+	str=str.replace(/\\'/g,'\'');
+	str=str.replace(/\\"/g,'"');
+	str=str.replace(/\\0/g,'\0');
+	str=str.replace(/\\\\/g,'\\');
+	return str;
+}
+
+
+function
+mithToggleLinkFunc(godMessageId,
+		           toggleLinkId)
+{
+	$("#"+godMessageId).toggle();
+	$("#"+toggleLinkId).text($("#"+toggleLinkId).text() == "show" ? "hide" : "show");
 }
 
 
@@ -147,7 +166,7 @@ mithPostComment(commentTextId,
 		        commentType,
 		        commentPostIndicator)
 {
-   var text = fixText(document.getElementById(commentTextId).value);
+   var text = document.getElementById(commentTextId).value;
    document.getElementById(commentPostIndicator).style.visibility = 'visible';
    $.ajax({
       type: "POST",
@@ -173,7 +192,7 @@ mithPostComment(commentTextId,
     		 alert("Server rejected your request.");
     	 }
       }
-	 });
+   });
 }
 
 
@@ -191,46 +210,89 @@ mithPostComment(commentTextId,
  * @return none
  *----------------------------------------------------------------------------------------
  */
-var mithCbMafiaLastComment;
-var mithCbCityLastComment;
 
 function 
 mithGetNewComments(commentBlobId,
 		           commentType,
 		           commentPostIndicator,
-		           commentNewMessage)
+		           lastNewCommentId,
+		           newMessageId)
 {
-   var lastComment = (commentType == 0 ? mithCbCityLastComment : mithCbMafiaLastComment);
-   
    $.ajax({
       type: "POST",
       global: false,
       url: "navigation/getNewComments.php",
       dataType: "json",
-      data: 'lastComment='+lastComment+'&type='+commentType,
+      data: 'lastComment='+$("#"+lastNewCommentId).val()+'&type='+commentType,
       error: function(XMLHttpRequest, textStatus) {
 	     alert("Some error occured. We will fix asap.");
       },
       success: function(json){
-    	 //alert("got datatype json"+ json.numNewComments);
-    	 $("#"+commentNewMessage).html(json.numNewComments + " New Comment");
-    	 ;
-    	  /*
-         var response = "<div id="+ mithDummyId + " > " + xmlHttp.responseText + "</div>";
-         $("#cbCommentBlob").prepend(response);
-         FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
-         document.getElementById("cbIndicator").style.visibility = 'hidden';
-         $("#cbCommentText").val("");
-         cbDummyId++;
-         */
+    	 if (json.ret == 0 && json.numNewComments > 0) {
+            $.each(json.comments, function (i, comment) {
+        	   var html = mithCreateCommentHtml(comment.text, comment.uid, comment.timestamp);
+         	   var response = "<div id="+ mithDummyId + " > " + html + "</div>";
+         	   $("#"+commentBlobId).prepend(response);
+               FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
+         	   var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
+         	   $("#"+mithDummyId).addClass(newClass); 
+         	   mithDummyId++;
+    	   })
+    	   $("#"+lastNewCommentId).val(json.lastCommentId);
+    	 }
       }
-   });
-   
+   }); 
 }
+
+
+/*----------------------------------------------------------------------------------------
+ * mithGetNewComments --
+ *   Get new messages from the server.
+ *
+ *   Both cityBox and mafiaBox uses this function. As a side-effect page will get updated
+ *   when the response arrives. One day, I will add ajax error function too.
+ *
+ * @commentTextId Id of comment textarea
+ * @commentBlobId Id of comment blob, area where comments are displayed
+ * @commentType   can be COMMENT_CITY_TYPE or COMMENT_MAFIA_TYPE
+ *
+ * @return none
+ *----------------------------------------------------------------------------------------
+ */
+
+function 
+mithGetOldComments(commentBlobId,
+		           commentType,
+		           commentPostIndicator,
+		           lastOldCommentId)
+{
+   $.ajax({
+      type: "POST",
+      global: false,
+      url: "navigation/getOldComments.php",
+      dataType: "json",
+      data: 'lastComment='+$("#"+lastOldCommentId).val()+'&type='+commentType,
+      error: function(XMLHttpRequest, textStatus) {
+	     alert("Some error occured. We will fix asap.");
+      },
+      success: function(json){
+         $.each(json.comments, function (i, comment) {
+        	 var html = mithCreateCommentHtml(comment.text, comment.uid, comment.timestamp);
+         	 var response = "<div id="+ mithDummyId + " > " + html + "</div>";
+         	 $("#"+commentBlobId).append(response);
+             FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
+         	 var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
+         	 $("#"+mithDummyId).addClass(newClass); 
+         	 mithDummyId++;
+    	 })
+    	 $("#"+lastOldCommentId).val(json.lastCommentId);
+      }
+   }); 
+}
+
 
 function mithStatusRegisterVote(id, myid, type)
 {  
-
    $.ajax({
       type: "POST",
 	  global: false,
@@ -247,5 +309,5 @@ function mithStatusRegisterVote(id, myid, type)
 	    		   alert("Server rejected your request.");
 	    	    }
 	         }
-	});   
+   });   
 }

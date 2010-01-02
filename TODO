@@ -1,13 +1,12 @@
 -- Enter in the comments are lost. Also double quotes getting lost.
 -- Mafia should be able to see each other. When clicked on 'hide' things are hidden.
--- Show summary of who is dead and who is alive
+
 -- Automatic votes feature
 -- "I am not a mafia" because ...
 -- See deadlines for round
--- Present some statistics of who has done what etc.
+
 -- Images of doctor, police, mafia, civilians, god.
--- Rank votes accordingly.
--- Who has voted whom ?
+
 -- Should we have temporary votes ?
 -- On mousehover events on navigation bar.
 -- When do you use require, require_once, include, include_once.
@@ -16,11 +15,21 @@
 -- Check out DYNDATEANDTIME, DATETIME, EDIT-IN_PLACE, feedbackui plugin, jQuery Tools - The missing UI library for the Web,
 , jquery-in-place-edit, maxChar, Show Character Limit, jQuery Simply Countable plugin, Text limiter for form fields,
  plugins
+ 
+-- Status Page:
 -- Least comments by user -- Who's silent.
 -- Previous round votes
 -- Last evicted
+-- Rank votes accordingly.
+-- Who has voted whom ?
+-- Present some statistics of who has done what etc.
+-- Show summary of who is dead and who is alive
+
 -- timeago plugin may be superuseful. It will update 0 minutes ago .. etc auto.
--- Chirag -- Read this http://www.brainbell.com/tutors/php/php_mysql/When_and_how_to_lock_tables.html
+-- Chirag MySQL
+-- Read this http://www.brainbell.com/tutors/php/php_mysql/When_and_how_to_lock_tables.html
+-- Add escaping of strings, use prepare statements instead of query statements.
+
 
 -- Seperate css, presentation, javascript and business logic
 -- Remove %2 hack.

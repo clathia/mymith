@@ -1,40 +1,20 @@
-<body>
-<!-- Needs to be kept here in the start of body tag. Don't mess with it. -->
-<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
-
-<!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error -->
-<div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div>
-
-
 <script type="text/javascript">
 {
 	var html = 0;
 	var i = 0;
-	var mithCbNumComments;
+
    <?php
    $comment = $database->get_comments(5, 1, $mithCommentType, 20);
    $tmp = count($comment) - 1;
-   ?>
-
-   mithCbNumComments = <?php echo $tmp?>;
-
-   <?php
-   if ($mithCommentType == COMMENT_TYPE_MAFIA) {
-   ?>
-      mithCbMafiaLastComment = <?php echo $comment[0]['comment_id']?>;
-   <?php
-   } else {
-   ?>
-	   mithCbCityLastComment = <?php echo $comment[0]['comment_id']?>;
-   <?php
-	}
    ?>
 
    mithCbComments = new Array(<?php echo $tmp ?>);
 
    <?php
       for($i = 0; $i <= $tmp; $i++) {
-         $text = $comment[$i]['text'];
+         /* In order to send it to JS - escape quotes */
+         $text = addSlashes($comment[$i]['text']);
+         $text = preg_replace("/\\n/"," ", $text);
          $uid = $comment[$i]['uid'];
          /* This processing can be done on client side too. Do it. */
          $timestamp = display_date($comment[$i]['timestamp']);
@@ -51,12 +31,19 @@
    }
    $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
    $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
+   /* Now that we have added all the FB tags, it is time to make sense of those tags. */
+   FB.XFBML.Host.parseDomTree();
 }
 </script>
 
+<input type='hidden' id=<?php echo $mithCbLastNewComment ?> value=<?php echo $comment[0]['comment_id'] ?> />
+<input type='hidden' id=<?php echo $mithCbLastOldComment ?> value=<?php echo $comment[$tmp]['comment_id'] ?> />
 
-<a class="mithToggleLink" href=#>hide</a>
-<div class="mithGodMessage">
+<a id=<?php echo $mithToggleLink ?> class="mithToggleLink" href=# onclick='mithToggleLinkFunc("<?php echo $mithGodMessage ?>", "<?php echo $mithToggleLink ?>")'>
+   hide
+</a>
+
+<div id=<?php echo $mithGodMessage ?> class="mithGodMessage">
    <?php
       $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
       if (count($comment)) {
@@ -87,8 +74,7 @@
    </form>
 </div> <!-- End div.mithPostComment -->
 
-
-<a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithNewMessage ?>")'>
+<a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithCbLastNewComment ?>", "<?php echo $mithNewMessage ?>")'>
 Refresh Now
 </a>
 <br />
@@ -101,7 +87,6 @@ Refresh Now
 <div id=<?php echo $mithCommentBlob ?> class="mithCommentBlob">
 </div>
 
-
 <!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
 <script type="text/javascript">
 FB_RequireFeatures(["XFBML"], function(){
@@ -109,4 +94,8 @@ FB_RequireFeatures(["XFBML"], function(){
    FB.CanvasClient.startTimerToSizeToContent();
    });
 </script>
-</body>
+
+<a href="#" onclick='mithGetOldComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithCbLastOldComment ?>")'>
+More
+</a>
+
