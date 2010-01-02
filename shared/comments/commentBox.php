@@ -31,6 +31,7 @@ var mithCbComments;
 <a id=<?php echo $mithToggleLink ?> class="mithToggleLink" href=# onclick='mithToggleLinkFunc("<?php echo $mithGodMessage ?>", "<?php echo $mithToggleLink ?>")'>hide</a>
 
 <div id=<?php echo $mithGodMessage ?> class="mithGodMessage">
+
    <?php
       $comment = $database->get_comments(5, 1, COMMENT_TYPE_GOD, 1);
       if (count($comment)) {
@@ -38,6 +39,7 @@ var mithCbComments;
       }
    ?>
 </div>
+
 
 <div id="<?php echo $mithCommentPostIndicator ?>" class ="mithCommentIndicator">
    <img src ='shared/comments/images/indicator.gif'/>
@@ -51,18 +53,25 @@ var mithCbComments;
    <form method="get" action="" onsubmit="return false;">
       <textarea id="<?php echo $mithCommentText ?>">
       </textarea>
-      <input class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
-       onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>");'>
+      <div class="mithButtons">
+         <button class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
+          onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>");'>
+            <?php echo $mithButtonValue ?>
+         </button>
+      </div>
    </form>
 </div> <!-- End div.mithPostComment -->
+
 
 <a class="mithRefreshNowLink" href="#" onclick='mithGetNewComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithCbLastNewComment ?>", "<?php echo $mithNewMessage ?>")'>
 Refresh Now
 </a>
 <br />
 
+
 <div id=<?php echo $mithNewMessage ?>>
 </div>
+
 
 <div id=<?php echo $mithCommentBlob ?> class="mithCommentBlob">
 </div>
