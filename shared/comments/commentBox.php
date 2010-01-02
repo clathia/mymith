@@ -1,8 +1,6 @@
 <script type="text/javascript">
+var mithCbComments;
 {
-	var html = 0;
-	var i = 0;
-
    <?php
    $comment = $database->get_comments(5, 1, $mithCommentType, 20);
    $tmp = count($comment) - 1;
@@ -24,15 +22,6 @@
          echo "mithCbComments[$i][2] = '$timestamp';\n";
       }
    ?>
-
-   for (i = 0; i < mithCbComments.length; i++) {
-      html = mithCreateCommentHtml(mithCbComments[i][0], mithCbComments[i][1], mithCbComments[i][2]);
-      $("#" + "<?php echo $mithCommentBlob ?>").append(html);
-   }
-   $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
-   $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
-   /* Now that we have added all the FB tags, it is time to make sense of those tags. */
-   FB.XFBML.Host.parseDomTree();
 }
 </script>
 
@@ -82,3 +71,22 @@ Refresh Now
 More
 </a>
 
+<script type="text/javascript">
+{
+	var html = 0;
+	var i = 0;
+	
+   for (i = 0; i < mithCbComments.length; i++) {
+      html = mithCreateCommentHtml(mithCbComments[i][0], mithCbComments[i][1], mithCbComments[i][2]);
+      $("#" + "<?php echo $mithCommentBlob ?>").append(html);
+   }
+   $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
+   $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
+   /* 
+    * Now that we have added all the FB tags, it is time to make sense of those tags. 
+    * Comment this out if you are making either mafiaBox or cityBox as Home page.
+    */
+   FB.XFBML.Host.parseDomTree();
+}
+</script>
+   
