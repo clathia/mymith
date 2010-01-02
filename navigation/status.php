@@ -111,11 +111,11 @@ $mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAY
 
 <div class="mithCarouselBlob">
    <div class="mithCarouselBorder">
-      <button class="mithCarouselPrev">
-         &lt;&lt;
-      </button>
       <button class="mithCarouselNext">
          &gt;&gt;
+      </button>
+      <button class="mithCarouselPrev">
+         &lt;&lt;
       </button>
    </div>
 
@@ -159,8 +159,8 @@ $mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAY
                </tr>
                <tr>
                   <td>
-                     <div class="mithCarouselButtons">
-                        <button type="submit" class="simple" onclick = 'mithStatusRegisterVote("<?php echo $mithStUid ?>", "<?php echo $mithStMyUid?>")';>
+                     <div class="mithButtons">
+                        <button type="submit" class="mithCarouselButtons" onclick = 'mithStatusRegisterVote("<?php echo $mithStUid ?>", "<?php echo $mithStMyUid?>")';>
                            <?php echo $mithStButtonName ?>
                         </button>
                      </div> <!-- End div.mithCarouselButtons -->

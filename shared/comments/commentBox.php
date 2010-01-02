@@ -78,8 +78,12 @@
    <form method="get" action="" onsubmit="return false;">
       <textarea id="<?php echo $mithCommentText ?>">
       </textarea>
-      <input class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
-       onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>");'>
+      <div class="mithButtons">
+         <button class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
+          onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>");'>
+            <?php echo $mithButtonValue ?>
+         </button>
+      </div>
    </form>
 </div> <!-- End div.mithPostComment -->
 
