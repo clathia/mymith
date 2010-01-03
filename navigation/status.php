@@ -61,19 +61,23 @@ $mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAY
 ?>
 
 <div class="mithDefense">
+   <div class="mithDefenseBorder">
+   Your Defense
+   </div> <!-- End div.mithDefenseBorder -->
+
    <div class="mithTextForDefense">
-   I am not a mafia because...
+      I am not a mafia because...
    </div> <!-- End div.mithTextForDefense -->
 
    <div class="mithEditDefense" id="div_2">
-   I have written come crap, ok?.
+      I have written come crap, ok?.
    </div> <!-- End div.mithEditDefense -->
 </div> <!-- End div.mithDefense -->
 
 
 <div class="mithSetDeadline">
    <div class="mithTextForDeadline">
-      Set Deadline
+      Set Deadline for Next Round
    </div> <!-- End div.mithTextForDeadline -->
 
    <div class="mithDeadlineBox">
@@ -95,8 +99,12 @@ $mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAY
 
 
 <div class="mithGameStatus">
+   <div class="mithGameStatusBorder">
+      Game Status
+   </div> <!-- End div.mithGameStatusBorder -->
+
    <div class="mithGameState">
-      Game State: <?php echo $mithStRoundState ?> <?php echo $mithStGame['curr_round'] ?>
+      <?php echo $mithStRoundState ?> <?php echo $mithStGame['curr_round'] ?>
    </div> <!-- End div.mithGameState -->
 
    <div class="mithPlayersAlive">
@@ -111,6 +119,7 @@ $mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAY
 
 <div class="mithCarouselBlob">
    <div class="mithCarouselBorder">
+      Who is the Mafia?
       <button class="mithCarouselNext">
          &gt;&gt;
       </button>

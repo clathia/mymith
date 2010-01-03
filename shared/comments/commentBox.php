@@ -87,14 +87,6 @@ Refresh Now
 <div id=<?php echo $mithCommentBlob ?> class="mithCommentBlob">
 </div>
 
-<!-- Needs to be kept here at the end of body tag. Don't mess with it. -->
-<script type="text/javascript">
-FB_RequireFeatures(["XFBML"], function(){
-   FB.Facebook.init("<?php echo $appapikey?>", "xd_receiver.htm");
-   FB.CanvasClient.startTimerToSizeToContent();
-   });
-</script>
-
 <a href="#" onclick='mithGetOldComments("<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithCbLastOldComment ?>")'>
 More
 </a>
