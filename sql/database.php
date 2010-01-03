@@ -4,7 +4,8 @@
  * types for success cases. For failures, FALSE is returned. If not specified,
  * the function returns TRUE for success, and FALSE for failure.
  */
-
+/* Turn off error reporting on live site */
+error_reporting(E_ALL);
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/constants.php");
 class db_manager
 {
@@ -179,8 +180,9 @@ class db_manager
          return FALSE;
       }
 
+      $timestamp = time();
       //Add comment to comments
-      $q = "INSERT INTO ".TBL_COMMENTS." (comment_id, game_id, round, uid, type, text) VALUES ('$comm_id', '$game_id', '$round', '$uid', '$type', '$text')";
+      $q = "INSERT INTO ".TBL_COMMENTS." (comment_id, game_id, round, uid, type, text, timestamp) VALUES ('$comm_id', '$game_id', '$round', '$uid', '$type', '$text', '$timestamp')";
       $result = $this->run_query($q);
       if ($result == FALSE) {
          return FALSE;

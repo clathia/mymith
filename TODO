@@ -33,3 +33,8 @@
 
 -- Seperate css, presentation, javascript and business logic
 -- Remove %2 hack.
+-- http://keith-wood.name/countdown.html jquery countdown.
+-- Citybox can highlight comments posted by Mafias.
+
+Live sites: 
+Remove error_reporting(E_ALL) from mithkeys.php and database.php

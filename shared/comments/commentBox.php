@@ -15,7 +15,7 @@ var mithCbComments;
          $text = preg_replace("/\\n/"," ", $text);
          $uid = $comment[$i]['uid'];
          /* This processing can be done on client side too. Do it. */
-         $timestamp = display_date($comment[$i]['timestamp']);
+         $timestamp = $comment[$i]['timestamp'];
          echo "mithCbComments[$i] = new Array(3);";
          echo "mithCbComments[$i][0] = '$text';\n";
          echo "mithCbComments[$i][1] = '$uid';\n";
@@ -55,7 +55,7 @@ var mithCbComments;
       </textarea>
       <div class="mithButtons">
          <button class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
-          onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>");'>
+          onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithCbLastNewComment ?>");'>
             <?php echo $mithButtonValue ?>
          </button>
       </div>

@@ -22,5 +22,5 @@ if (php_uname("n") == "CHIRAG-RVBD") {
 
 $facebook = new Facebook($appapikey, $appsecret);
 $user_id = $facebook->require_login();
-
+error_reporting(E_ALL);
 ?>
