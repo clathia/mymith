@@ -235,11 +235,11 @@ a {
 }
 
 .mithCommentBlob {
-
+	width:100%;
+	overflow:hidden;
 }
 
    .mithCommentEntry {
-
    }
 
       .mithCommentEntryClassOdd {
