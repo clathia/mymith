@@ -1,6 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<head>
 <?php
 /*
  * Copyright 2009 MiTH.  All Rights Reserved.
@@ -11,15 +8,9 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/sql/database.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/helper.php");
+
 $mithStGameId = 5;
-?>
 
-<link rel="stylesheet" type="text/css" href="styles.css?16" />
-</head>
-
-<body>
-
-<?php
 $mithStMyUid = $facebook->api_client->users_GetLoggedInUser();
 $mithStRole = $database->get_player_role($mithStGameId, $mithStMyUid);
 $mithStState = $database->get_player_state($mithStGameId, $mithStMyUid);
@@ -82,7 +73,6 @@ $mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAY
 
    <div class="mithDeadlineBox">
       <input id="deadline" type="datetime-local" min="2009-08-01T12:15" max="2009-09-08T13:25">
-      </input> <!-- End input.deadline -->
    </div> <!-- End div.mithDeadlineBox -->
 </div>
 
@@ -193,4 +183,4 @@ $mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAY
    <div class="mithCarouselBorder">
    </div>
 </div> <!-- End div.mithCarouselBlob -->
-</body>
+

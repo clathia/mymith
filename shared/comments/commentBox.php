@@ -1,8 +1,6 @@
 <script type="text/javascript">
+var mithCbComments;
 {
-	var html = 0;
-	var i = 0;
-
    <?php
    $comment = $database->get_comments(5, 1, $mithCommentType, 20);
    $tmp = count($comment) - 1;
@@ -17,22 +15,13 @@
          $text = preg_replace("/\\n/"," ", $text);
          $uid = $comment[$i]['uid'];
          /* This processing can be done on client side too. Do it. */
-         $timestamp = display_date($comment[$i]['timestamp']);
+         $timestamp = $comment[$i]['timestamp'];
          echo "mithCbComments[$i] = new Array(3);";
          echo "mithCbComments[$i][0] = '$text';\n";
          echo "mithCbComments[$i][1] = '$uid';\n";
          echo "mithCbComments[$i][2] = '$timestamp';\n";
       }
    ?>
-
-   for (i = 0; i < mithCbComments.length; i++) {
-      html = mithCreateCommentHtml(mithCbComments[i][0], mithCbComments[i][1], mithCbComments[i][2]);
-      $("#" + "<?php echo $mithCommentBlob ?>").append(html);
-   }
-   $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
-   $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
-   /* Now that we have added all the FB tags, it is time to make sense of those tags. */
-   FB.XFBML.Host.parseDomTree();
 }
 </script>
 
@@ -63,14 +52,25 @@
       <?php echo $mithTextHeader; ?>
    </div>
    <form method="get" action="" onsubmit="return false;">
-      <textarea id="<?php echo $mithCommentText ?>">
+      <textarea id="<?php echo $mithCommentText ?>" onkeypress='enableButtonOnText("<?php echo $mithCommentText ?>",
+                                                                                "<?php echo $mithPostButton ?>",
+                                                                                "<?php echo $mithInfoCharLimit?>",
+                                                                                300);'>
       </textarea>
       <div class="mithButtons">
-         <button class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
-          onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>");'>
+         <button id=<?php echo $mithPostButton ?> class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
+          onclick='mithPostComment("<?php echo $mithCommentText ?>",
+                                   "<?php echo $mithCommentBlob ?>",
+                                   "<?php echo $mithCommentType ?>",
+                                   "<?php echo $mithCommentPostIndicator ?>",
+                                   "<?php echo $mithCbLastNewComment ?>",
+                                   "<?php echo $mithPostButton ?>",
+                                   "<?php echo $mithInfoCharLimit?>",
+                                   300);'>
             <?php echo $mithButtonValue ?>
          </button>
-      </div>
+      </div> <!-- End div.mithButtons -->
+      <div id=<?php echo $mithInfoCharLimit?>>300</div>
    </form>
 </div> <!-- End div.mithPostComment -->
 
@@ -91,3 +91,21 @@ Refresh Now
 More
 </a>
 
+<script type="text/javascript">
+{
+	var html = 0;
+	var i = 0;
+
+   for (i = 0; i < mithCbComments.length; i++) {
+      html = mithCreateCommentHtml(mithCbComments[i][0], mithCbComments[i][1], mithCbComments[i][2]);
+      $("#" + "<?php echo $mithCommentBlob ?>").append(html);
+   }
+   $(".mithCommentEntry:odd").addClass("mithCommentEntryClassOdd");
+   $(".mithCommentEntry:even").addClass("mithCommentEntryClassEven");
+   /*
+    * Now that we have added all the FB tags, it is time to make sense of those tags.
+    * Comment this out if you are making either mafiaBox or cityBox as Home page.
+    */
+   FB.XFBML.Host.parseDomTree();
+}
+</script>

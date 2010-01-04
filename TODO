@@ -1,35 +1,40 @@
--- Enter in the comments are lost. Also double quotes getting lost.
--- Mafia should be able to see each other. When clicked on 'hide' things are hidden.
+P0 (Have to do it, no question or game will not work):
+1) Show summary of who is dead and who is alive -- clathia
+2) Locking Read this http://www.brainbell.com/tutors/php/php_mysql/When_and_how_to_lock_tables.html -- clathia (& sajain)
+3) Pages for inspector and Doctor - ?
+4) Set deadlines and show countdown. - sajain - 8th Jan
+5) Validation checks both on user side, server side and mysql tier. (Add escaping of strings.) - sajain - 7th Jan
+6) Error reporting infrastructure. - sajain - 6th Jan
+7) Selecting 'the'/'a' theme of the game. - clathia
+8) Facebook integration - User should be able to select friends and display pending/accepted invitations and
+start the game. - sajain - 5th Jan
+9) God says "Message". Give the textarea for the god to enter. - clathia
+10) Database modifications and changing corresponding function names - clathia
 
--- Automatic votes feature
--- "I am not a mafia" because ...
--- See deadlines for round
-
--- Images of doctor, police, mafia, civilians, god.
-
--- Should we have temporary votes ?
--- On mousehover events on navigation bar.
--- When do you use require, require_once, include, include_once.
--- Images in calendar is not displayed. Path problem.
--- Pages for inspector and Doctor
--- Check out DYNDATEANDTIME, DATETIME, EDIT-IN_PLACE, feedbackui plugin, jQuery Tools - The missing UI library for the Web,
-, jquery-in-place-edit, maxChar, Show Character Limit, jQuery Simply Countable plugin, Text limiter for form fields,
- plugins
- 
--- Status Page:
--- Least comments by user -- Who's silent.
--- Previous round votes
--- Last evicted
--- Rank votes accordingly.
--- Who has voted whom ?
--- Present some statistics of who has done what etc.
--- Show summary of who is dead and who is alive
-
--- timeago plugin may be superuseful. It will update 0 minutes ago .. etc auto.
--- Chirag MySQL
--- Read this http://www.brainbell.com/tutors/php/php_mysql/When_and_how_to_lock_tables.html
--- Add escaping of strings, use prepare statements instead of query statements.
+P1 (Must have feature, very convenient):
+1) Images of doctor, police, mafia, civilians, god.
+2) Stats to user:
+status -- Least comments by user -- Who's silent.
+status -- Previous round votes
+status -- Last evicted
+status -- Rank votes accordingly.
+status -- Who has voted whom ?
+3) Filter comments by rounds.
+4) Publish activities on facebook. (Come up with funny one liners to post on FB.)
 
 
--- Seperate css, presentation, javascript and business logic
--- Remove %2 hack.
+P2 (Nice to have, depending upon time):
+1) timeago plugin may be superuseful. It will update 0 minutes ago .. etc auto. We could also refresh items
+when user clicks post, refresh or more button.
+2) Automatic votes feature
+3) "I am not a mafia" because ... Why is this useful ? or just get rid of it.
+4) Citybox can highlight comments posted by Mafias.
+
+
+Notes:
+-- Check out DYNDATEANDTIME, DATETIME, EDIT-IN_PLACE, feedbackui plugin, jQuery Tools - The missing UI library for the Web
+-- Having face masks and different color gives indication of different people.
+-- Naming and branding.
+
+Live sites: 
+Remove error_reporting(E_ALL) from mithkeys.php and database.php

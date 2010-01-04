@@ -77,6 +77,28 @@ $(document).ready(function() {
    });   
 });
 
+function
+enableButtonOnText(textarea, button, infoCharLimit, limit)
+{
+   var text = document.getElementById(textarea).value;
+   var textLength = text.length;
+   var info = document.getElementById(infoCharLimit);
+   if(textLength > limit)
+   {
+      info.innerHTML = 'No more then '+limit+' characters!';
+      textarea.value = text.substr(0,limit);
+      return false;
+   } else {
+	  if (textLength == 0) {
+         document.getElementById(button).disabled = true;
+	  } else {
+		 document.getElementById(button).disabled = false;
+	  }
+      info.innerHTML = (limit - textLength);
+      return true;
+   }
+}
+
 
 /*----------------------------------------------------------------------------------------
  * mithCreateCommentHtml --
@@ -108,7 +130,7 @@ mithCreateCommentHtml(text,
    html +=    '<div class="mithFullName">';
    html +=    '<fb:name uid=\''+ uid + '\' linked="true" useyou="false">';
    html +=    '<\/fb:name>\n';
-   html +=    '<span class="mithDate">'+ timestamp +'<\/span>\n';
+   html +=    '<span class="mithDate">'+ mithDisplayDate(timestamp) +'<\/span>\n';
    html +=    '<div class="mithCommentText">'+ stripslashes(text) +'<\/div>\n';
    html +=    '<\/td>\n';
    html +=    '<\/tr>\n';
@@ -144,6 +166,41 @@ mithToggleLinkFunc(godMessageId,
 }
 
 
+function
+mithDisplayDate(date)
+{	
+    periods = new Array("second", "minute", "hour", "day", "week", "month", "year", "decade");
+    lengths = new Array("60","60","24","7","4.35","12","10");
+ 
+    var d = new Date();
+    now = d.getTime()/1000;
+    
+   // is it future date or past date
+   if(now == date) {
+      return "Just now";
+   }
+
+   if(now >= date) {
+      difference = now - date;
+      tense = "ago";
+   } else {
+      difference = date - now;
+      tense = "from now";
+   }
+
+   for(j = 0; difference >= lengths[j] && j < lengths.length -1; j++) {
+      difference /= lengths[j];
+   }
+
+   difference = Math.round(difference);
+   if (difference != 1) {
+      periods[j] += "s";
+   }
+
+   return difference +" "+periods[j]+" "+ tense;
+}
+
+
 /*----------------------------------------------------------------------------------------
  * mithPostComment --
  *   Post the comment to the server and display it.
@@ -164,9 +221,14 @@ function
 mithPostComment(commentTextId,
 		        commentBlobId,
 		        commentType,
-		        commentPostIndicator)
+		        commentPostIndicator,
+		        lastNewCommentId,
+		        postButtonId,
+		        infoCharLimit,
+		        limit)
 {
    var text = document.getElementById(commentTextId).value;
+   document.getElementById(postButtonId).disabled = true;
    document.getElementById(commentPostIndicator).style.visibility = 'visible';
    $.ajax({
       type: "POST",
@@ -175,22 +237,25 @@ mithPostComment(commentTextId,
       dataType: "json",
       data: 'commentText='+text+'&type='+commentType,
       error: function(XMLHttpRequest, textStatus) {
-   	     alert("Some error occured. We will fix asap."); 
+   	     alert("Some error occured. We will fix asap.");
+   	     document.getElementById(infoCharLimit).innerHTML = limit;
+   	     document.getElementById(commentPostIndicator).style.visibility = 'hidden';
       },
       success: function(json){
     	 if (json.ret == 0) {
-            var html = mithCreateCommentHtml(text, json.uid, json.date);
+            var html = mithCreateCommentHtml(text, json.uid, (new Date()).getTime()/1000);
     	    var response = "<div id="+ mithDummyId + " > " + html + "</div>";
     		$("#"+commentBlobId).prepend(response);
     		FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
     		document.getElementById(commentTextId).value = '';
-    		document.getElementById(commentPostIndicator).style.visibility = 'hidden';
     		var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
     		$("#"+mithDummyId).addClass(newClass);
     		mithDummyId++;
     	 } else {
     		 alert("Server rejected your request.");
     	 }
+    	 document.getElementById(infoCharLimit).innerHTML = limit;
+    	 document.getElementById(commentPostIndicator).style.visibility = 'hidden';
       }
    });
 }
@@ -221,14 +286,14 @@ mithGetNewComments(commentBlobId,
    $.ajax({
       type: "POST",
       global: false,
-      url: "navigation/getNewComments.php",
+      url: "navigation/getComments.php",
       dataType: "json",
-      data: 'lastComment='+$("#"+lastNewCommentId).val()+'&type='+commentType,
+      data: 'lastComment='+$("#"+lastNewCommentId).val()+'&type='+commentType+'&oldOrNew=new',
       error: function(XMLHttpRequest, textStatus) {
 	     alert("Some error occured. We will fix asap.");
       },
       success: function(json){
-    	 if (json.ret == 0 && json.numNewComments > 0) {
+    	 if (json.ret == 0 && json.numComments > 0) {
             $.each(json.comments, function (i, comment) {
         	   var html = mithCreateCommentHtml(comment.text, comment.uid, comment.timestamp);
          	   var response = "<div id="+ mithDummyId + " > " + html + "</div>";
@@ -237,7 +302,7 @@ mithGetNewComments(commentBlobId,
          	   var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
          	   $("#"+mithDummyId).addClass(newClass); 
          	   mithDummyId++;
-    	   })
+    	   });
     	   $("#"+lastNewCommentId).val(json.lastCommentId);
     	 }
       }
@@ -247,7 +312,7 @@ mithGetNewComments(commentBlobId,
 
 /*----------------------------------------------------------------------------------------
  * mithGetNewComments --
- *   Get new messages from the server.
+ *   Get old messages from the server.
  *
  *   Both cityBox and mafiaBox uses this function. As a side-effect page will get updated
  *   when the response arrives. One day, I will add ajax error function too.
@@ -269,9 +334,9 @@ mithGetOldComments(commentBlobId,
    $.ajax({
       type: "POST",
       global: false,
-      url: "navigation/getOldComments.php",
+      url: "navigation/getComments.php",
       dataType: "json",
-      data: 'lastComment='+$("#"+lastOldCommentId).val()+'&type='+commentType,
+      data: 'lastComment='+$("#"+lastOldCommentId).val()+'&type='+commentType+'&oldOrNew=old',
       error: function(XMLHttpRequest, textStatus) {
 	     alert("Some error occured. We will fix asap.");
       },
@@ -284,12 +349,27 @@ mithGetOldComments(commentBlobId,
          	 var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
          	 $("#"+mithDummyId).addClass(newClass); 
          	 mithDummyId++;
-    	 })
+    	 });
     	 $("#"+lastOldCommentId).val(json.lastCommentId);
       }
    }); 
 }
 
+
+/*----------------------------------------------------------------------------------------
+ * mithGetNewComments --
+ *   Get old messages from the server.
+ *
+ *   Both cityBox and mafiaBox uses this function. As a side-effect page will get updated
+ *   when the response arrives. One day, I will add ajax error function too.
+ *
+ * @commentTextId Id of comment textarea
+ * @commentBlobId Id of comment blob, area where comments are displayed
+ * @commentType   can be COMMENT_CITY_TYPE or COMMENT_MAFIA_TYPE
+ *
+ * @return none
+ *----------------------------------------------------------------------------------------
+ */
 
 function mithStatusRegisterVote(id, myid, type)
 {  

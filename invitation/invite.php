@@ -5,7 +5,7 @@
  * Application: MiTH (Mafia in The House)
  * File: 'invite.php' 
  */
-require_once 'mithkeys.php';
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
 
 define( 'FB_API_KEY', $appapikey );
 define( 'FB_SECRET', $appsecret ); 
@@ -16,7 +16,7 @@ define( 'RETURN_URL', 'http://apps.facebook.com/mafiainthehouse/group.php' );
 function SendNewRequest() {
     global $facebook;
     $content = '<fb:req-choice url=\''.RETURN_URL.'\' label=\'Accept\' />';
-    $action = 'http://apps.facebook.com/mafiainthehouse/inviteSelection.php';
+    $action = 'http://apps.facebook.com/mafiainthehouse/navigation/inviteSelection.php';
     $actionText = 'Create your group for MiTH!';
     
     $excludeFriends = null; 
