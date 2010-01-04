@@ -51,14 +51,25 @@ var mithCbComments;
       <?php echo $mithTextHeader; ?>
    </div>
    <form method="get" action="" onsubmit="return false;">
-      <textarea id="<?php echo $mithCommentText ?>">
+      <textarea id="<?php echo $mithCommentText ?>" onkeypress='enableButtonOnText("<?php echo $mithCommentText ?>", 
+                                                                                "<?php echo $mithPostButton ?>",
+                                                                                "<?php echo $mithInfoCharLimit?>",
+                                                                                300);'>
       </textarea>
       <div class="mithButtons">
-         <button class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
-          onclick='mithPostComment("<?php echo $mithCommentText ?>", "<?php echo $mithCommentBlob ?>", "<?php echo $mithCommentType ?>", "<?php echo $mithCommentPostIndicator ?>", "<?php echo $mithCbLastNewComment ?>");'>
+         <button id=<?php echo $mithPostButton ?> class="mithPostButton" type='submit' value="<?php echo $mithButtonValue ?>"
+          onclick='mithPostComment("<?php echo $mithCommentText ?>",
+                                   "<?php echo $mithCommentBlob ?>",
+                                   "<?php echo $mithCommentType ?>",
+                                   "<?php echo $mithCommentPostIndicator ?>",
+                                   "<?php echo $mithCbLastNewComment ?>",
+                                   "<?php echo $mithPostButton ?>",
+                                   "<?php echo $mithInfoCharLimit?>",
+                                   300);'>
             <?php echo $mithButtonValue ?>
          </button>
-      </div>
+      </div> <!-- End div.mithButtons -->
+      <div id=<?php echo $mithInfoCharLimit?>>300</div>
    </form>
 </div> <!-- End div.mithPostComment -->
 

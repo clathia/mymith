@@ -36,5 +36,10 @@
 -- http://keith-wood.name/countdown.html jquery countdown.
 -- Citybox can highlight comments posted by Mafias.
 
+
+-- Having masks and different color gives indication of different people.
+
+-- Naming and branding.
+
 Live sites: 
 Remove error_reporting(E_ALL) from mithkeys.php and database.php

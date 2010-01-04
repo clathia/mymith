@@ -1,35 +1,19 @@
-<?php
-/*
- * <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
- * Copyright 2009 MiTH.  All Rights Reserved.
- *
- * Application: MiTH (Mafia in The House)
- * File: 'index.php'
- */
-require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
-
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 
 <head>
-<link type="text/css" href="/shared/js/jquery-lite/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
-<link type="text/css" href="/shared/js/jquery-dtpicker-1.0a5/jquery.dtpicker.css" rel="stylesheet" />
+<?php
+/*
+ * Copyright 2009 MiTH.  All Rights Reserved. 
+ *
+ * Application: MiTH (Mafia in The House)
+ * File: 'play.php' 
+ */
+require_once($_SERVER['DOCUMENT_ROOT'] . "/shared/mithkeys.php");
+?>
 
 <link rel="stylesheet" type="text/css" href="styles.css?31" />
 
-<script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/shared/js/jquery-lite/js/jquery-ui-1.7.2.custom.min.js"></script>
-
-<script type="text/javascript" src="/shared/js/jcarousellite_1.0.1.js"></script>
-<script type="text/javascript" src="/shared/js/jquery.mousewheel.js"></script>
-<script type="text/javascript" src="/shared/js/jquery.jeditable.js"></script>
-<script type="text/javascript" src="/shared/js/jquery.cookie.js"></script>
-
-<script type="text/javascript" src="/shared/js/jquery-dtpicker-1.0a5/jquery.metadata.min.js"></script>
-<script type="text/javascript" src="/shared/js/jquery-dtpicker-1.0a5/jquery.dtpicker.min.js"></script>
-<script type="text/javascript" src="/shared/js/mithFunctions.js?5"></script>
 </head>
 
 <body>
@@ -43,28 +27,37 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/shared/head.php");
    <div class="wrapper">
       <div class="content">
          <div class="demo">
-            <div id="tabs">
-            <ul>
-            <li><a href="#status">Status</a></li>
-            <li><a href="/navigation/cityBox.php">CityBox</a></li>
-            <li><a href="/navigation/mafiaBox.php">MafiaBox</a></li>
-            </ul>
-            <div id="status">
-              <?php
-               include($_SERVER['DOCUMENT_ROOT'] . "/navigation/status.php");
-               ?>
-            </div> <!--  End CityBox -->
-           </div> <!-- End tabs -->
+
+if () {
+
+} else {
+
+
+
+<fb:serverfbml style="width: 750px;">  
+<script type="text/fbml">  
+<fb:fbml>  
+
+<fb:request-form 
+   action="http://apps.facebook.com/mafiainthehouse/invitation/inviteSelection.php" 
+   method="get"
+   type="MiTH"
+   content = '<fb:req-choice url=\"http://apps.facebook.com/mafiainthehouse\" label=\"Confirm\" />' 
+   <fb:multi-friend-selector showborder="false" actiontext="Create your group for MiTH !.">  
+</fb:request-form>  
+
+</fb:fbml>
+</script>
+</fb:serverfbml>
+
+}
+
          </div><!-- End demo -->
       </div> <!-- End content -->
    </div> <!-- End wrapper -->
 </div> <!--  End container -->
 
 
-<!-- 
-Needs to be kept here at the end of body tag. Don't mess with it. 
-I am going to use some FB.* function. I need to load those libraries.
--->
 
 <script type="text/javascript">
 FB_RequireFeatures(["CanvasUtil"], function()
@@ -81,4 +74,5 @@ FB_RequireFeatures(["XFBML"], function(){
 });
 </script>
 </body>
+
 </html>

@@ -69,7 +69,6 @@ $mithStTotalMafiasNum = count($database->get_players_by_role($mithStGameId, PLAY
 
    <div class="mithDeadlineBox">
       <input id="deadline" type="datetime-local" min="2009-08-01T12:15" max="2009-09-08T13:25">
-      </input> <!-- End input.deadline -->
    </div> <!-- End div.mithDeadlineBox -->
 </div>
 

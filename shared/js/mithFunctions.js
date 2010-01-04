@@ -77,6 +77,28 @@ $(document).ready(function() {
    });   
 });
 
+function
+enableButtonOnText(textarea, button, infoCharLimit, limit)
+{
+   var text = document.getElementById(textarea).value;
+   var textLength = text.length;
+   var info = document.getElementById(infoCharLimit);
+   if(textLength > limit)
+   {
+      info.innerHTML = 'No more then '+limit+' characters!';
+      textarea.value = text.substr(0,limit);
+      return false;
+   } else {
+	  if (textLength == 0) {
+         document.getElementById(button).disabled = true;
+	  } else {
+		 document.getElementById(button).disabled = false;
+	  }
+      info.innerHTML = (limit - textLength);
+      return true;
+   }
+}
+
 
 /*----------------------------------------------------------------------------------------
  * mithCreateCommentHtml --
@@ -200,9 +222,13 @@ mithPostComment(commentTextId,
 		        commentBlobId,
 		        commentType,
 		        commentPostIndicator,
-		        lastNewCommentId)
+		        lastNewCommentId,
+		        postButtonId,
+		        infoCharLimit,
+		        limit)
 {
    var text = document.getElementById(commentTextId).value;
+   document.getElementById(postButtonId).disabled = true;
    document.getElementById(commentPostIndicator).style.visibility = 'visible';
    $.ajax({
       type: "POST",
@@ -211,7 +237,9 @@ mithPostComment(commentTextId,
       dataType: "json",
       data: 'commentText='+text+'&type='+commentType,
       error: function(XMLHttpRequest, textStatus) {
-   	     alert("Some error occured. We will fix asap."); 
+   	     alert("Some error occured. We will fix asap.");
+   	     document.getElementById(infoCharLimit).innerHTML = limit;
+   	     document.getElementById(commentPostIndicator).style.visibility = 'hidden';
       },
       success: function(json){
     	 if (json.ret == 0) {
@@ -220,13 +248,14 @@ mithPostComment(commentTextId,
     		$("#"+commentBlobId).prepend(response);
     		FB.XFBML.Host.parseDomElement(document.getElementById(mithDummyId));
     		document.getElementById(commentTextId).value = '';
-    		document.getElementById(commentPostIndicator).style.visibility = 'hidden';
     		var newClass = $("#"+commentBlobId +" .mithCommentEntry").length % 2 == 0 ? 'mithCommentEntryClassEven' : 'mithCommentEntryClassOdd';
     		$("#"+mithDummyId).addClass(newClass);
     		mithDummyId++;
     	 } else {
     		 alert("Server rejected your request.");
     	 }
+    	 document.getElementById(infoCharLimit).innerHTML = limit;
+    	 document.getElementById(commentPostIndicator).style.visibility = 'hidden';
       }
    });
 }

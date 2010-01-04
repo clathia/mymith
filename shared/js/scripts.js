@@ -68,16 +68,6 @@ function sendPostRequestAjax(xmlHttp, url, params, callback)
 	   xmlHttp.send(params);
 }
 
-
-function enableButtonOnText(textarea, button)
-{
-   if (document.getElementById(textarea).value == '') {
-      document.getElementById(button).disabled = true;
-   } else {
-      document.getElementById(button).disabled = false;
-   }
-}
-
 function openWindow(url)
 {
     window.open(url,'mywindow','width=400,height=400');
